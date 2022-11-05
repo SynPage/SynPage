@@ -3,10 +3,10 @@ import { Button, Card, CardActions, CardContent, createStyles, Grid, IconButton,
 import { Theme } from "@emotion/react";
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore'
-import { Tutorial } from "./Tutorial";
+import TutorialProp from "../models/TutorialProp";
 import { TutorialStepComponent } from "./TutorialStepComponent";
 
-export const TutorialComponent = (props: { tutorial: Tutorial }) => {
+export const TutorialComponent = (props: { tutorial: TutorialProp }) => {
     const [currentStep, setCurrentStep] = useState(0);
 
     const handleNextStep = () => {

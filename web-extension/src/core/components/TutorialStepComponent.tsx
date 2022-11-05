@@ -3,10 +3,10 @@ import { Button, Card, CardActions, CardContent, createStyles, Grid, IconButton,
 import { Theme } from "@emotion/react";
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore'
-import { TutorialPopperComponent } from "./TtutorialPopperComponent";
-import { TutorialStep } from "./TutorialStep";
+import TutorialPopperComponent from "./TutorialPopperComponent";
+import TutorialStepProp from "../models/TutorialStepProp";
 
-export const TutorialStepComponent = (props: { stepConfig: TutorialStep}) => {
+export const TutorialStepComponent = (props: { stepConfig: TutorialStepProp}) => {
     const config = props.stepConfig;
 
     const poppers = () => {

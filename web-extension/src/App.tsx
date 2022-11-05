@@ -1,15 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import logo from './logo.svg'
-import './App.css';
+import { BrowserRouter, createBrowserRouter, Outlet, Route, RouterProvider, Routes } from 'react-router-dom';
+import TutorialPopperComponent from './core/components/TutorialPopperComponent';
+
+const router = createBrowserRouter([
+  {
+    path: "/test",
+    element: <div id="test"><p>Hello World!123123123123</p><Outlet/></div>, 
+    errorElement: <div><p>Error!</p></div>, // TODO: Build an error page
+    children: [
+      {
+        path: "tut",
+        element: <TutorialPopperComponent popperConfig={{title: "Hello", description: "Hello", targetIdentifier: "#test"}}/>,
+        errorElement: <div>Error!</div>
+      }
+    ]
+  },
+])
 
 const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Welcome to Project TBD</p>
-      </header>
-    </div>
+    <RouterProvider router={router}/>
   );
 }
 

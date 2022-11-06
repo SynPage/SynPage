@@ -1,15 +1,10 @@
 import React, { useEffect } from "react";
-import { Button, Card, CardActions, CardContent, createStyles, Grid, IconButton, makeStyles, Paper, Popover, Popper, Typography } from "@mui/material";
-import { Theme } from "@emotion/react";
+import { Card, CardActions, CardContent, IconButton, Popper, Typography } from "@mui/material";
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore'
-import PopperProp from "../models/PopperProp";
+import {TutorialBox} from "../models/TutorialBox";
 
-const TutorialPopperComponent = (props: { popperConfig: PopperProp, nextStep?: () => void, prevStep?: () => void, canNextStep?: () => boolean, canPrevStep?: () => boolean }) => {
-    useEffect(() => {
-        console.log(props.popperConfig.targetIdentifier.toString())
-    }, [])
-    
+const TutorialPopperComponent = (props: { popperConfig: TutorialBox, nextStep?: () => void, prevStep?: () => void, canNextStep?: () => boolean, canPrevStep?: () => boolean }) => {
     return (
         <Popper open={true}
             anchorEl={document.querySelector(props.popperConfig.targetIdentifier.toString())}

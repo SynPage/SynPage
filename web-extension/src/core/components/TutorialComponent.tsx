@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import { Button, Card, CardActions, CardContent, createStyles, Grid, IconButton, makeStyles, Paper, Popover, Popper, Typography } from "@mui/material";
-import { Theme } from "@emotion/react";
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore'
-import TutorialProp from "../models/TutorialProp";
+import {TutorialProp} from "../models/TutorialProp";
 import { TutorialStepComponent } from "./TutorialStepComponent";
 
 export const TutorialComponent = (props: { tutorial: TutorialProp }) => {

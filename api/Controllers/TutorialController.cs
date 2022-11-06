@@ -29,7 +29,7 @@ public class TutorialsController : ControllerBase
 
         return tutorial;
     }
-
+    
     [HttpPost]
     public async Task<IActionResult> Post(Tutorial newTutorial)
     {

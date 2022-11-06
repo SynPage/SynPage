@@ -1,8 +1,6 @@
-import PopperProp from './PopperProp'
+import {TutorialStep} from "./TutorialStep";
 
-export default interface TutorialStepProp {
-    id: String;
-    popperConfigs: PopperProp[];
+export interface TutorialStepProp extends TutorialStep{
     nextStep?: () => void;
     prevStep?: () => void;
     canNextStep?: () => boolean;

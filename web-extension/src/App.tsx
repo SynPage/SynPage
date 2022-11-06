@@ -1,12 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter, createBrowserRouter, Outlet, Route, RouterProvider, Routes } from 'react-router-dom';
+import React from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import TutorialPopperComponent from './core/components/TutorialPopperComponent';
+import { CreatorApp } from './creator/CreatorApp';
 
 const router = createBrowserRouter([
   {
+    path: "/creator",
+    element: <CreatorApp/>, 
+    errorElement: <div><p>Error!</p></div>, 
+  },
+  {
     path: "/test",
-    element: <div id="test"><p>Hello World!123123123123</p><Outlet/></div>, 
-    errorElement: <div><p>Error!</p></div>, // TODO: Build an error page
+    element: <p>Hello</p>,
+    errorElement: <div><p>Error!</p></div>, 
     children: [
       {
         path: "tut",
@@ -14,7 +20,7 @@ const router = createBrowserRouter([
         errorElement: <div>Error!</div>
       }
     ]
-  },
+  }
 ])
 
 const App = () => {

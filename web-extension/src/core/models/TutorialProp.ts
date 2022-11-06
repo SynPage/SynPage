@@ -1,5 +1,6 @@
-import TutorialStepProp from "./TutorialStepProp";
+import {Tutorial} from "./Tutorial";
+import {TutorialStepProp} from "./TutorialStepProp";
 
-export default interface TutorialProp {
-    steps: TutorialStepProp[];
+export interface TutorialProp extends Tutorial{
+    steps: TutorialStepProp[]
 }

@@ -1,6 +1,6 @@
 import React from "react";
-import {TutorialProp} from "../../core/models/TutorialProp"
-import { TutorialComponent } from "../../core/components/TutorialComponent";
+import {TutorialProp} from "../core/models/TutorialProp"
+import { TutorialComponent } from "../core/components/TutorialComponent";
 import _tutorialDemo from "./tutorialDemo.json";
 
 export const App = () => {

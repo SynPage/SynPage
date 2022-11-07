@@ -1,0 +1,39 @@
+{
+  "id": "",
+  "name": "",
+  "targetSite": "",
+  "steps": [
+    {
+      "index": "0",
+      "StepName": "",
+      "components": [
+        {
+          "title": "Dashboard",
+          "description": "Click here to open dashboard. ",
+          "targetIdentifier": "#displayHome"
+        },
+        {
+          "title": "View Job Postings",
+          "description": "Click here to view job postings. ",
+          "targetIdentifier": "#myAccountNav > nav > ul > li:nth-child(2) > a"
+        }
+      ]
+    },
+    {
+      "index": "1",
+      "StepName": "",
+      "components": [
+        {
+          "title": "Co-op",
+          "description": "Click here to see your coop history. ",
+          "targetIdentifier": "#displayStudentMyCoop"
+        },
+        {
+          "title": "View Appointments",
+          "description": "Click here to check your appointments. ",
+          "targetIdentifier": "body > main > div.orbisTabContainer > div.tab-content > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div.panel-body > table > tbody > tr > td.full > a"
+        }
+      ]
+    }
+  ]
+}

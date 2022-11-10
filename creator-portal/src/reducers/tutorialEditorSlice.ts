@@ -1,25 +1,39 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {TutorialStep} from "../core/models/TutorialStep";
-import {Tutorial} from "../core/models/Tutorial";
-import {postPublishTutorial} from "../client";
+import {tutorialsApi, stepsApi} from "../client";
 import {AppDispatch, RootState} from "../store";
+import {Tutorial, TutorialStep} from "../generated";
 
-interface TutorialState {
-    value: Tutorial
+interface TutorialEditorState {
+    tutorial: Tutorial
     status: string
     error?: string
 }
 
-const initialState: TutorialState = {
-    value: {steps: [], name: "", id: "", targetSite: ""},
+const createEmptyTutorial = (): Tutorial => {
+    return {
+        name: "Valid Tutorial",
+        targetSite: "http://localhost:3000/creator",
+        steps: []
+    }
+};
+
+const initialState: TutorialEditorState = {
+    tutorial: createEmptyTutorial(),
     status: "idle",
     error: ""
-} as TutorialState
+} as TutorialEditorState
 
 export const publishTutorial = createAsyncThunk<Tutorial, void, {state: RootState, dispatch: AppDispatch}>(
     'tutorialEditor/publishTutorial',
     async (arg, {getState}) => {
-        return await postPublishTutorial(getState().tutorialEditor.value)
+        const tutorial = getState().tutorialEditor.tutorial;
+        const tutorialResult =  await tutorialsApi.createTutorial(tutorial);
+        for (let step in tutorial.steps) {
+            console.log(step);
+            // const stepsResult = await stepsApi.createTutorialStep(step);
+        }
+        const result = await tutorialsApi.retrieveTutorial(tutorialResult.data.id!.toString())
+        return result.data;
     }
 )
 
@@ -28,11 +42,11 @@ export const tutorialEditorSlice = createSlice({
     initialState: initialState,
     reducers: {
         addStep: (state, action: PayloadAction<TutorialStep>) => {
-            state.value.steps.push(action.payload);
+            state.tutorial.steps!.push(action.payload);
         },
         editStep: (state, action: PayloadAction<TutorialStep>) => {
-            const index = state.value.steps.findIndex(step => step.index === action.payload.index);
-            state.value.steps[index] = action.payload;
+            const index = state.tutorial.steps!.findIndex(step => step.index === action.payload.index);
+            state.tutorial.steps![index] = action.payload;
         },
     },
     extraReducers(builder) {
@@ -45,7 +59,7 @@ export const tutorialEditorSlice = createSlice({
                 // Add any fetched posts to the array
                 // state.value = state.value.concat(action.payload)
                 console.log(action.payload);
-                state.value = {steps: [], name: "", id: "", targetSite: ""};
+                state.tutorial = createEmptyTutorial();
             })
             .addCase(publishTutorial.rejected, (state, action) => {
                 state.status = 'failed'

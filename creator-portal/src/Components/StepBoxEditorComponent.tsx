@@ -1,10 +1,10 @@
 import {Grid, Paper, TextField} from "@mui/material";
-import {TutorialBox} from "../../core/models/TutorialBox";
+import {TutorialTextBox} from "../generated";
 
-export const StepBoxEditorComponent = (props: { stepBox: TutorialBox, onEditStepBox: (newComponent: TutorialBox) => void }) => {
+export const StepBoxEditorComponent = (props: { stepBox: TutorialTextBox, onEditStepBox: (newComponent: TutorialTextBox) => void }) => {
     const {stepBox, onEditStepBox, ...others} = props;
 
-    const handleEditStepBox = (newComponent: TutorialBox) => {
+    const handleEditStepBox = (newComponent: TutorialTextBox) => {
         onEditStepBox(newComponent);
     };
 
@@ -27,10 +27,10 @@ export const StepBoxEditorComponent = (props: { stepBox: TutorialBox, onEditStep
                 </Grid>
                 <Grid item xs={6}>
                     <TextField
-                        value={stepBox.targetIdentifier}
+                        value={stepBox.targetSelector}
                         label="Target Element"
                         fullWidth
-                        onChange={(e) => handleEditStepBox({...stepBox, targetIdentifier: e.target.value})}
+                        onChange={(e) => handleEditStepBox({...stepBox, targetSelector: e.target.value})}
                     />
                 </Grid>
                 <Grid item xs={12}>

@@ -33,7 +33,7 @@ class TutorialViewSet(viewsets.ModelViewSet):
     """
     queryset = Tutorial.objects.all()
     serializer_class = TutorialSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
 
 class TutorialStepViewSet(viewsets.ModelViewSet):
@@ -42,7 +42,7 @@ class TutorialStepViewSet(viewsets.ModelViewSet):
     """
     queryset = TutorialStep.objects.all()
     serializer_class = TutorialStepSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
 
 class TutorialTextBoxViewSet(viewsets.ModelViewSet):
@@ -51,4 +51,4 @@ class TutorialTextBoxViewSet(viewsets.ModelViewSet):
     """
     queryset = TutorialTextBox.objects.all()
     serializer_class = TutorialTextBoxSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]

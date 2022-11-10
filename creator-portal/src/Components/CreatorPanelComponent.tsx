@@ -3,8 +3,8 @@ import {StepListComponent} from "./StepListComponent"
 import {useState} from "react";
 import {StepEditorComponent} from "./StepEditorComponent";
 import {StepPreviewComponent} from "./StepPreviewComponent";
-import {useAppDispatch} from "../../hooks";
-import {publishTutorial} from "../../reducers/tutorialEditorSlice";
+import {useAppDispatch} from "../hooks";
+import {publishTutorial} from "../reducers/tutorialEditorSlice";
 
 export const CreatorPanelComponent = () => {
     const dispatch = useAppDispatch();

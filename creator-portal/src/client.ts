@@ -1,14 +1,9 @@
-import {Tutorial} from "./core/models/Tutorial";
+import {TutorialsApi, StepsApi, TextboxApi} from "./generated";
 
-export const postPublishTutorial = async (tutorial: Tutorial) => {
-    const body = JSON.stringify(tutorial);
-    const response = await fetch('https://localhost:7212/api/Tutorials', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: body
-    });
-    return await response.json();
-}
+const basePath = "http://127.0.0.1:8000"
+
+const tutorialsApi = new TutorialsApi(undefined, basePath);
+const stepsApi = new StepsApi(undefined, basePath);
+const textBoxesApi = new TextboxApi(undefined, basePath);
+
+export {tutorialsApi, stepsApi, textBoxesApi}

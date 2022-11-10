@@ -1,3 +1,2 @@
-﻿/bin
-/.idea
-/obj
+/venv
+db.sqlite3

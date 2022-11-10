@@ -1,9 +1,10 @@
 from django.db import models
 
-from models.TutorialComponent import TutorialComponent
+from models.TutorialStep import TutorialStep
 
 
-class TutorialTextBox(TutorialComponent):
+class TutorialTextBox(models.Model):
+    step_id = models.ForeignKey(TutorialStep, related_name='textboxes', on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=250)
     targetSelector = models.CharField(max_length=100)

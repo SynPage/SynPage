@@ -25,11 +25,11 @@ class TutorialTextBoxSerializer(serializers.ModelSerializer):
 
 
 class TutorialStepSerializer(serializers.ModelSerializer):
-    components = TutorialTextBoxSerializer(many=True, read_only=True)
+    textboxes = TutorialTextBoxSerializer(many=True, read_only=True)
 
     class Meta:
         model = TutorialStep
-        fields = ['name', 'index', 'components', 'tutorial_id']
+        fields = ['name', 'index', 'textboxes', 'tutorial_id']
 
 
 class TutorialSerializer(serializers.ModelSerializer):

@@ -8,7 +8,7 @@ import {editStep} from "../reducers/tutorialEditorSlice";
 export const StepEditorComponent = (props: {currentStepIndex: number}) => {
     const {currentStepIndex, ...others} = props;
     const dispatch = useAppDispatch();
-    const step = useAppSelector(state => state.tutorialEditor.tutorial.steps?.find(step => step.index === currentStepIndex));
+    const step = useAppSelector(state => state.tutorialEditor.steps?.find(step => step.index === currentStepIndex));
 
     const handleEditStepName = (newName: string) => {
         step && dispatch(editStep({...step, name: newName}));

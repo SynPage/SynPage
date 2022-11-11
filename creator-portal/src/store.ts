@@ -1,9 +1,11 @@
 import {configureStore} from "@reduxjs/toolkit";
 import tutorialEditorReducer from "./reducers/tutorialEditorSlice"
+import tutorialManagerReducer from "./reducers/tutorialManagerSlice";
 
 export const store = configureStore({
     reducer: {
-        tutorialEditor: tutorialEditorReducer
+        tutorialEditor: tutorialEditorReducer,
+        tutorialManager: tutorialManagerReducer
     },
 })
 

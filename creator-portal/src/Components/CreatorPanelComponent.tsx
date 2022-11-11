@@ -1,14 +1,28 @@
-import {AppBar, Box, Button, Divider, Grid, Toolbar, Typography} from "@mui/material"
+import {
+    AppBar,
+    Backdrop,
+    Box,
+    Button,
+    CircularProgress,
+    Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
+    Divider, FormControl,
+    Grid, TextField,
+    Toolbar,
+    Typography
+} from "@mui/material"
 import {StepListComponent} from "./StepListComponent"
 import {useState} from "react";
 import {StepEditorComponent} from "./StepEditorComponent";
 import {StepPreviewComponent} from "./StepPreviewComponent";
-import {useAppDispatch} from "../hooks";
-import {publishTutorial} from "../reducers/tutorialEditorSlice";
+import {useAppDispatch, useAppSelector} from "../hooks";
+import {useNavigate} from "react-router-dom";
 
 export const CreatorPanelComponent = () => {
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const [currentStepIndex, setCurrentStepIndex] = useState(0);
+    const error = useAppSelector(s => s.tutorialEditor.error);
+    const loading = useAppSelector(s => s.tutorialEditor.loading);
 
     const handleSetStepIndex = (index: number) => {
         setCurrentStepIndex(index);
@@ -16,7 +30,7 @@ export const CreatorPanelComponent = () => {
 
     const handlePublishTutorial = () => {
         console.log("Dispatching publish TUT.")
-        dispatch(publishTutorial());
+        // dispatch(publishTutorial());
     }
 
     return (
@@ -42,6 +56,23 @@ export const CreatorPanelComponent = () => {
                     </Grid>
                 </Grid>
             </Box>
+            <Backdrop
+                open={!!loading}
+            >
+                <CircularProgress color="inherit" />
+                <Typography variant="body1">{loading}</Typography>
+            </Backdrop>
+            <Dialog open={!!error}>
+                <DialogTitle>Create a new tutorial</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Failed to create tutorial with the following error message: {error}
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => navigate("/")}>Back to main page</Button>
+                </DialogActions>
+            </Dialog>
         </Box>
     );
 }

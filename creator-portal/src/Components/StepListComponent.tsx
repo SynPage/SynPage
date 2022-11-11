@@ -4,7 +4,7 @@ import {addStep} from "../reducers/tutorialEditorSlice";
 
 export const StepListComponent = (props:{currentStepIndex: number, onSetStep?: (index: number) => void}) => {
     const dispatch = useAppDispatch();
-    const steps = useAppSelector(state => state.tutorialEditor.tutorial.steps);
+    const steps = useAppSelector(state => state.tutorialEditor.steps);
     
     const handleSetStep = (index: number) => {
         props.onSetStep?.(index);

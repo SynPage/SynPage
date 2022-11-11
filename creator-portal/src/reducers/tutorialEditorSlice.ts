@@ -1,39 +1,36 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {tutorialsApi, stepsApi} from "../client";
-import {AppDispatch, RootState} from "../store";
 import {Tutorial, TutorialStep} from "../generated";
+import {AppDispatch, RootState} from "../store";
+import {stepsApi, tutorialsApi} from "../client";
 
 interface TutorialEditorState {
-    tutorial: Tutorial
-    status: string
+    tutorial?: Tutorial
+    steps: TutorialStep[]
+    loading?: string
     error?: string
 }
 
-const createEmptyTutorial = (): Tutorial => {
-    return {
-        name: "Valid Tutorial",
-        targetSite: "http://localhost:3000/creator",
-        steps: []
-    }
+const initialState: TutorialEditorState = {
+    steps: []
 };
 
-const initialState: TutorialEditorState = {
-    tutorial: createEmptyTutorial(),
-    status: "idle",
-    error: ""
-} as TutorialEditorState
-
-export const publishTutorial = createAsyncThunk<Tutorial, void, {state: RootState, dispatch: AppDispatch}>(
-    'tutorialEditor/publishTutorial',
+export const createTutorial = createAsyncThunk<Tutorial, Tutorial, { state: RootState, dispatch: AppDispatch }>(
+    'tutorialEditor/createTutorial',
     async (arg, {getState}) => {
-        const tutorial = getState().tutorialEditor.tutorial;
-        const tutorialResult =  await tutorialsApi.createTutorial(tutorial);
-        for (let step in tutorial.steps) {
-            console.log(step);
-            // const stepsResult = await stepsApi.createTutorialStep(step);
-        }
-        const result = await tutorialsApi.retrieveTutorial(tutorialResult.data.id!.toString())
-        return result.data;
+        const created = await tutorialsApi.createTutorial(arg);
+        return created.data;
+    }
+)
+
+export const loadTutorial = createAsyncThunk<{ tutorial: Tutorial, steps: TutorialStep[] }, number, { state: RootState, dispatch: AppDispatch }>(
+    'tutorialEditor/loadTutorial',
+    async (id, {getState}) => {
+        const tutorial = await tutorialsApi.retrieveTutorial(id.toString());
+        const steps: TutorialStep[] = [] //TODO: await stepsApi.retrieveTutorialStep();
+        return {
+            tutorial: tutorial.data,
+            steps: steps
+        };
     }
 )
 
@@ -42,30 +39,44 @@ export const tutorialEditorSlice = createSlice({
     initialState: initialState,
     reducers: {
         addStep: (state, action: PayloadAction<TutorialStep>) => {
-            state.tutorial.steps!.push(action.payload);
+            state.steps.push(action.payload);
         },
         editStep: (state, action: PayloadAction<TutorialStep>) => {
-            const index = state.tutorial.steps!.findIndex(step => step.index === action.payload.index);
-            state.tutorial.steps![index] = action.payload;
+            const index = state.steps.findIndex(step => step.index === action.payload.index);
+            state.steps[index] = action.payload;
         },
     },
     extraReducers(builder) {
         builder
-            .addCase(publishTutorial.pending, (state, action) => {
-                state.status = 'loading'
+            .addCase(createTutorial.pending, (state, action) => {
+                state.loading = 'Creating tutorial'
             })
-            .addCase(publishTutorial.fulfilled, (state, action) => {
-                state.status = 'succeeded'
-                // Add any fetched posts to the array
-                // state.value = state.value.concat(action.payload)
+            .addCase(createTutorial.fulfilled, (state, action) => {
                 console.log(action.payload);
-                state.tutorial = createEmptyTutorial();
+                state.tutorial = action.payload;
+                state.steps = [];
+                state.loading = undefined;
+                state.error = undefined;
             })
-            .addCase(publishTutorial.rejected, (state, action) => {
-                state.status = 'failed'
+            .addCase(createTutorial.rejected, (state, action) => {
+                state.loading = undefined;
                 state.error = action.error.message
             })
-    }
+            .addCase(loadTutorial.pending, (state, action) => {
+                state.loading = 'Loading tutorial'
+            })
+            .addCase(loadTutorial.fulfilled, (state, action) => {
+                console.log(action.payload);
+                state.tutorial = action.payload.tutorial;
+                state.steps = action.payload.steps;
+                state.loading = undefined;
+                state.error = undefined;
+            })
+            .addCase(loadTutorial.rejected, (state, action) => {
+                state.loading = undefined;
+                state.error = action.error.message;
+            })
+    },
 })
 
 export const {addStep, editStep} = tutorialEditorSlice.actions

@@ -1,19 +1,25 @@
 import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { CreatorApp } from './CreatorApp';
+import {createBrowserRouter, RouterProvider} from 'react-router-dom';
+import {CreatorApp} from './CreatorApp';
+import {TutorialManager} from "./TutorialManager";
 
 const router = createBrowserRouter([
-  {
-    path: "/creator",
-    element: <CreatorApp/>, 
-    errorElement: <div><p>Error!</p></div>, 
-  },
+    {
+        path: "/",
+        element: <TutorialManager/>,
+        errorElement: <div><p>Error!</p></div>,
+    },
+    {
+        path: "/creator",
+        element: <CreatorApp/>,
+        errorElement: <div><p>Error!</p></div>,
+    },
 ])
 
 const App = () => {
-  return (
-    <RouterProvider router={router}/>
-  );
+    return (
+        <RouterProvider router={router}/>
+    );
 }
 
 export default App;

@@ -1,5 +1,9 @@
-import {Box, Typography} from "@mui/material";
+import {Box, Button, Typography} from "@mui/material";
+import {useAppDispatch} from "../hooks";
+import {saveCurrentStep} from "../reducers/tutorialEditorSlice";
 
 export const StepPreviewComponent = () => {
-    return <Box><Typography variant="h5">Preview</Typography></Box>
+    const dispatch = useAppDispatch();
+
+    return <Box><Button variant="outlined" onClick={() => dispatch(saveCurrentStep())}>Save Step</Button></Box>
 }

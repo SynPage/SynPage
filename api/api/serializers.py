@@ -21,7 +21,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 class TutorialTextBoxSerializer(serializers.ModelSerializer):
     class Meta:
         model = TutorialTextBox
-        fields = ['title', 'description', 'targetSelector', 'step_id']
+        fields = ['id', 'title', 'description', 'targetSelector', 'step_id']
 
 
 class TutorialStepSerializer(serializers.ModelSerializer):
@@ -29,7 +29,7 @@ class TutorialStepSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TutorialStep
-        fields = ['name', 'index', 'textboxes', 'tutorial_id']
+        fields = ['id', 'name', 'index', 'textboxes', 'tutorial_id']
 
 
 class TutorialSerializer(serializers.ModelSerializer):

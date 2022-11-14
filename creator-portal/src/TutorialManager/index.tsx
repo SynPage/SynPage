@@ -1,31 +1,33 @@
 import {useAppDispatch, useAppSelector} from "../hooks";
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {loadTutorials} from "../reducers/tutorialManagerSlice";
-import {createTutorial} from "../reducers/tutorialEditorSlice";
+import {loadTutorials, createTutorial} from "../reducers/tutorialManagerSlice";
 import {Tutorial} from "../generated";
 import {
+    Backdrop,
     Box,
-    Button,
+    Button, CircularProgress,
     Dialog,
     DialogActions,
     DialogContent,
     DialogContentText,
     DialogTitle, FormControl,
-    TextField
+    TextField, Typography
 } from "@mui/material";
 
 export const TutorialManager = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const error = useAppSelector(s => s.tutorialManager.error);
+    const loading = useAppSelector(s => s.tutorialManager.loading);
 
-    const editorActive = useAppSelector(s => {
-        return !!s.tutorialEditor.loading;
+    const toEdit = useAppSelector(s => {
+        return s.tutorialManager.toEdit;
     })
 
     useEffect(() => {
-        editorActive && navigate('/creator');
-    }, [editorActive])
+         toEdit && toEdit.id && navigate(`/editor/${toEdit.id}`);
+    }, [toEdit])
 
     useEffect(() => {
         dispatch(loadTutorials(0));
@@ -74,6 +76,23 @@ export const TutorialManager = () => {
                 <DialogActions>
                     <Button onClick={() => setTutorialPropEditor(false)}>Cancel</Button>
                     <Button onClick={handleCreateTutorial}>Submit</Button>
+                </DialogActions>
+            </Dialog>
+            <Backdrop
+                open={!!loading}
+            >
+                <CircularProgress color="inherit"/>
+                <Typography variant="body1">{loading}</Typography>
+            </Backdrop>
+            <Dialog open={!!error}>
+                <DialogTitle>Error</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        {error}
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => navigate("/")}>Back to main page</Button>
                 </DialogActions>
             </Dialog>
         </Box>

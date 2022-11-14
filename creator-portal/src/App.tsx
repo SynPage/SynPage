@@ -10,7 +10,7 @@ const router = createBrowserRouter([
         errorElement: <div><p>Error!</p></div>,
     },
     {
-        path: "/creator",
+        path: "/editor/:id",
         element: <CreatorApp/>,
         errorElement: <div><p>Error!</p></div>,
     },

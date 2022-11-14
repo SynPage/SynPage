@@ -11,21 +11,37 @@ import {
     Typography
 } from "@mui/material"
 import {StepListComponent} from "./StepListComponent"
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {StepEditorComponent} from "./StepEditorComponent";
 import {StepPreviewComponent} from "./StepPreviewComponent";
 import {useAppDispatch, useAppSelector} from "../hooks";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
+import {editorError, loadTutorial, setCurrentStepIndex} from "../reducers/tutorialEditorSlice";
 
-export const CreatorPanelComponent = () => {
+export const CreatorPanelComponent = (props: any) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const [currentStepIndex, setCurrentStepIndex] = useState(0);
+    const currentStepIndex = useAppSelector(s => s.tutorialEditor.currentStepIndex)
     const error = useAppSelector(s => s.tutorialEditor.error);
     const loading = useAppSelector(s => s.tutorialEditor.loading);
+    const {id} = useParams();
+    const tutorial = useAppSelector(s => s.tutorialEditor.tutorial);
+
+    useEffect(() => {
+        if (!id) {
+            navigate("/")
+        } else {
+            const tutId = parseInt(id);
+            if (isNaN(tutId)) {
+                dispatch(editorError(`${id} is not a valid id`))
+            } else {
+                dispatch(loadTutorial(tutId));
+            }
+        }
+    }, [])
 
     const handleSetStepIndex = (index: number) => {
-        setCurrentStepIndex(index);
+        dispatch(setCurrentStepIndex(index));
     }
 
     const handlePublishTutorial = () => {
@@ -35,38 +51,43 @@ export const CreatorPanelComponent = () => {
 
     return (
         <Box sx={{width: '100%'}}>
-            <AppBar position="static">
-                <Toolbar>
-                    <Typography variant="h5" flexGrow={1}>Creator</Typography>
-                    <Button color="inherit" onClick={handlePublishTutorial}>Publish Tutorial</Button>
-                </Toolbar>
-            </AppBar>
+            {tutorial && (
+                <>
+                    <AppBar position="static">
+                        <Toolbar>
+                            <Typography variant="h5" flexGrow={1}>{tutorial.name}</Typography>
+                            <Button color="inherit" onClick={handlePublishTutorial}>Publish Tutorial</Button>
+                        </Toolbar>
+                    </AppBar>
 
-            <StepListComponent currentStepIndex={currentStepIndex}
-                               onSetStep={handleSetStepIndex}/>
 
-            <Box padding={2}>
-                <Grid container spacing={2}>
-                    <Grid item xs={5} padding={2}>
-                        <StepEditorComponent currentStepIndex={currentStepIndex}/>
-                    </Grid>
-                    <Divider orientation="vertical" flexItem variant="fullWidth"/>
-                    <Grid item xs={6} padding={2}>
-                        <StepPreviewComponent/>
-                    </Grid>
-                </Grid>
-            </Box>
+                    <StepListComponent currentStepIndex={currentStepIndex}
+                                       onSetStep={handleSetStepIndex}/>
+
+                    <Box padding={2}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={5} padding={2}>
+                                <StepEditorComponent currentStepIndex={currentStepIndex}/>
+                            </Grid>
+                            <Divider orientation="vertical" flexItem variant="fullWidth"/>
+                            <Grid item xs={6} padding={2}>
+                                <StepPreviewComponent/>
+                            </Grid>
+                        </Grid>
+                    </Box>
+                </>
+            )}
             <Backdrop
                 open={!!loading}
             >
-                <CircularProgress color="inherit" />
+                <CircularProgress color="inherit"/>
                 <Typography variant="body1">{loading}</Typography>
             </Backdrop>
             <Dialog open={!!error}>
-                <DialogTitle>Create a new tutorial</DialogTitle>
+                <DialogTitle>Error</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Failed to create tutorial with the following error message: {error}
+                        {error}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>

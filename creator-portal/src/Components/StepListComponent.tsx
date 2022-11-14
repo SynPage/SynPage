@@ -1,6 +1,6 @@
 import {Box, Tab, Tabs} from "@mui/material"
 import {useAppDispatch, useAppSelector} from "../hooks";
-import {addStep} from "../reducers/tutorialEditorSlice";
+import {createNewStep} from "../reducers/tutorialEditorSlice";
 
 export const StepListComponent = (props:{currentStepIndex: number, onSetStep?: (index: number) => void}) => {
     const dispatch = useAppDispatch();
@@ -12,7 +12,7 @@ export const StepListComponent = (props:{currentStepIndex: number, onSetStep?: (
 
     const handleAddStep = () => {
         const stepIndex = steps!.length;
-        dispatch(addStep({index: stepIndex, name: "New Step", textboxes: [], tutorial_id: -1}))
+        dispatch(createNewStep())
         handleSetStep(stepIndex);
     };
 

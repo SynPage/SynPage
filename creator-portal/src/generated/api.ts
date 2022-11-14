@@ -234,6 +234,12 @@ export interface Tutorial {
 export interface TutorialStep {
     /**
      * 
+     * @type {number}
+     * @memberof TutorialStep
+     */
+    'id'?: number;
+    /**
+     * 
      * @type {string}
      * @memberof TutorialStep
      */
@@ -263,6 +269,12 @@ export interface TutorialStep {
  * @interface TutorialStepsInner
  */
 export interface TutorialStepsInner {
+    /**
+     * 
+     * @type {number}
+     * @memberof TutorialStepsInner
+     */
+    'id'?: number;
     /**
      * 
      * @type {string}
@@ -296,6 +308,12 @@ export interface TutorialStepsInner {
 export interface TutorialStepsInnerTextboxesInner {
     /**
      * 
+     * @type {number}
+     * @memberof TutorialStepsInnerTextboxesInner
+     */
+    'id'?: number;
+    /**
+     * 
      * @type {string}
      * @memberof TutorialStepsInnerTextboxesInner
      */
@@ -325,6 +343,12 @@ export interface TutorialStepsInnerTextboxesInner {
  * @interface TutorialTextBox
  */
 export interface TutorialTextBox {
+    /**
+     * 
+     * @type {number}
+     * @memberof TutorialTextBox
+     */
+    'id'?: number;
     /**
      * 
      * @type {string}

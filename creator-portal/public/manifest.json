@@ -1,32 +1,25 @@
 {
-  "name": "Hello Extensions",
-  "description": "Base Level Extension",
-  "version": "1.0",
-  "manifest_version": 3,
-  "action": {
-    "default_popup": "main.html",
-    "default_title": "Open the popup"
-  },
-  "background": {
-    "service_worker": "background.js"
-  },
-  "content_scripts": [
+  "short_name": "React App",
+  "name": "Create React App Sample",
+  "icons": [
     {
-      "matches": ["https://waterlooworks.uwaterloo.ca/myAccount/dashboard.htm"],
-      "js": ["content.js"],
-      "all_frames": false,
-      "run_at": "document_end"
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ],
-  "icons": {
-    "16": "logo192.png",
-    "48": "logo192.png",
-    "128": "logo192.png"
-  },
-  "permissions": [
-    "activeTab"
-  ],
-  "optional_permissions": [
-    
-  ]
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
 }

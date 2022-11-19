@@ -1,6 +1,6 @@
 import {TutorialsApi, StepsApi, TextboxApi} from "./generated";
 
-const basePath = "http://127.0.0.1:8000"
+const basePath = process.env.REACT_APP_API_BASE;
 
 const tutorialsApi = new TutorialsApi(undefined, basePath);
 const stepsApi = new StepsApi(undefined, basePath);

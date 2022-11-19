@@ -1,6 +1,6 @@
 from django.db import models
 
-from models.TutorialStep import TutorialStep
+from .TutorialStep import TutorialStep
 
 
 class TutorialTextBox(models.Model):

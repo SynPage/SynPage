@@ -1,6 +1,6 @@
 from django.db import models
 
-from models.Tutorial import Tutorial
+from .Tutorial import Tutorial
 
 
 class TutorialStep(models.Model):

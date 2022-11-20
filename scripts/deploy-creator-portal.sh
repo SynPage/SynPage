@@ -1,7 +1,8 @@
 DEST=$1
 
 cd ../creator-portal
-npm run build
+yarn install
+yarn build
 
 cd build
 tar -czf creator-portal.tar.gz *

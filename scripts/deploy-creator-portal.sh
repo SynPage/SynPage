@@ -8,4 +8,4 @@ cd build
 tar -czf creator-portal.tar.gz *
 
 scp creator-portal.tar.gz $DEST:/tmp/
-ssh $DEST "sh /opt/StealthMode/scripts/update-creator-portal.sh"
+ssh $DEST "sh /opt/SynPage/scripts/update-creator-portal.sh"

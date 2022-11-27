@@ -1,9 +1,7 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 
-from .models.Tutorial import Tutorial
-from .models.TutorialStep import TutorialStep
-from .models.TutorialTextBox import TutorialTextBox
+from .models.tutorial import Tutorial, TutorialStep, TutorialTextBox
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):

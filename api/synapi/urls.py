@@ -16,7 +16,7 @@ Including another URLconf
 
 
 from rest_framework import routers
-from api import views
+from synapi import views
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)

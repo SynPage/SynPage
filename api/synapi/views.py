@@ -3,7 +3,7 @@ from rest_framework import viewsets
 from rest_framework import permissions
 
 from .models.tutorial import Tutorial, TutorialStep, TutorialTextBox
-from api.serializers import UserSerializer, GroupSerializer, TutorialSerializer, TutorialStepSerializer, \
+from synapi.serializers import UserSerializer, GroupSerializer, TutorialSerializer, TutorialStepSerializer, \
     TutorialTextBoxSerializer
 
 

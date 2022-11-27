@@ -1,4 +1,4 @@
-"""SynPage API URL Configuration
+"""SynPage Platform URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.1/topics/http/urls/
@@ -15,12 +15,16 @@ Including another URLconf
 """
 
 
-from rest_framework import routers
-from api import views
+from django.contrib import admin
 
-router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
-router.register(r'groups', views.GroupViewSet)
-router.register(r'tutorials', views.TutorialViewSet)
-router.register(r'steps', views.TutorialStepViewSet)
-router.register(r'textbox', views.TutorialTextBoxViewSet)
+from django.urls import include, path
+import api.urls
+
+
+# Wire up our API using automatic URL routing.
+# Additionally, we include login URLs for the browsable API.
+urlpatterns = [
+    path('api/', include(api.urls.router.urls)),
+    path('admin/', admin.site.urls),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+]

@@ -2,11 +2,9 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from rest_framework import permissions
 
-from models.Tutorial import Tutorial
-from api.serializers import UserSerializer, GroupSerializer, TutorialSerializer, TutorialStepSerializer, \
+from .models.tutorial import Tutorial, TutorialStep, TutorialTextBox
+from synapi.serializers import UserSerializer, GroupSerializer, TutorialSerializer, TutorialStepSerializer, \
     TutorialTextBoxSerializer
-from models.TutorialStep import TutorialStep
-from models.TutorialTextBox import TutorialTextBox
 
 
 class UserViewSet(viewsets.ModelViewSet):

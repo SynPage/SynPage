@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-$_=)6w3wou0ko@3@txxrl6-b4su4$#hv)2#hx#*h)v(zk7g(4n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]', '35.185.9.151', 'test.ufii4.com']
 
 
 # Application definition
@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'models',
     'corsheaders',
+    'synapi',
 ]
 
 MIDDLEWARE = [
@@ -53,7 +53,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-ROOT_URLCONF = 'api.urls'
+ROOT_URLCONF = 'synpage_platform.urls'
 
 TEMPLATES = [
     {
@@ -72,7 +72,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'api.wsgi.application'
+WSGI_APPLICATION = 'synpage_platform.wsgi.application'
 
 
 # Database

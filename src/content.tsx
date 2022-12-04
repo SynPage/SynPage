@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import {Content} from "./Content";
+import {OnPage} from "./OnPage";
 
 // chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 //     console.log('[content.js]. Message received', {
@@ -22,7 +22,7 @@ if (body) {
 
 const root = ReactDOM.createRoot(extensionRoot);
 
-root.render(<Content/>)
+root.render(<OnPage/>)
 
 
 /**

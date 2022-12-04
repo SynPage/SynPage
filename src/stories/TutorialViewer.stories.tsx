@@ -1,20 +1,22 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 
-import {TutorialBrief} from "../popupComponents/TutorialBrief";
+import {TutorialViewer} from "../onPageComponents/TutorialViewer";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-    title: 'Popup/TutorialBrief',
-    component: TutorialBrief,
-} as ComponentMeta<typeof TutorialBrief>;
+    title: 'OnPage/TutorialViewer',
+    component: TutorialViewer
+} as ComponentMeta<typeof TutorialViewer>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof TutorialBrief> = (args) => <TutorialBrief {...args}/>;
+const Template: ComponentStory<typeof TutorialViewer> = (args) => <TutorialViewer {...args}/>;
 
 export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-// Primary.args = {
-//     primary: true,
-//     label: 'Button',
-// };
+Default.args = {
+    tutorial: {
+        name: "Hello World!",
+        targetSite: "https://google.ca"
+    }
+};

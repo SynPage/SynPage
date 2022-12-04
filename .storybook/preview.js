@@ -10,6 +10,19 @@ const customViewports = {
       height: '400px',
     },
   },
+  onPage: {
+    name: 'OnPage',
+    styles: {
+      width: '1920px',
+      height: '900px',
+    },
+  },
+  sidePanel: {
+    name: 'SidePanel',
+    styles: {
+      width: '250px',
+    },
+  },
 };
 
 export const parameters = {

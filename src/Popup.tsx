@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "./reducers/hooks";
 import {LoadTutorialListForSite} from "./reducers/TutorialControllerSlice";
-import {Header} from "./components/Header";
-import {TutorialList} from "./components/TutorialList";
+import {Header} from "./popupComponents/Header";
+import {TutorialList} from "./popupComponents/TutorialList";
 
 const Popup = () => {
     const dispatch = useAppDispatch();

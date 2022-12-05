@@ -25,7 +25,10 @@ SECRET_KEY = 'django-insecure-$_=)6w3wou0ko@3@txxrl6-b4su4$#hv)2#hx#*h)v(zk7g(4n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]', '35.185.9.151', 'test.ufii4.com']
+ALLOWED_HOSTS = [
+    '.localhost', '127.0.0.1', '[::1]',
+    '34.148.79.109', 'dev.ufii4.com'
+]
 
 
 # Application definition
@@ -58,8 +61,7 @@ ROOT_URLCONF = 'synpage_platform.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -17,12 +17,11 @@ const extensionRoot = document.createElement('div');
 extensionRoot.id = 'synpage-root';
 
 if (body) {
-    body.append(extensionRoot)
+  body.append(extensionRoot)
 }
 
 const root = ReactDOM.createRoot(extensionRoot);
-
-root.render(<OnPage/>)
+root.render(<OnPage/>);
 
 
 /**

@@ -1,12 +1,12 @@
 import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import {ComponentMeta, ComponentStory} from '@storybook/react';
 
 import {SearchBar} from "../popupComponents/SearchBar";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-    title: 'Popup/SearchBar',
-    component: SearchBar,
+  title: 'Popup/SearchBar',
+  component: SearchBar,
 } as ComponentMeta<typeof SearchBar>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args

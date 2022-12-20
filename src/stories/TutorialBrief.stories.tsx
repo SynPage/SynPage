@@ -1,12 +1,12 @@
 import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import {ComponentMeta, ComponentStory} from '@storybook/react';
 
 import {TutorialBrief} from "../popupComponents/TutorialBrief";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-    title: 'Popup/TutorialBrief',
-    component: TutorialBrief,
+  title: 'Popup/TutorialBrief',
+  component: TutorialBrief,
 } as ComponentMeta<typeof TutorialBrief>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args

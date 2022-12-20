@@ -2,9 +2,9 @@ import {configureStore} from "@reduxjs/toolkit";
 import ControllerReducer from "./TutorialControllerSlice"
 
 export const store = configureStore({
-    reducer: {
-        Controller: ControllerReducer,
-    },
+  reducer: {
+    Controller: ControllerReducer,
+  },
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

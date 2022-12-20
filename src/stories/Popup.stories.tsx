@@ -1,23 +1,23 @@
 import React from 'react';
-import {ComponentStory, ComponentMeta} from '@storybook/react';
+import {ComponentMeta, ComponentStory} from '@storybook/react';
 
 import Popup from '../Popup';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-    title: 'Popup/Home',
-    component: Popup,
-    // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-    // argTypes: {
-    //     backgroundColor: { control: 'color' },
-    // },
-    parameters: {
-        // More on Story layout: https://storybook.js.org/docs/react/configure/story-layout
-        viewport: {
-            defaultViewport: "popup"
-        },
-        layout: "fullscreen"
+  title: 'Popup/Home',
+  component: Popup,
+  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
+  // argTypes: {
+  //     backgroundColor: { control: 'color' },
+  // },
+  parameters: {
+    // More on Story layout: https://storybook.js.org/docs/react/configure/story-layout
+    viewport: {
+      defaultViewport: "popup"
     },
+    layout: "fullscreen"
+  },
 } as ComponentMeta<typeof Popup>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args

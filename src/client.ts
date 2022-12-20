@@ -1,4 +1,4 @@
-import {TutorialsApi, StepsApi, TextboxApi} from "./generated";
+import {StepsApi, TextboxApi, TutorialsApi} from "./generated";
 
 const basePath = process.env.REACT_APP_API_BASE;
 

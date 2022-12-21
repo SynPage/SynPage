@@ -30,9 +30,29 @@ class TutorialStepSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'index', 'textboxes', 'tutorial_id']
 
 
+class StepBriefSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TutorialStep
+        fields = ['id', 'name', 'index']
+
+
 class TutorialSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     steps = TutorialStepSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Tutorial
+        fields = ['id', 'name', 'targetSite', 'steps']
+
+
+class TutorialMetadataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tutorial
+        fields = ['id', 'name', 'targetSite']
+
+
+class TutorialBriefSerializer(serializers.ModelSerializer):
+    steps = StepBriefSerializer(many=True)
 
     class Meta:
         model = Tutorial

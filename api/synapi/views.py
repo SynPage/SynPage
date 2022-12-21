@@ -1,10 +1,19 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from rest_framework import permissions
+from rest_framework.response import Response
 
 from .models.tutorial import Tutorial, TutorialStep, TutorialTextBox
-from synapi.serializers import UserSerializer, GroupSerializer, TutorialSerializer, TutorialStepSerializer, \
+from synapi.serializers import (
+    StepBriefSerializer,
+    TutorialBriefSerializer,
+    TutorialMetadataSerializer,
+    UserSerializer,
+    GroupSerializer,
+    TutorialSerializer,
+    TutorialStepSerializer,
     TutorialTextBoxSerializer
+)
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -33,6 +42,13 @@ class TutorialViewSet(viewsets.ModelViewSet):
     serializer_class = TutorialSerializer
     # permission_classes = [permissions.IsAuthenticated]
 
+    def get_serializer_class(self):
+        if self.action == 'retrieve':
+            return TutorialBriefSerializer
+        elif self.action == 'list':
+            return TutorialMetadataSerializer
+        return super().get_serializer_class()
+
 
 class TutorialStepViewSet(viewsets.ModelViewSet):
     """
@@ -41,6 +57,11 @@ class TutorialStepViewSet(viewsets.ModelViewSet):
     queryset = TutorialStep.objects.all()
     serializer_class = TutorialStepSerializer
     # permission_classes = [permissions.IsAuthenticated]
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return StepBriefSerializer
+        return super().get_serializer_class()
 
 
 class TutorialTextBoxViewSet(viewsets.ModelViewSet):

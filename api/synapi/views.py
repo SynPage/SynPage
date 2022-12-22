@@ -3,7 +3,7 @@ from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework.response import Response
 
-from .models.tutorial import Tutorial, TutorialStep, TutorialTextBox
+from .models.tutorial import Tutorial, Step, Action
 from synapi.serializers import (
     StepBriefSerializer,
     TutorialBriefSerializer,
@@ -11,8 +11,8 @@ from synapi.serializers import (
     UserSerializer,
     GroupSerializer,
     TutorialSerializer,
-    TutorialStepSerializer,
-    TutorialTextBoxSerializer
+    StepSerializer,
+    ActionSerializer
 )
 
 
@@ -50,12 +50,12 @@ class TutorialViewSet(viewsets.ModelViewSet):
         return super().get_serializer_class()
 
 
-class TutorialStepViewSet(viewsets.ModelViewSet):
+class StepViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
-    queryset = TutorialStep.objects.all()
-    serializer_class = TutorialStepSerializer
+    queryset = Step.objects.all()
+    serializer_class = StepSerializer
     # permission_classes = [permissions.IsAuthenticated]
 
     def get_serializer_class(self):
@@ -64,10 +64,10 @@ class TutorialStepViewSet(viewsets.ModelViewSet):
         return super().get_serializer_class()
 
 
-class TutorialTextBoxViewSet(viewsets.ModelViewSet):
+class ActionViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
-    queryset = TutorialTextBox.objects.all()
-    serializer_class = TutorialTextBoxSerializer
+    queryset = Action.objects.all()
+    serializer_class = ActionSerializer
     # permission_classes = [permissions.IsAuthenticated]

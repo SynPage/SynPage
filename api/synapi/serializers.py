@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 
-from .models.tutorial import Tutorial, TutorialStep, TutorialTextBox
+from .models.tutorial import Tutorial, Step, Action
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -16,44 +16,44 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['url', 'name']
 
 
-class TutorialTextBoxSerializer(serializers.ModelSerializer):
+class ActionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = TutorialTextBox
-        fields = ['id', 'title', 'description', 'targetSelector', 'step_id']
+        model = Action
+        fields = ['id', 'description', 'target_elem', 'step_id', 'index', 'mouse_button', 'mouse_action']
 
 
-class TutorialStepSerializer(serializers.ModelSerializer):
-    textboxes = TutorialTextBoxSerializer(many=True, read_only=True)
+class StepSerializer(serializers.ModelSerializer):
+    actions = ActionSerializer(many=True, read_only=True)
 
     class Meta:
-        model = TutorialStep
-        fields = ['id', 'name', 'index', 'textboxes', 'tutorial_id']
+        model = Step
+        fields = ['id', 'title', 'description', 'index', 'actions', 'tutorial_id']
 
 
 class StepBriefSerializer(serializers.ModelSerializer):
     class Meta:
-        model = TutorialStep
-        fields = ['id', 'name', 'index']
+        model = Step
+        fields = ['id', 'title', 'index']
 
 
 class TutorialSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
-    steps = TutorialStepSerializer(many=True, read_only=True)
+    steps = StepSerializer(many=True, read_only=True)
 
     class Meta:
         model = Tutorial
-        fields = ['id', 'name', 'targetSite', 'steps']
+        fields = ['id', 'title', 'description', 'target_site', 'steps']
 
 
 class TutorialMetadataSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tutorial
-        fields = ['id', 'name', 'targetSite']
+        fields = ['id', 'title', 'description', 'target_site']
 
 
 class TutorialBriefSerializer(serializers.ModelSerializer):
-    steps = StepBriefSerializer(many=True)
+    steps = StepBriefSerializer(many=True, read_only=True)
 
     class Meta:
         model = Tutorial
-        fields = ['id', 'name', 'targetSite', 'steps']
+        fields = ['id', 'title', 'description', 'target_site', 'steps']

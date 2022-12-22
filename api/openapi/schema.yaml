@@ -476,7 +476,7 @@ paths:
       - tutorials
   /steps/:
     get:
-      operationId: listTutorialSteps
+      operationId: listSteps
       description: API endpoint that allows groups to be viewed or edited.
       parameters:
       - name: page
@@ -513,38 +513,38 @@ paths:
       tags:
       - steps
     post:
-      operationId: createTutorialStep
+      operationId: createStep
       description: API endpoint that allows groups to be viewed or edited.
       parameters: []
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TutorialStep'
+              $ref: '#/components/schemas/Step'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/TutorialStep'
+              $ref: '#/components/schemas/Step'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/TutorialStep'
+              $ref: '#/components/schemas/Step'
       responses:
         '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TutorialStep'
+                $ref: '#/components/schemas/Step'
           description: ''
       tags:
       - steps
   /steps/{id}/:
     get:
-      operationId: retrieveTutorialStep
+      operationId: retrieveStep
       description: API endpoint that allows groups to be viewed or edited.
       parameters:
       - name: id
         in: path
         required: true
-        description: A unique integer value identifying this tutorial step.
+        description: A unique integer value identifying this step.
         schema:
           type: string
       responses:
@@ -552,78 +552,78 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TutorialStep'
+                $ref: '#/components/schemas/Step'
           description: ''
       tags:
       - steps
     put:
-      operationId: updateTutorialStep
+      operationId: updateStep
       description: API endpoint that allows groups to be viewed or edited.
       parameters:
       - name: id
         in: path
         required: true
-        description: A unique integer value identifying this tutorial step.
+        description: A unique integer value identifying this step.
         schema:
           type: string
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TutorialStep'
+              $ref: '#/components/schemas/Step'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/TutorialStep'
+              $ref: '#/components/schemas/Step'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/TutorialStep'
+              $ref: '#/components/schemas/Step'
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TutorialStep'
+                $ref: '#/components/schemas/Step'
           description: ''
       tags:
       - steps
     patch:
-      operationId: partialUpdateTutorialStep
+      operationId: partialUpdateStep
       description: API endpoint that allows groups to be viewed or edited.
       parameters:
       - name: id
         in: path
         required: true
-        description: A unique integer value identifying this tutorial step.
+        description: A unique integer value identifying this step.
         schema:
           type: string
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TutorialStep'
+              $ref: '#/components/schemas/Step'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/TutorialStep'
+              $ref: '#/components/schemas/Step'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/TutorialStep'
+              $ref: '#/components/schemas/Step'
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TutorialStep'
+                $ref: '#/components/schemas/Step'
           description: ''
       tags:
       - steps
     delete:
-      operationId: destroyTutorialStep
+      operationId: destroyStep
       description: API endpoint that allows groups to be viewed or edited.
       parameters:
       - name: id
         in: path
         required: true
-        description: A unique integer value identifying this tutorial step.
+        description: A unique integer value identifying this step.
         schema:
           type: string
       responses:
@@ -631,9 +631,9 @@ paths:
           description: ''
       tags:
       - steps
-  /textbox/:
+  /actions/:
     get:
-      operationId: listTutorialTextBoxs
+      operationId: listActions
       description: API endpoint that allows groups to be viewed or edited.
       parameters:
       - name: page
@@ -665,43 +665,43 @@ paths:
                   results:
                     type: array
                     items:
-                      $ref: '#/components/schemas/TutorialTextBox'
+                      $ref: '#/components/schemas/Action'
           description: ''
       tags:
-      - textbox
+      - actions
     post:
-      operationId: createTutorialTextBox
+      operationId: createAction
       description: API endpoint that allows groups to be viewed or edited.
       parameters: []
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TutorialTextBox'
+              $ref: '#/components/schemas/Action'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/TutorialTextBox'
+              $ref: '#/components/schemas/Action'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/TutorialTextBox'
+              $ref: '#/components/schemas/Action'
       responses:
         '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TutorialTextBox'
+                $ref: '#/components/schemas/Action'
           description: ''
       tags:
-      - textbox
-  /textbox/{id}/:
+      - actions
+  /actions/{id}/:
     get:
-      operationId: retrieveTutorialTextBox
+      operationId: retrieveAction
       description: API endpoint that allows groups to be viewed or edited.
       parameters:
       - name: id
         in: path
         required: true
-        description: A unique integer value identifying this tutorial text box.
+        description: A unique integer value identifying this action.
         schema:
           type: string
       responses:
@@ -709,85 +709,85 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TutorialTextBox'
+                $ref: '#/components/schemas/Action'
           description: ''
       tags:
-      - textbox
+      - actions
     put:
-      operationId: updateTutorialTextBox
+      operationId: updateAction
       description: API endpoint that allows groups to be viewed or edited.
       parameters:
       - name: id
         in: path
         required: true
-        description: A unique integer value identifying this tutorial text box.
+        description: A unique integer value identifying this action.
         schema:
           type: string
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TutorialTextBox'
+              $ref: '#/components/schemas/Action'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/TutorialTextBox'
+              $ref: '#/components/schemas/Action'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/TutorialTextBox'
+              $ref: '#/components/schemas/Action'
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TutorialTextBox'
+                $ref: '#/components/schemas/Action'
           description: ''
       tags:
-      - textbox
+      - actions
     patch:
-      operationId: partialUpdateTutorialTextBox
+      operationId: partialUpdateAction
       description: API endpoint that allows groups to be viewed or edited.
       parameters:
       - name: id
         in: path
         required: true
-        description: A unique integer value identifying this tutorial text box.
+        description: A unique integer value identifying this action.
         schema:
           type: string
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TutorialTextBox'
+              $ref: '#/components/schemas/Action'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/TutorialTextBox'
+              $ref: '#/components/schemas/Action'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/TutorialTextBox'
+              $ref: '#/components/schemas/Action'
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TutorialTextBox'
+                $ref: '#/components/schemas/Action'
           description: ''
       tags:
-      - textbox
+      - actions
     delete:
-      operationId: destroyTutorialTextBox
+      operationId: destroyAction
       description: API endpoint that allows groups to be viewed or edited.
       parameters:
       - name: id
         in: path
         required: true
-        description: A unique integer value identifying this tutorial text box.
+        description: A unique integer value identifying this action.
         schema:
           type: string
       responses:
         '204':
           description: ''
       tags:
-      - textbox
+      - actions
 components:
   schemas:
     User:
@@ -831,10 +831,12 @@ components:
         id:
           type: integer
           readOnly: true
-        name:
+        title:
           type: string
           maxLength: 50
-        targetSite:
+        description:
+          type: string
+        target_site:
           type: string
           format: uri
           maxLength: 200
@@ -844,18 +846,20 @@ components:
             .(?!-)[a-z\xA1-\uFFFF0-9-]{1,63}(?<!-))*\\.(?!-)(?:[a-z\xA1-\uFFFF-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\\\
             .?|localhost))(?::[0-9]{1,5})?(?:[/?#][^\\s]*)?\\z"
       required:
-      - name
-      - targetSite
+      - title
+      - target_site
     TutorialBrief:
       type: object
       properties:
         id:
           type: integer
           readOnly: true
-        name:
+        title:
           type: string
           maxLength: 50
-        targetSite:
+        description:
+          type: string
+        target_site:
           type: string
           format: uri
           maxLength: 200
@@ -872,44 +876,143 @@ components:
               id:
                 type: integer
                 readOnly: true
-              name:
+              title:
                 type: string
                 maxLength: 50
               index:
                 type: integer
             required:
-            - name
+            - title
             - index
+          readOnly: true
       required:
-      - name
-      - targetSite
-      - steps
+      - title
+      - target_site
     StepBrief:
       type: object
       properties:
         id:
           type: integer
           readOnly: true
-        name:
+        title:
           type: string
           maxLength: 50
         index:
           type: integer
       required:
-      - name
+      - title
       - index
-    TutorialStep:
+    Step:
       type: object
       properties:
         id:
           type: integer
           readOnly: true
-        name:
+        title:
           type: string
           maxLength: 50
+        description:
+          type: string
         index:
           type: integer
-        textboxes:
+        actions:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                readOnly: true
+              description:
+                type: string
+                maxLength: 250
+              target_elem:
+                type: string
+                maxLength: 100
+              step_id:
+                type: integer
+              index:
+                type: integer
+                nullable: true
+              mouse_button:
+                enum:
+                - ''
+                - L
+                - R
+                - M
+                type: string
+              mouse_action:
+                enum:
+                - ''
+                - CLICK
+                - DBCLICK
+                type: string
+            required:
+            - description
+            - step_id
+            - index
+          readOnly: true
+        tutorial_id:
+          type: integer
+      required:
+      - title
+      - index
+      - tutorial_id
+    Action:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        description:
+          type: string
+          maxLength: 250
+        target_elem:
+          type: string
+          maxLength: 100
+        step_id:
+          type: integer
+        index:
+          type: integer
+          nullable: true
+        mouse_button:
+          enum:
+          - ''
+          - L
+          - R
+          - M
+          type: string
+        mouse_action:
+          enum:
+          - ''
+          - CLICK
+          - DBCLICK
+          type: string
+      required:
+      - description
+      - step_id
+      - index
+    Tutorial:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+        target_site:
+          type: string
+          format: uri
+          maxLength: 200
+          pattern: "^(?:[a-z0-9.+-]*)://(?:[^\\s:@/]+(?::[^\\s:@/]*)?@)?(?:(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)(?:\\\
+            .(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)){3}|\\[[0-9a-f:.]+\\\
+            ]|([a-z\xA1-\uFFFF0-9](?:[a-z\xA1-\uFFFF0-9-]{0,61}[a-z\xA1-\uFFFF0-9])?(?:\\\
+            .(?!-)[a-z\xA1-\uFFFF0-9-]{1,63}(?<!-))*\\.(?!-)(?:[a-z\xA1-\uFFFF-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\\\
+            .?|localhost))(?::[0-9]{1,5})?(?:[/?#][^\\s]*)?\\z"
+        steps:
           type: array
           items:
             type: object
@@ -922,78 +1025,9 @@ components:
                 maxLength: 50
               description:
                 type: string
-                maxLength: 250
-              targetSelector:
-                type: string
-                maxLength: 100
-              step_id:
-                type: integer
-            required:
-            - title
-            - description
-            - targetSelector
-            - step_id
-          readOnly: true
-        tutorial_id:
-          type: integer
-      required:
-      - name
-      - index
-      - tutorial_id
-    TutorialTextBox:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        title:
-          type: string
-          maxLength: 50
-        description:
-          type: string
-          maxLength: 250
-        targetSelector:
-          type: string
-          maxLength: 100
-        step_id:
-          type: integer
-      required:
-      - title
-      - description
-      - targetSelector
-      - step_id
-    Tutorial:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        name:
-          type: string
-          maxLength: 50
-        targetSite:
-          type: string
-          format: uri
-          maxLength: 200
-          pattern: "^(?:[a-z0-9.+-]*)://(?:[^\\s:@/]+(?::[^\\s:@/]*)?@)?(?:(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)(?:\\\
-            .(?:0|25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?)){3}|\\[[0-9a-f:.]+\\\
-            ]|([a-z\xA1-\uFFFF0-9](?:[a-z\xA1-\uFFFF0-9-]{0,61}[a-z\xA1-\uFFFF0-9])?(?:\\\
-            .(?!-)[a-z\xA1-\uFFFF0-9-]{1,63}(?<!-))*\\.(?!-)(?:[a-z\xA1-\uFFFF-]{2,63}|xn--[a-z0-9]{1,59})(?<!-)\\\
-            .?|localhost))(?::[0-9]{1,5})?(?:[/?#][^\\s]*)?\\z"
-        steps:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: integer
-                readOnly: true
-              name:
-                type: string
-                maxLength: 50
               index:
                 type: integer
-              textboxes:
+              actions:
                 type: array
                 items:
                   type: object
@@ -1001,30 +1035,42 @@ components:
                     id:
                       type: integer
                       readOnly: true
-                    title:
-                      type: string
-                      maxLength: 50
                     description:
                       type: string
                       maxLength: 250
-                    targetSelector:
+                    target_elem:
                       type: string
                       maxLength: 100
                     step_id:
                       type: integer
+                    index:
+                      type: integer
+                      nullable: true
+                    mouse_button:
+                      enum:
+                      - ''
+                      - L
+                      - R
+                      - M
+                      type: string
+                    mouse_action:
+                      enum:
+                      - ''
+                      - CLICK
+                      - DBCLICK
+                      type: string
                   required:
-                  - title
                   - description
-                  - targetSelector
                   - step_id
+                  - index
                 readOnly: true
               tutorial_id:
                 type: integer
             required:
-            - name
+            - title
             - index
             - tutorial_id
           readOnly: true
       required:
-      - name
-      - targetSite
+      - title
+      - target_site

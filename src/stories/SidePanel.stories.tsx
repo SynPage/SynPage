@@ -2,7 +2,7 @@ import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
 
 import {SidePanel} from "../onPageComponents/SidePanel";
-import {SidePanelStepView, SidePanelStepViewProps, SidePanelTutorialView} from "../onPageComponents/SidePanelViews";
+import {Box} from "@mui/material";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -13,21 +13,9 @@ export default {
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof SidePanel> = (args) => <SidePanel {...args}/>;
 
-export const StepView = Template.bind({});
-const stepViewProps: SidePanelStepViewProps = {
-  step: {
-    name: 'Step 1',
-    index: 0,
-    tutorial_id: 0
-  }
+export const DefaultView = Template.bind({});
+DefaultView.args = {
+  children: <Box sx={{backgroundColor: "orange", width: "100%", height: "100%"}}>
+    Customizable content
+  </Box>
 }
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
-StepView.args = {
-  children: <SidePanelStepView {...stepViewProps}/>,
-};
-
-export const TutorialView = Template.bind({});
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
-TutorialView.args = {
-  children: <SidePanelTutorialView/>,
-};

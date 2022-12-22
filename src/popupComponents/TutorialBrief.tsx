@@ -23,7 +23,6 @@ export const TutorialBrief = (props: { onClick: (e: any) => void }) => {
               </Typography>
             </Grid>
           </Grid>
-
         </Grid>
       </Grid>
     </Box>

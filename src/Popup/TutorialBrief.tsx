@@ -1,10 +1,16 @@
 import {Box, Grid, Typography} from "@mui/material";
+import {Tutorial} from "../generated";
 
-export const TutorialBrief = (props: { onClick: (e: any) => void }) => {
-  const {onClick, ...others} = props;
+export interface TutorialBriefProps {
+  tutorial: Tutorial,
+  onClick: (e: any) => void
+}
+
+export const TutorialBrief = (props: TutorialBriefProps) => {
+  const {tutorial, onClick, ...others} = props;
 
   return (
-    <Box sx={{flexGrow: 1}} padding={1} border={1}>
+    <Box sx={{flexGrow: 1}} padding={1} border={1} onClick={onClick}>
       <Grid container spacing={3}>
         <Grid item xs={"auto"}>
           <img src={"https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"} alt={"logo"}
@@ -14,12 +20,12 @@ export const TutorialBrief = (props: { onClick: (e: any) => void }) => {
           <Grid container direction={"column"}>
             <Grid item>
               <Typography variant={"h6"}>
-                Hello World!
+                {tutorial.title}
               </Typography>
             </Grid>
             <Grid item>
               <Typography variant={"body2"}>
-                Description
+                {tutorial.description}
               </Typography>
             </Grid>
           </Grid>

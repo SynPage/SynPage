@@ -1,14 +1,15 @@
-import {Tutorial} from "../generated";
+import {TutorialBrief} from "../generated";
 import {SidePanel} from "./SidePanel";
 import React, {useState} from "react";
 import {Button, DialogActions, DialogContent, Typography} from "@mui/material";
 
 export interface TutorialViewerProps {
-  tutorial: Tutorial;
+  tutorial: TutorialBrief;
+  onExitTutorial: () => void;
 }
 
 export const TutorialViewer = (props: TutorialViewerProps) => {
-  const {tutorial, ...others} = props;
+  const {tutorial, onExitTutorial, ...others} = props;
   const [view, setView] = useState(true);
   const [stepIndex, setStepIndex] = useState(0);
 
@@ -17,7 +18,7 @@ export const TutorialViewer = (props: TutorialViewerProps) => {
   }
 
   const handleExitTutorial = () => {
-
+    onExitTutorial();
   }
 
   const handlePrevStep = () => {
@@ -37,7 +38,7 @@ export const TutorialViewer = (props: TutorialViewerProps) => {
     return (
       <>
         <DialogContent>
-          <Typography>{tutorial.name}</Typography>
+          <Typography>{tutorial.title}</Typography>
         </DialogContent>
       </>
     )
@@ -49,7 +50,8 @@ export const TutorialViewer = (props: TutorialViewerProps) => {
     return step && (
       <>
         <DialogContent>
-          <Typography>{step.name}</Typography>
+          <Typography variant={"h6"}>{step.title}</Typography>
+          <Typography variant={"body1"}>Description Placeholder, will replace with actual description.</Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={handlePrevStep} disabled={stepIndex < 1}>Prev</Button>

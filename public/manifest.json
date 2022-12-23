@@ -28,5 +28,8 @@
     "activeTab"
   ],
   "optional_permissions": [
+  ],
+  "host_permissions": [
+    "http://localhost:8000/*"
   ]
 }

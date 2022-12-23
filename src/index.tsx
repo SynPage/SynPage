@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import Popup from './Popup';
-import {Provider} from "react-redux";
-import {store} from "./reducers/store";
+import {Popup} from './Popup';
 import './index.css';
 
 const root = ReactDOM.createRoot(
@@ -10,7 +8,5 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <Provider store={store}>
-    <Popup/>
-  </Provider>
+  <Popup/>
 );

@@ -1,6 +1,4 @@
 import React from "react"
-import {Provider} from "react-redux";
-import {store} from "../src/reducers/store";
 
 const customViewports = {
   popup: {
@@ -40,8 +38,6 @@ export const parameters = {
 
 export const decorators = [
   (Story) => (
-    <Provider store={store}>
-      <Story/>
-    </Provider>
+    <Story/>
   )
 ]

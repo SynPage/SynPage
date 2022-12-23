@@ -1,7 +1,7 @@
 import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
 
-import {Header} from '../popupComponents/Header';
+import {Header} from '../Popup/Header';
 import {userEvent, within} from "@storybook/testing-library";
 
 export default {

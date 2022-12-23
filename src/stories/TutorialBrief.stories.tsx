@@ -1,7 +1,7 @@
 import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
 
-import {TutorialBrief} from "../popupComponents/TutorialBrief";
+import {TutorialBrief} from "../Popup/TutorialBrief";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -14,7 +14,9 @@ const Template: ComponentStory<typeof TutorialBrief> = (args) => <TutorialBrief 
 
 export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-// Primary.args = {
-//     primary: true,
-//     label: 'Button',
-// };
+Default.args = {
+  tutorial: {
+    title: "Tutorial Demo",
+    target_site: "google.ca"
+  }
+};

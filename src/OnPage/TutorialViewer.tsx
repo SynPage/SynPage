@@ -1,7 +1,8 @@
-import {TutorialBrief} from "../generated";
+import {TutorialBrief} from "../client/generated";
 import {SidePanel} from "./SidePanel";
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {Button, DialogActions, DialogContent, Typography} from "@mui/material";
+import {ClientContext} from "./index";
 
 export interface TutorialViewerProps {
   tutorial: TutorialBrief;
@@ -10,6 +11,7 @@ export interface TutorialViewerProps {
 
 export const TutorialViewer = (props: TutorialViewerProps) => {
   const {tutorial, onExitTutorial, ...others} = props;
+  const {chromeClient} = useContext(ClientContext);
   const [view, setView] = useState(true);
   const [stepIndex, setStepIndex] = useState(0);
 
@@ -38,7 +40,8 @@ export const TutorialViewer = (props: TutorialViewerProps) => {
     return (
       <>
         <DialogContent>
-          <Typography>{tutorial.title}</Typography>
+          <Typography variant={"h6"}>{tutorial.title}</Typography>
+          <Typography variant={"body1"}>{tutorial.description}</Typography>
         </DialogContent>
       </>
     )

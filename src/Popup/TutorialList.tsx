@@ -1,6 +1,6 @@
 import {Box, Grid} from "@mui/material";
 import {TutorialBrief} from "./TutorialBrief";
-import {Tutorial} from "../generated";
+import {Tutorial} from "../client/generated";
 
 export interface TutorialListProps {
   tutorials: Tutorial[],

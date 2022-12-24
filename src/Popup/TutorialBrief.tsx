@@ -1,5 +1,5 @@
 import {Box, Grid, Typography} from "@mui/material";
-import {Tutorial} from "../generated";
+import {Tutorial} from "../client/generated";
 
 export interface TutorialBriefProps {
   tutorial: Tutorial,

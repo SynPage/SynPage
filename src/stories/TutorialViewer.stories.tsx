@@ -17,7 +17,7 @@ export const Default = Template.bind({});
 Default.args = {
   tutorial: {
     title: "Hello World!",
-    target_site: "https://google.ca",
+    targetSite: "https://google.ca",
     steps: [
       {
         title: 'Step 1',

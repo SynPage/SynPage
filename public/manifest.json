@@ -10,7 +10,8 @@
   "content_scripts": [
     {
       "matches": [
-        "https://waterlooworks.uwaterloo.ca/myAccount/dashboard.htm"
+        "https://google.ca/*",
+        "https://www.google.ca/*"
       ],
       "js": [
         "content.js"
@@ -19,17 +20,23 @@
       "run_at": "document_end"
     }
   ],
+  "background": {
+    "service_worker": "background.js"
+  },
   "icons": {
     "16": "logo192.png",
     "48": "logo192.png",
     "128": "logo192.png"
   },
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "storage"
   ],
   "optional_permissions": [
   ],
   "host_permissions": [
-    "http://localhost:8000/*"
+    "http://localhost/*",
+    "http://dev.ufii4.com:8000/*",
+    "http://dev.synpage.ca/*"
   ]
 }

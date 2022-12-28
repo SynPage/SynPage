@@ -1,10 +1,14 @@
-import {ActionsApi, StepsApi, TutorialsApi} from "./generated";
+import {ActionsApi, Configuration, DefaultConfig, HTTPQuery, StepsApi, TutorialsApi} from "./generated";
 
-const basePath = "http://localhost:8000";
+const BASE_PATH = process.env.API_BASE_URL;
 
-const tutorialsApi = new TutorialsApi(undefined, basePath);
-const stepsApi = new StepsApi(undefined, basePath);
-const actionsApi = new ActionsApi(undefined, basePath);
+const config = new Configuration({
+  basePath: BASE_PATH
+})
+
+const tutorialsApi = new TutorialsApi(config);
+const stepsApi = new StepsApi(config);
+const actionsApi = new ActionsApi(config);
 
 export {
   tutorialsApi,

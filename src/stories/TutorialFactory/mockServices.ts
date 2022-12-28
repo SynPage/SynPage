@@ -1,39 +1,10 @@
-import {ChromeClient} from "../../chrome/client";
-import {ChromeResponse, Status} from "../../chrome/response";
-import {actionsApi, stepsApi, tutorialsApi} from "../../client";
-import {ChromeQuery} from "../../chrome/query";
+import {MockPopupClient} from "./mockPopupClient";
+import {MockOnPageClient} from "./mockOnPageClient";
 
-const BASE_PATH = "http://localhost:8000"
+const BASE_PATH = process.env.API_BASE_URL;
 
-export class MockChromeClient extends ChromeClient {
-  triggerSuccess?: (query: ChromeQuery) => Promise<ChromeResponse>;
-  triggerError?: (query: ChromeQuery, message: string) => Promise<ChromeResponse>;
-
-  sendQuery = async (query: ChromeQuery): Promise<ChromeResponse> => {
-    console.log("Mock sending query: ");
-    console.log(query);
-    return {
-      query: query,
-      status: Status.ok,
-    };
-  }
-
-  listen = async (onSuccess: (query: ChromeQuery) => Promise<ChromeResponse>,
-                  onError: (query: ChromeQuery, message: string) => Promise<ChromeResponse>) => {
-    this.triggerSuccess = onSuccess;
-    this.triggerError = onError;
-    console.log("Mock Listening...");
-  }
-}
-
-const mockChromeClient = new MockChromeClient();
-
-export default {
-  chromeClient: mockChromeClient,
-  tutorialsApi: tutorialsApi,
-  stepsApi: stepsApi,
-  actionsApi: actionsApi
-}
+export const mockPopupClient = new MockPopupClient();
+export const mockOnPageClient = new MockOnPageClient();
 
 export const mockData = [
   {

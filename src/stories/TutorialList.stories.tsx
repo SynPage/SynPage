@@ -29,11 +29,11 @@ Default.args = {
     tutorials: [
       {
         title: "Tutorial 1",
-        target_site: "google.ca"
+        targetSite: "google.ca"
       },
       {
         title: "Tutorial 2",
-        target_site: "google.ca"
+        targetSite: "google.ca"
       }
     ]
 };

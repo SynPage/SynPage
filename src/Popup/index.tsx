@@ -4,19 +4,19 @@ import {TutorialList} from "./TutorialList";
 import {Loading} from "../shared/Loading";
 import {Error} from "../shared/Error";
 import {ActionsApi, StepsApi, TutorialMetadata, TutorialsApi} from "../client/generated";
-import {ChromeClient} from "../chrome/client";
 import {ChromeQuery, QueryType} from "../chrome/query";
 import {ChromeResponse, Status, validateResponse} from "../chrome/response";
+import popupClient, {PopupClient} from "../chrome/popupClient";
 
 export interface PopupProps {
-  chromeClient: ChromeClient,
+  chromeClient: PopupClient,
   tutorialsApi: TutorialsApi,
   stepsApi: StepsApi,
   actionsApi: ActionsApi
 }
 
 interface Context {
-  chromeClient: ChromeClient
+  chromeClient: PopupClient
   tutorialsApi: TutorialsApi
   stepsApi: StepsApi
   actionsApi: ActionsApi
@@ -24,16 +24,7 @@ interface Context {
 
 export const ClientContext = createContext<Context>(
   {
-    chromeClient: {
-      sendQuery: async query => {
-        return {
-          query: query,
-          status: Status.error,
-        };
-      },
-      listen: (onSuccess, onError) => {
-      }
-    },
+    chromeClient: popupClient,
     tutorialsApi: new TutorialsApi(),
     stepsApi: new StepsApi(),
     actionsApi: new ActionsApi()
@@ -47,15 +38,15 @@ export const Popup = (props: PopupProps) => {
   const [error, setError] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    chromeClient.listen(handleChromeMessage, handleChromeError);
+    // chromeClient.listen(handleChromeMessage, handleChromeError);
 
     setLoading("Loading...");
     tutorialsApi.listTutorials().then(value => {
       setLoading(undefined);
-      if (!value.data.results) {
+      if (!value.results) {
         setError("Failed to get tutorials for site.");
       } else {
-        setList(value.data.results);
+        setList(value.results);
       }
     }, reason => {
       setLoading(undefined)
@@ -63,33 +54,28 @@ export const Popup = (props: PopupProps) => {
     });
   }, []);
 
-  const handleChromeMessage = async (query: ChromeQuery): Promise<ChromeResponse> => {
-    let response: ChromeResponse = {
-      query: query,
-      status: Status.error,
-    }
+  // const handleChromeMessage = async (query: ChromeQuery): Promise<ChromeResponse> => {
+  //   console.log("[Popup]: Received query", query)
+  //   switch (query.type) {
+  //     default:
+  //       const error = "[Popup]: Unexpected query type."
+  //       setError(error);
+  //       return {
+  //         query: query,
+  //         status: Status.error,
+  //         message: error
+  //       }
+  //   }
+  // }
 
-    switch (query.type) {
-      default:
-        const error = "Unexpected query type."
-        setError(error)
-        response = {
-          ...response,
-          status: Status.error,
-          message: error
-        }
-    }
-    return response;
-  }
-
-  const handleChromeError = async (query: ChromeQuery, message: string): Promise<ChromeResponse> => {
-    setError(message);
-    return {
-      query: query,
-      status: Status.error,
-      message: message
-    }
-  }
+  // const handleChromeError = async (query: ChromeQuery, message: string): Promise<ChromeResponse> => {
+  //   setError(message);
+  //   return {
+  //     query: query,
+  //     status: Status.error,
+  //     message: message
+  //   }
+  // }
 
   const handleTutorialSelection = (tutorial: TutorialMetadata) => {
     if (!tutorial.id) {
@@ -97,25 +83,19 @@ export const Popup = (props: PopupProps) => {
       return;
     }
     setLoading("Loading...");
-    tutorialsApi.retrieveTutorial(tutorial.id.toString()).then(response => {
-      chromeClient.sendQuery({type: QueryType.tutorialInit, message: response.data}).then(chromeResponse => {
-        setLoading(undefined)
-        const {valid, validated} = validateResponse(chromeResponse);
-        if (!valid) {
-          console.log(chromeResponse);
-          setError("Received unexpected response.");
-        }
-        if (chromeResponse.status !== Status.ok) {
-          setError(validated.message ?? "Unknown error.");
-        }
-      }, reason => {
-        setLoading(undefined);
-        setError(reason.message ?? "Unknown error.");
-      });
+    chromeClient.queryBackground({type: QueryType.init, message: tutorial.id}).then(chromeResponse => {
+      setLoading(undefined)
+      const {valid, validated} = validateResponse(chromeResponse);
+      if (!valid) {
+        console.log("Received unexpected response.", chromeResponse);
+        setError("Received unexpected response.");
+      } else if (chromeResponse.status !== Status.ok) {
+        setError(validated.message ?? "Unknown error.");
+      }
     }, reason => {
       setLoading(undefined);
       setError(reason.message ?? "Unknown error.");
-    });
+    })
   }
 
   return (

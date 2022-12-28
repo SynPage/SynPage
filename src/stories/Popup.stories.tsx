@@ -1,7 +1,8 @@
 import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
 import {Popup} from '../Popup';
-import mockServices, {mockData} from "./TutorialFactory/mockServices";
+import {mockData, mockPopupClient} from "./TutorialFactory/mockServices";
+import {actionsApi, stepsApi, tutorialsApi} from "../client";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -28,4 +29,9 @@ const Template: ComponentStory<typeof Popup> = (args) => {
 
 export const Home = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-Home.args = mockServices;
+Home.args = {
+  chromeClient: mockPopupClient,
+  tutorialsApi: tutorialsApi,
+  stepsApi: stepsApi,
+  actionsApi: actionsApi,
+};

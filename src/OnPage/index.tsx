@@ -1,24 +1,26 @@
 import {createContext, useEffect, useState} from "react";
 import {TutorialBrief} from "../client/generated";
 import {TutorialViewer} from "./TutorialViewer";
-import {ChromeClient} from "../chrome/client";
-import {ChromeQuery, QueryType} from "../chrome/query";
+import {OnPageClient} from "../chrome/onPageClient";
 import {ChromeResponse, Status} from "../chrome/response";
+import {ChromeQuery, QueryType} from "../chrome/query";
 
 export interface OnPageProps {
-  chromeClient: ChromeClient
+  chromeClient: OnPageClient
 }
 
-export const ClientContext = createContext<{chromeClient: ChromeClient}>(
+export const ClientContext = createContext<{ chromeClient: OnPageClient }>(
   {
     chromeClient: {
-      sendQuery: async query => {
+      async query(query: ChromeQuery): Promise<ChromeResponse> {
         return {
           query: query,
-          status: Status.error,
+          status: Status.ok,
         };
       },
-      listen: (onSuccess, onError) => {
+      listen(
+        onSuccess: (query: ChromeQuery) => Promise<ChromeResponse>,
+        onError: (query: ChromeQuery, message: string) => Promise<ChromeResponse>): void {
       }
     }
   }
@@ -30,6 +32,11 @@ export const OnPage = (props: OnPageProps) => {
 
   useEffect(() => {
     chromeClient.listen(handleChromeMessage, handleChromeError);
+    chromeClient.query({type: QueryType.resumeTutorial}).then(chromeResponse => {
+      if (chromeResponse.status === Status.ok && chromeResponse.message !== undefined) {
+        setTutorial(chromeResponse.message);
+      }
+    });
   }, []);
 
   const handleChromeMessage = async (query: ChromeQuery): Promise<ChromeResponse> => {
@@ -39,7 +46,7 @@ export const OnPage = (props: OnPageProps) => {
     }
 
     switch (query.type) {
-      case QueryType.tutorialInit:
+      case QueryType.init:
         setTutorial(query.message);
         response = {
           ...response,
@@ -47,11 +54,10 @@ export const OnPage = (props: OnPageProps) => {
         }
         break;
       default:
-        const error = "Unexpected query type."
         response = {
           ...response,
           status: Status.error,
-          message: error
+          message: "[Content]: Unexpected query type."
         }
     }
     return response;
@@ -64,8 +70,15 @@ export const OnPage = (props: OnPageProps) => {
       message: message
     }
   }
-  const handleExitTutorial = () => {
 
+  const handleExitTutorial = () => {
+    chromeClient.query({type: QueryType.exit}).then(value => {
+      console.log("[Content]: Exited tutorial.");
+      setTutorial(undefined);
+    }, reason => {
+      console.log("[Content]: Exited tutorial but an error occurred.", reason.message);
+      setTutorial(undefined);
+    });
   }
 
   return (

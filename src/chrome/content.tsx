@@ -1,8 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import {OnPage} from "./OnPage";
-import {ChromeClient} from "./chrome/client";
-import {validateQuery} from "./chrome/query";
+import {OnPage} from "../OnPage";
+import onPageClient from "./onPageClient";
 
 // chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 //     console.log('[content.js]. Message received', {
@@ -22,25 +21,8 @@ if (body) {
   body.append(extensionRoot)
 }
 
-const chromeClient: ChromeClient = {
-  sendQuery: async query => {
-    return await chrome.runtime.sendMessage(query);
-  },
-  listen: (onSuccess, onError) => {
-    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-      const {valid, validated} = validateQuery(message);
-      if (!valid) {
-        onError(validated,"content: Received unexpected message.").then(sendResponse);
-      } else {
-        onSuccess(validated).then(sendResponse);
-      }
-    });
-  }
-}
-
-
 const root = ReactDOM.createRoot(extensionRoot);
-root.render(<OnPage chromeClient={chromeClient}/>);
+root.render(<OnPage chromeClient={onPageClient}/>);
 
 
 /**

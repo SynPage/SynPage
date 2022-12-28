@@ -427,10 +427,10 @@ export interface Tutorial {
     'target_site': string;
     /**
      * 
-     * @type {Array<StepsInner>}
+     * @type {Array<TutorialStepsInner>}
      * @memberof Tutorial
      */
-    'steps'?: Array<StepsInner>;
+    'steps'?: Array<TutorialStepsInner>;
 }
 /**
  * 
@@ -528,43 +528,43 @@ export interface TutorialMetadata {
 /**
  * 
  * @export
- * @interface StepsInner
+ * @interface TutorialStepsInner
  */
-export interface StepsInner {
+export interface TutorialStepsInner {
     /**
      * 
      * @type {number}
-     * @memberof StepsInner
+     * @memberof TutorialStepsInner
      */
     'id'?: number;
     /**
      * 
      * @type {string}
-     * @memberof StepsInner
+     * @memberof TutorialStepsInner
      */
     'title': string;
     /**
      * 
      * @type {string}
-     * @memberof StepsInner
+     * @memberof TutorialStepsInner
      */
     'description'?: string;
     /**
      * 
      * @type {number}
-     * @memberof StepsInner
+     * @memberof TutorialStepsInner
      */
     'index': number;
     /**
      * 
      * @type {Array<StepActionsInner>}
-     * @memberof StepsInner
+     * @memberof TutorialStepsInner
      */
     'actions'?: Array<StepActionsInner>;
     /**
      * 
      * @type {number}
-     * @memberof StepsInner
+     * @memberof TutorialStepsInner
      */
     'tutorial_id': number;
 }

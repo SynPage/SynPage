@@ -1,14 +1,36 @@
-import {ChromeResponse, validateResponse} from "./response";
-import {ChromeQuery, validateQuery} from "./query";
+import {ChromeResponse, Status, validateResponse} from "./response";
+import {ChromeQuery, QueryType, validateQuery} from "./query";
+import {Step, TutorialBrief} from "../client/generated";
 
 export class OnPageClient {
-  async query(query: ChromeQuery): Promise<ChromeResponse> {
+  private async query(query: ChromeQuery): Promise<ChromeResponse> {
     const response = await chrome.runtime.sendMessage(query);
     const {valid, validated} = validateResponse(response);
-    if (!valid) {
-      throw new Error("[Content]: received invalid response.");
+    if (!valid || validated.status !== Status.ok) {
+      throw new Error("[Content]: error occurred while querying the background script.", validated.message);
     }
     return validated;
+  }
+
+  async requestStep(): Promise<Step> {
+    const response = await this.query({type: QueryType.requestStep});
+    // TODO: Validate step
+    return response.message;
+  }
+
+  async requestStepIndexChange(newStepIndex: number): Promise<number> {
+    const response = await this.query({type: QueryType.setStepIndex, message: newStepIndex});
+    // TODO: Think about when and how it will happen where the requested stepIndex defers from the one returned (actual)
+    return response.message;
+  }
+
+  async notifyExit(): Promise<void> {
+    await this.query({type: QueryType.exit});
+  }
+
+  async resumeTutorial(): Promise<TutorialBrief> {
+    const response = await this.query({type: QueryType.resumeTutorial});
+    return response.message;
   }
 
   listen(

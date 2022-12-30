@@ -1,11 +1,21 @@
 import {Step, TutorialBrief} from "../client/generated";
 import {SidePanel} from "./SidePanel";
 import React, {useContext, useEffect, useState} from "react";
-import {Button, DialogActions, DialogContent, Typography} from "@mui/material";
+import {
+  Button,
+  DialogActions,
+  DialogContent,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Typography
+} from "@mui/material";
 import {ClientContext} from "./index";
 import {QueryType} from "../chrome/query";
 import {Status} from "../chrome/response";
 import {Error} from "../shared/Error";
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 export interface TutorialViewerProps {
   tutorial: TutorialBrief;
@@ -18,23 +28,17 @@ export const TutorialViewer = (props: TutorialViewerProps) => {
   const [stepIndex, setStepIndex] = useState(0);
   const [step, setStep] = useState<Step | undefined>(undefined);
   const [view, setView] = useState(true);
-  const [error, setError] = useState<string|undefined>(undefined);
-  const [loading, setLoading] = useState<string|undefined>(undefined);
+  const [error, setError] = useState<string | undefined>(undefined);
+  const [loading, setLoading] = useState<string | undefined>(undefined);
 
   const handleToggleView = () => {
     setView(!view);
   }
 
   const handleExitTutorial = () => {
-    chromeClient.query({
-      type: QueryType.exit,
-    }).then(response => {
-      if (response.status === Status.error) {
-        console.log(response.message);
-      }
-    }, reason => {
-      console.log(reason.message);
-    });
+    setStepIndex(0);
+    setStep(undefined);
+    setView(true);
     onExitTutorial();
   }
 
@@ -46,9 +50,8 @@ export const TutorialViewer = (props: TutorialViewerProps) => {
     requestStepIndexChange(stepIndex + 1);
   }
 
-  const handleStepItemClick = (index: number) => {
-    setStepIndex(index);
-    setView(!view);
+  const handleStepItemClick = (selectedIndex: number) => {
+    requestStepIndexChange(selectedIndex);
   }
 
   const createTutorialView = () => {
@@ -57,6 +60,14 @@ export const TutorialViewer = (props: TutorialViewerProps) => {
         <DialogContent>
           <Typography variant={"h6"}>{tutorial.title}</Typography>
           <Typography variant={"body1"}>{tutorial.description}</Typography>
+          <List>
+            {tutorial.steps && tutorial.steps.map(step => (
+              <ListItemButton onClick={() => handleStepItemClick(step.index)}>
+                {(stepIndex === step.index) && <KeyboardArrowRightIcon/>}
+                <Typography variant={"body1"}>{step.title}</Typography>
+              </ListItemButton>
+            ))}
+          </List>
         </DialogContent>
       </>
     )
@@ -96,16 +107,12 @@ export const TutorialViewer = (props: TutorialViewerProps) => {
 
   const requestStep = () => {
     if (tutorial.steps !== undefined && stepIndex < tutorial.steps.length) {
-      chromeClient.query({type: QueryType.requestStep}).then(chromeResponse => {
-        if (chromeResponse.status === Status.ok) {
-          // TODO: validate step
-          const requested: Step = chromeResponse.message;
-          console.log("[Content.requestStep]: received requested step.", requested)
-          setStep(requested);
-          setStepIndex(requested.index);
-        } else {
-          console.log("[Content.requestStep]: request failed from background", chromeResponse.message)
-        }
+      chromeClient.requestStep().then(step => {
+        setStep(step);
+        setStepIndex(step.index);
+        setView(true);
+      }, reason => {
+        console.log("[Content]: Failed to get step from the background", reason.message);
       })
     } else {
       setStep(undefined);
@@ -118,11 +125,8 @@ export const TutorialViewer = (props: TutorialViewerProps) => {
 
   const requestStepIndexChange = (newStepIndex: number) => {
     if (tutorial.steps !== undefined && newStepIndex < tutorial.steps.length) {
-      chromeClient.query({type: QueryType.setStepIndex, message: newStepIndex}).then(chromeResponse => {
-        if (chromeResponse.status === Status.error) {
-          console.warn("[Content]: content and background state mismatch.");
-        }
-        setStepIndex(chromeResponse.message);
+      chromeClient.requestStepIndexChange(newStepIndex).then(value => {
+        setStepIndex(value);
         requestStep();
       }, reason => {
         console.log("[Content]: step change failed", reason.message);

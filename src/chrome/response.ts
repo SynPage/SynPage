@@ -17,7 +17,8 @@ export const validateResponse = (response: ChromeResponse): {valid: boolean, val
       valid: false,
       validated: {
         ...response,
-        status: Status.error
+        status: Status.error,
+        message: "Invalid response."
       }
     }
   }

@@ -1,7 +1,7 @@
 import {createContext, useEffect, useState} from "react";
 import {TutorialBrief} from "../client/generated";
 import {TutorialViewer} from "./TutorialViewer";
-import {OnPageClient} from "../chrome/onPageClient";
+import onPageClient, {OnPageClient} from "../chrome/onPageClient";
 import {ChromeResponse, Status} from "../chrome/response";
 import {ChromeQuery, QueryType} from "../chrome/query";
 
@@ -11,18 +11,7 @@ export interface OnPageProps {
 
 export const ClientContext = createContext<{ chromeClient: OnPageClient }>(
   {
-    chromeClient: {
-      async query(query: ChromeQuery): Promise<ChromeResponse> {
-        return {
-          query: query,
-          status: Status.ok,
-        };
-      },
-      listen(
-        onSuccess: (query: ChromeQuery) => Promise<ChromeResponse>,
-        onError: (query: ChromeQuery, message: string) => Promise<ChromeResponse>): void {
-      }
-    }
+    chromeClient: onPageClient
   }
 );
 
@@ -32,10 +21,10 @@ export const OnPage = (props: OnPageProps) => {
 
   useEffect(() => {
     chromeClient.listen(handleChromeMessage, handleChromeError);
-    chromeClient.query({type: QueryType.resumeTutorial}).then(chromeResponse => {
-      if (chromeResponse.status === Status.ok && chromeResponse.message !== undefined) {
-        setTutorial(chromeResponse.message);
-      }
+    chromeClient.resumeTutorial().then(tutorial => {
+      setTutorial(tutorial);
+    }, reason => {
+      console.log("[Content]: No active tutorial found", reason.message);
     });
   }, []);
 
@@ -72,7 +61,7 @@ export const OnPage = (props: OnPageProps) => {
   }
 
   const handleExitTutorial = () => {
-    chromeClient.query({type: QueryType.exit}).then(value => {
+    chromeClient.notifyExit().then(value => {
       console.log("[Content]: Exited tutorial.");
       setTutorial(undefined);
     }, reason => {

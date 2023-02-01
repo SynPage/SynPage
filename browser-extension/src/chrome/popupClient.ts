@@ -6,5 +6,3 @@ export class PopupClient {
     return chrome.runtime.sendMessage(query);
   }
 }
-
-export default new PopupClient();

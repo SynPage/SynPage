@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
-import {OnPage} from '../OnPage';
-import {mockOnPageClient} from "./TutorialFactory/mockServices";
+import {OnPage} from './index';
+import {mockOnPageClient} from "../stories/TutorialFactory/mockServices";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {

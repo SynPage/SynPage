@@ -13,55 +13,42 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { TutorialBriefStepsInner } from './TutorialBriefStepsInner';
-import {
-    TutorialBriefStepsInnerFromJSON,
-    TutorialBriefStepsInnerFromJSONTyped,
-    TutorialBriefStepsInnerToJSON,
-} from './TutorialBriefStepsInner';
-
 /**
  * 
  * @export
- * @interface TutorialBrief
+ * @interface TutorialInfo
  */
-export interface TutorialBrief {
+export interface TutorialInfo {
     /**
      * 
      * @type {number}
-     * @memberof TutorialBrief
+     * @memberof TutorialInfo
      */
     readonly id?: number;
     /**
      * 
      * @type {string}
-     * @memberof TutorialBrief
+     * @memberof TutorialInfo
      */
     title: string;
     /**
      * 
      * @type {string}
-     * @memberof TutorialBrief
+     * @memberof TutorialInfo
      */
     description?: string;
     /**
      * 
      * @type {string}
-     * @memberof TutorialBrief
+     * @memberof TutorialInfo
      */
     targetSite: string;
-    /**
-     * 
-     * @type {Array<TutorialBriefStepsInner>}
-     * @memberof TutorialBrief
-     */
-    readonly steps?: Array<TutorialBriefStepsInner>;
 }
 
 /**
- * Check if a given object implements the TutorialBrief interface.
+ * Check if a given object implements the TutorialInfo interface.
  */
-export function instanceOfTutorialBrief(value: object): boolean {
+export function instanceOfTutorialInfo(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "title" in value;
     isInstance = isInstance && "targetSite" in value;
@@ -69,11 +56,11 @@ export function instanceOfTutorialBrief(value: object): boolean {
     return isInstance;
 }
 
-export function TutorialBriefFromJSON(json: any): TutorialBrief {
-    return TutorialBriefFromJSONTyped(json, false);
+export function TutorialInfoFromJSON(json: any): TutorialInfo {
+    return TutorialInfoFromJSONTyped(json, false);
 }
 
-export function TutorialBriefFromJSONTyped(json: any, ignoreDiscriminator: boolean): TutorialBrief {
+export function TutorialInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean): TutorialInfo {
     if ((json === undefined) || (json === null)) {
         return json;
     }
@@ -83,11 +70,10 @@ export function TutorialBriefFromJSONTyped(json: any, ignoreDiscriminator: boole
         'title': json['title'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'targetSite': json['target_site'],
-        'steps': !exists(json, 'steps') ? undefined : ((json['steps'] as Array<any>).map(TutorialBriefStepsInnerFromJSON)),
     };
 }
 
-export function TutorialBriefToJSON(value?: TutorialBrief | null): any {
+export function TutorialInfoToJSON(value?: TutorialInfo | null): any {
     if (value === undefined) {
         return undefined;
     }

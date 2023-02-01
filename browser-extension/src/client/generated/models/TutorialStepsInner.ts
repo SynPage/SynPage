@@ -13,13 +13,6 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { StepActionsInner } from './StepActionsInner';
-import {
-    StepActionsInnerFromJSON,
-    StepActionsInnerFromJSONTyped,
-    StepActionsInnerToJSON,
-} from './StepActionsInner';
-
 /**
  * 
  * @export
@@ -50,18 +43,6 @@ export interface TutorialStepsInner {
      * @memberof TutorialStepsInner
      */
     index: number;
-    /**
-     * 
-     * @type {Array<StepActionsInner>}
-     * @memberof TutorialStepsInner
-     */
-    readonly actions?: Array<StepActionsInner>;
-    /**
-     * 
-     * @type {number}
-     * @memberof TutorialStepsInner
-     */
-    tutorialId: number;
 }
 
 /**
@@ -71,7 +52,6 @@ export function instanceOfTutorialStepsInner(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "title" in value;
     isInstance = isInstance && "index" in value;
-    isInstance = isInstance && "tutorialId" in value;
 
     return isInstance;
 }
@@ -90,8 +70,6 @@ export function TutorialStepsInnerFromJSONTyped(json: any, ignoreDiscriminator: 
         'title': json['title'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'index': json['index'],
-        'actions': !exists(json, 'actions') ? undefined : ((json['actions'] as Array<any>).map(StepActionsInnerFromJSON)),
-        'tutorialId': json['tutorial_id'],
     };
 }
 
@@ -107,7 +85,6 @@ export function TutorialStepsInnerToJSON(value?: TutorialStepsInner | null): any
         'title': value.title,
         'description': value.description,
         'index': value.index,
-        'tutorial_id': value.tutorialId,
     };
 }
 

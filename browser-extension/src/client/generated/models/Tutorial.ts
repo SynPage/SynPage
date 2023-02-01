@@ -28,12 +28,6 @@ import {
 export interface Tutorial {
     /**
      * 
-     * @type {number}
-     * @memberof Tutorial
-     */
-    readonly id?: number;
-    /**
-     * 
      * @type {string}
      * @memberof Tutorial
      */
@@ -79,7 +73,6 @@ export function TutorialFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     }
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
         'title': json['title'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'targetSite': json['target_site'],

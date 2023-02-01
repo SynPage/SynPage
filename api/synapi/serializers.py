@@ -19,7 +19,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 class ActionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Action
-        fields = ['id', 'description', 'target_elem', 'step_id', 'index', 'mouse_button', 'mouse_action']
+        fields = ['index', 'description', 'action_type', 'action_target', 'action_content']
 
 
 class StepSerializer(serializers.ModelSerializer):
@@ -27,33 +27,27 @@ class StepSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Step
-        fields = ['id', 'title', 'description', 'index', 'actions', 'tutorial_id']
+        fields = ['index', 'title', 'description', 'actions']
 
 
-class StepBriefSerializer(serializers.ModelSerializer):
+class StepInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Step
-        fields = ['id', 'title', 'index']
+        fields = ['id', 'title', 'description', 'index']
 
 
 class TutorialSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(read_only=True)
-    steps = StepSerializer(many=True, read_only=True)
+    steps = StepInfoSerializer(many=True, read_only=True)
 
     class Meta:
         model = Tutorial
-        fields = ['id', 'title', 'description', 'target_site', 'steps']
+        fields = ['title', 'description', 'target_site', 'steps']
 
 
-class TutorialMetadataSerializer(serializers.ModelSerializer):
+class TutorialInfoSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+
     class Meta:
         model = Tutorial
         fields = ['id', 'title', 'description', 'target_site']
 
-
-class TutorialBriefSerializer(serializers.ModelSerializer):
-    steps = StepBriefSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = Tutorial
-        fields = ['id', 'title', 'description', 'target_site', 'steps']

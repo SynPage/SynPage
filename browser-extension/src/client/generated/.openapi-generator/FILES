@@ -14,11 +14,9 @@ models/ListTutorials200Response.ts
 models/ListUsers200Response.ts
 models/Step.ts
 models/StepActionsInner.ts
-models/StepBrief.ts
+models/StepInfo.ts
 models/Tutorial.ts
-models/TutorialBrief.ts
-models/TutorialBriefStepsInner.ts
-models/TutorialMetadata.ts
+models/TutorialInfo.ts
 models/TutorialStepsInner.ts
 models/User.ts
 models/index.ts

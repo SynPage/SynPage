@@ -1,10 +1,45 @@
 import {MockPopupClient} from "./mockPopupClient";
 import {MockOnPageClient} from "./mockOnPageClient";
+import {Step, Tutorial} from "../../client/generated";
 
 const BASE_PATH = process.env.API_BASE_URL;
 
 export const mockPopupClient = new MockPopupClient();
 export const mockOnPageClient = new MockOnPageClient();
+
+export const mockSteps: Step[] = [
+  {
+    title: "Test Step 1",
+    index: 0,
+    actions: [
+      {
+        index: 0,
+        actionType: "Left Click",
+        actionTarget: "#search",
+        description: "Hello",
+      }
+    ]
+  },
+  {
+    title: "Test Step 2",
+    index: 1,
+    actions: [
+      {
+        index: 0,
+        actionType: "Enter",
+        actionTarget: "#search",
+        actionContent: "Hello World",
+        description: "Hello",
+      }
+    ]
+  }
+]
+
+export const mockTutorial: Tutorial = {
+  title: "Test Tutorial 1",
+  targetSite: "dev.synpage.ca",
+  steps: mockSteps
+}
 
 export const mockData = [
   {

@@ -13,12 +13,12 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { StepBrief } from './StepBrief';
+import type { StepInfo } from './StepInfo';
 import {
-    StepBriefFromJSON,
-    StepBriefFromJSONTyped,
-    StepBriefToJSON,
-} from './StepBrief';
+    StepInfoFromJSON,
+    StepInfoFromJSONTyped,
+    StepInfoToJSON,
+} from './StepInfo';
 
 /**
  * 
@@ -46,10 +46,10 @@ export interface ListSteps200Response {
     previous?: string | null;
     /**
      * 
-     * @type {Array<StepBrief>}
+     * @type {Array<StepInfo>}
      * @memberof ListSteps200Response
      */
-    results?: Array<StepBrief>;
+    results?: Array<StepInfo>;
 }
 
 /**
@@ -74,7 +74,7 @@ export function ListSteps200ResponseFromJSONTyped(json: any, ignoreDiscriminator
         'count': !exists(json, 'count') ? undefined : json['count'],
         'next': !exists(json, 'next') ? undefined : json['next'],
         'previous': !exists(json, 'previous') ? undefined : json['previous'],
-        'results': !exists(json, 'results') ? undefined : ((json['results'] as Array<any>).map(StepBriefFromJSON)),
+        'results': !exists(json, 'results') ? undefined : ((json['results'] as Array<any>).map(StepInfoFromJSON)),
     };
 }
 
@@ -90,7 +90,7 @@ export function ListSteps200ResponseToJSON(value?: ListSteps200Response | null):
         'count': value.count,
         'next': value.next,
         'previous': value.previous,
-        'results': value.results === undefined ? undefined : ((value.results as Array<any>).map(StepBriefToJSON)),
+        'results': value.results === undefined ? undefined : ((value.results as Array<any>).map(StepInfoToJSON)),
     };
 }
 

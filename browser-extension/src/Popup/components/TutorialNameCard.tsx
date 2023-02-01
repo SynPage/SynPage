@@ -1,12 +1,12 @@
 import {Box, Grid, Typography} from "@mui/material";
-import {Tutorial} from "../client/generated";
+import {Tutorial} from "../../client/generated";
 
-export interface TutorialBriefProps {
+export interface TutorialNameCardProps {
   tutorial: Tutorial,
   onClick: (e: any) => void
 }
 
-export const TutorialBrief = (props: TutorialBriefProps) => {
+export const TutorialNameCard = (props: TutorialNameCardProps) => {
   const {tutorial, onClick, ...others} = props;
 
   return (

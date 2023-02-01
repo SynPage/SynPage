@@ -1,7 +1,7 @@
 import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
 
-import {TutorialList} from '../Popup/TutorialList';
+import {TutorialList} from '../Popup/components/TutorialList';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {

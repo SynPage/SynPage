@@ -24,7 +24,7 @@ export interface StepActionsInner {
      * @type {number}
      * @memberof StepActionsInner
      */
-    readonly id?: number;
+    index: number;
     /**
      * 
      * @type {string}
@@ -36,54 +36,34 @@ export interface StepActionsInner {
      * @type {string}
      * @memberof StepActionsInner
      */
-    targetElem?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof StepActionsInner
-     */
-    stepId: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof StepActionsInner
-     */
-    index: number | null;
+    actionType?: StepActionsInnerActionTypeEnum;
     /**
      * 
      * @type {string}
      * @memberof StepActionsInner
      */
-    mouseButton?: StepActionsInnerMouseButtonEnum;
+    actionTarget?: string;
     /**
      * 
      * @type {string}
      * @memberof StepActionsInner
      */
-    mouseAction?: StepActionsInnerMouseActionEnum;
+    actionContent?: string;
 }
 
 
 /**
  * @export
  */
-export const StepActionsInnerMouseButtonEnum = {
+export const StepActionsInnerActionTypeEnum = {
     Empty: '',
-    L: 'L',
-    R: 'R',
-    M: 'M'
+    LeftClick: 'Left Click',
+    RightClick: 'Right Click',
+    LeftDoubleClick: 'Left Double Click',
+    RightDoubleClick: 'Right Double Click',
+    Enter: 'Enter'
 } as const;
-export type StepActionsInnerMouseButtonEnum = typeof StepActionsInnerMouseButtonEnum[keyof typeof StepActionsInnerMouseButtonEnum];
-
-/**
- * @export
- */
-export const StepActionsInnerMouseActionEnum = {
-    Empty: '',
-    Click: 'CLICK',
-    Dbclick: 'DBCLICK'
-} as const;
-export type StepActionsInnerMouseActionEnum = typeof StepActionsInnerMouseActionEnum[keyof typeof StepActionsInnerMouseActionEnum];
+export type StepActionsInnerActionTypeEnum = typeof StepActionsInnerActionTypeEnum[keyof typeof StepActionsInnerActionTypeEnum];
 
 
 /**
@@ -91,9 +71,8 @@ export type StepActionsInnerMouseActionEnum = typeof StepActionsInnerMouseAction
  */
 export function instanceOfStepActionsInner(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "description" in value;
-    isInstance = isInstance && "stepId" in value;
     isInstance = isInstance && "index" in value;
+    isInstance = isInstance && "description" in value;
 
     return isInstance;
 }
@@ -108,13 +87,11 @@ export function StepActionsInnerFromJSONTyped(json: any, ignoreDiscriminator: bo
     }
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
-        'description': json['description'],
-        'targetElem': !exists(json, 'target_elem') ? undefined : json['target_elem'],
-        'stepId': json['step_id'],
         'index': json['index'],
-        'mouseButton': !exists(json, 'mouse_button') ? undefined : json['mouse_button'],
-        'mouseAction': !exists(json, 'mouse_action') ? undefined : json['mouse_action'],
+        'description': json['description'],
+        'actionType': !exists(json, 'action_type') ? undefined : json['action_type'],
+        'actionTarget': !exists(json, 'action_target') ? undefined : json['action_target'],
+        'actionContent': !exists(json, 'action_content') ? undefined : json['action_content'],
     };
 }
 
@@ -127,12 +104,11 @@ export function StepActionsInnerToJSON(value?: StepActionsInner | null): any {
     }
     return {
         
-        'description': value.description,
-        'target_elem': value.targetElem,
-        'step_id': value.stepId,
         'index': value.index,
-        'mouse_button': value.mouseButton,
-        'mouse_action': value.mouseAction,
+        'description': value.description,
+        'action_type': value.actionType,
+        'action_target': value.actionTarget,
+        'action_content': value.actionContent,
     };
 }
 

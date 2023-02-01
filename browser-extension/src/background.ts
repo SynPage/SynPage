@@ -1,7 +1,7 @@
-import {ChromeQuery, QueryType, validateQuery} from "./query";
-import {ChromeResponse, Status} from "./response";
-import {stepsApi, tutorialsApi} from "../client";
-import {getCurrentTab} from "./utils";
+import {ChromeQuery, QueryType, validateQuery} from "./chrome/query";
+import {ChromeResponse, Status} from "./chrome/response";
+import {stepsApi, tutorialsApi} from "./client";
+import {getCurrentTab} from "./chrome/utils";
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   console.log('[Background]: Message received', {
@@ -24,27 +24,35 @@ const handleMessage = async (query: ChromeQuery): Promise<ChromeResponse> => {
     status: Status.error
   }
   if (valid) {
-    switch (validated.type) {
-      case QueryType.init:
-        response = await handleInitializeTutorialViewer(validated);
-        break;
-      case QueryType.exit:
-        response = await handleExitTutorial(validated);
-        break;
-      case QueryType.requestStep:
-        response = await handleRequestStep(validated);
-        break;
-      case QueryType.setStepIndex:
-        response = await handleSetStep(validated);
-        break;
-      case QueryType.resumeTutorial:
-        response = await resumeTutorial(validated);
-        break;
-      default:
-        response = {
-          ...response,
-          message: "[Background]: Unexpected message type."
-        };
+    try{
+      switch (validated.type) {
+        case QueryType.init:
+          response = await handleInitializeTutorialViewer(validated);
+          break;
+        case QueryType.exit:
+          response = await handleExitTutorial(validated);
+          break;
+        case QueryType.requestStep:
+          response = await handleRequestStep(validated);
+          break;
+        case QueryType.setStepIndex:
+          response = await handleSetStep(validated);
+          break;
+        case QueryType.resumeTutorial:
+          response = await resumeTutorial(validated);
+          break;
+        default:
+          response = {
+            ...response,
+            message: "[Background]: Unexpected message type."
+          };
+      }
+    } catch (e: any) {
+      console.log(`[Background]: Internal error caught when handling query`, e);
+      response = {
+        ...response,
+        message: `[Background]: ${e.message}`
+      };
     }
   } else {
     response = {
@@ -56,12 +64,12 @@ const handleMessage = async (query: ChromeQuery): Promise<ChromeResponse> => {
   return response;
 }
 
-const notifyClient = async (query: ChromeQuery) => {
+const notifyContent = async (query: ChromeQuery) => {
   const tab = await getCurrentTab();
   if (!tab || !tab.id) {
     console.log("[Background]: Failed to reach content script, active tab not found", query);
   } else {
-    console.log(`[Background]: Sending query to tab ${tab.id}`, query);
+    console.log(`[Background]: Sending query`, query, ` to tab`, tab);
     await chrome.tabs.sendMessage(tab.id, query);
   }
 }
@@ -72,7 +80,7 @@ const handleInitializeTutorialViewer: queryHandler = async query => {
   const id: string = query.message;
   const tutorial = await tutorialsApi.retrieveTutorial({id: id});
   await chrome.storage.session.set({tutorial: tutorial, stepIndex: 0});
-  await notifyClient({type: QueryType.init, message: tutorial});
+  await notifyContent({type: QueryType.init, message: tutorial});
 
   return {
     query: query,

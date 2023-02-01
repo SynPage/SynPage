@@ -1,6 +1,7 @@
 import {Box, Grid} from "@mui/material";
-import {TutorialBrief} from "./TutorialBrief";
-import {Tutorial} from "../client/generated";
+import {TutorialInfo, Tutorial} from "../../client/generated";
+import React from "react";
+import {TutorialNameCard} from "./TutorialNameCard";
 
 export interface TutorialListProps {
   tutorials: Tutorial[],
@@ -18,7 +19,7 @@ export const TutorialList = (props: TutorialListProps) => {
     return tutorials && tutorials.map(tut => {
       return (
         <Grid item>
-          <TutorialBrief tutorial={tut} onClick={() => {
+          <TutorialNameCard tutorial={tut} onClick={() => {
             handleListItemClick(tut);
           }}/>
         </Grid>

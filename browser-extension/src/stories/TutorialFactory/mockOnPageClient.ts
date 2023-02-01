@@ -1,40 +1,26 @@
 import {ChromeQuery, QueryType} from "../../chrome/query";
 import {ChromeResponse} from "../../chrome/response";
 import {OnPageClient} from "../../chrome/onPageClient";
-import {Step, TutorialBrief} from "../../client/generated";
+import {Step, Tutorial, TutorialInfo} from "../../client/generated";
+import {mockSteps, mockTutorial} from "./mockServices";
 
 export class MockOnPageClient extends OnPageClient {
-  override async requestStep(): Promise<Step> {
-    return {
-      title: "Step Demo",
-      description: "Demo description",
-      index: 0,
-      tutorialId: 0,
-      actions: []
-    };
+  index: number = 0;
+  override async requestStepIndexChange(index: number): Promise<number> {
+    this.index = index;
+    return index;
   }
 
-  override async requestStepIndexChange(newStepIndex: number): Promise<number> {
-    return 0;
+  override async requestStep(): Promise<Step> {
+    return mockSteps[this.index];
   }
 
   override async notifyExit(): Promise<void> {
 
   }
 
-  override async resumeTutorial(): Promise<TutorialBrief> {
-    return {
-      "id": 1,
-      "title": "Hello World",
-      "description": "",
-      targetSite: "http://127.0.0.1:8000/tutorials/",
-      steps: [
-        {
-          title: "Step Demo",
-          index: 0
-        }
-      ]
-    };
+  override async getOnGoingTutorial(): Promise<Tutorial> {
+    return mockTutorial;
   }
 
   override listen(

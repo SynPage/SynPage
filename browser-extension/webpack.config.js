@@ -6,9 +6,9 @@ const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: {
-    popup: './src/chrome/popup.tsx',
-    background: './src/chrome/background.ts',
-    content: './src/chrome/content.tsx'
+    index: './src/index.tsx',
+    background: './src/background.ts',
+    content: './src/content.tsx'
   },
   output: {
     path: path.join(__dirname, "build"),
@@ -43,7 +43,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "public", "index.html"),
-      chunks: ["popup"]
+      chunks: ["index"]
     }),
     new CopyPlugin({
       patterns: [

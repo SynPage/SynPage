@@ -1,12 +1,13 @@
 import React, {createContext, useEffect, useState} from 'react';
-import {Header} from "./Header";
-import {TutorialList} from "./TutorialList";
+import {Header} from "./components/Header";
+import {TutorialList} from "./components/TutorialList";
 import {Loading} from "../shared/Loading";
 import {Error} from "../shared/Error";
-import {ActionsApi, StepsApi, TutorialMetadata, TutorialsApi} from "../client/generated";
+import {ActionsApi, StepsApi, TutorialInfo, TutorialsApi} from "../client/generated";
 import {ChromeQuery, QueryType} from "../chrome/query";
 import {ChromeResponse, Status, validateResponse} from "../chrome/response";
-import popupClient, {PopupClient} from "../chrome/popupClient";
+import {PopupClient} from "../chrome/popupClient";
+import "./index.css"
 
 export interface PopupProps {
   chromeClient: PopupClient,
@@ -24,7 +25,7 @@ interface Context {
 
 export const ClientContext = createContext<Context>(
   {
-    chromeClient: popupClient,
+    chromeClient: new PopupClient(),
     tutorialsApi: new TutorialsApi(),
     stepsApi: new StepsApi(),
     actionsApi: new ActionsApi()
@@ -33,7 +34,7 @@ export const ClientContext = createContext<Context>(
 
 export const Popup = (props: PopupProps) => {
   const {chromeClient, tutorialsApi, stepsApi, actionsApi} = props;
-  const [list, setList] = useState<TutorialMetadata[]>([]);
+  const [list, setList] = useState<TutorialInfo[]>([]);
   const [loading, setLoading] = useState<string | undefined>(undefined);
   const [error, setError] = useState<string | undefined>(undefined);
 
@@ -77,12 +78,13 @@ export const Popup = (props: PopupProps) => {
   //   }
   // }
 
-  const handleTutorialSelection = (tutorial: TutorialMetadata) => {
+  const handleTutorialSelection = (tutorial: TutorialInfo) => {
     if (!tutorial.id) {
       setError("Tutorial does not exist.");
       return;
     }
     setLoading("Loading...");
+    console.log(`[Popup]: Notifying background of tutorial selection`, tutorial);
     chromeClient.queryBackground({type: QueryType.init, message: tutorial.id}).then(chromeResponse => {
       setLoading(undefined)
       const {valid, validated} = validateResponse(chromeResponse);
@@ -93,6 +95,7 @@ export const Popup = (props: PopupProps) => {
         setError(validated.message ?? "Unknown error.");
       }
     }, reason => {
+      console.log("[Popup]: Error occurred when trying to reach background.");
       setLoading(undefined);
       setError(reason.message ?? "Unknown error.");
     })

@@ -1,6 +1,6 @@
 import {SidePanel} from "./SidePanel";
 import {Step, Tutorial} from "../../../client/generated";
-import {ToolTip} from "./ToolTip";
+import {ActionCentre} from "./ActionCentre";
 
 export interface UserControllerProps {
 	tutorial: Tutorial,
@@ -12,7 +12,7 @@ export const UserController = (props: UserControllerProps) => {
 
 	return (
 		<div className={"user-controller"}>
-			<ToolTip/>
+			<ActionCentre/>
 			<SidePanel tutorial={tutorial} step={step}/>
 		</div>
 	)

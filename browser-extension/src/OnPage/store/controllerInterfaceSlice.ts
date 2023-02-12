@@ -10,12 +10,12 @@ export enum SidePanelView {
 export interface ControllerInterfaceState {
 	sidePanelOpen: boolean,
 	sidePanelWidth: number,
-	sidePanelView: SidePanelView
+	sidePanelView: SidePanelView,
 }
 
 const initialState: ControllerInterfaceState = {
 	sidePanelOpen: true,
-	sidePanelWidth: 250,
+	sidePanelWidth: 300,
 	sidePanelView: SidePanelView.main
 }
 
@@ -27,6 +27,7 @@ export const controllerInterfaceSlice = createSlice({
 			state.sidePanelOpen = !state.sidePanelOpen;
 		},
 		setSidePanelView: (state, action: PayloadAction<SidePanelView>) => {
+			state.sidePanelOpen = true;
 			state.sidePanelView = action.payload;
 		}
 	},

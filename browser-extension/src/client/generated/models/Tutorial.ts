@@ -13,6 +13,12 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { TutorialRecommendationsInner } from './TutorialRecommendationsInner';
+import {
+    TutorialRecommendationsInnerFromJSON,
+    TutorialRecommendationsInnerFromJSONTyped,
+    TutorialRecommendationsInnerToJSON,
+} from './TutorialRecommendationsInner';
 import type { TutorialStepsInner } from './TutorialStepsInner';
 import {
     TutorialStepsInnerFromJSON,
@@ -50,6 +56,12 @@ export interface Tutorial {
      * @memberof Tutorial
      */
     readonly steps?: Array<TutorialStepsInner>;
+    /**
+     * 
+     * @type {Array<TutorialRecommendationsInner>}
+     * @memberof Tutorial
+     */
+    readonly recommendations?: Array<TutorialRecommendationsInner>;
 }
 
 /**
@@ -77,6 +89,7 @@ export function TutorialFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'description': !exists(json, 'description') ? undefined : json['description'],
         'targetSite': json['target_site'],
         'steps': !exists(json, 'steps') ? undefined : ((json['steps'] as Array<any>).map(TutorialStepsInnerFromJSON)),
+        'recommendations': !exists(json, 'recommendations') ? undefined : ((json['recommendations'] as Array<any>).map(TutorialRecommendationsInnerFromJSON)),
     };
 }
 

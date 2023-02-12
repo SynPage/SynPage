@@ -39,3 +39,16 @@ class Action(models.Model):
     class Meta:
         ordering = ['step_id', 'index']
         unique_together = ['step_id', 'index']
+
+
+class Recommendation(models.Model):
+    tutorial_id = models.ForeignKey(Tutorial, related_name='recommendations', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    media = models.URLField()
+    link = models.URLField()
+    title = models.CharField(max_length=50)
+    description = models.CharField(max_length=250)
+
+    class Meta:
+        ordering = ['updated_at']

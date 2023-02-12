@@ -41,9 +41,6 @@ export const SidePanel = (props: SidePanelProps) => {
   const createView = () => {
     switch (sidePanelView) {
       case SidePanelView.step:
-        if (!step) {
-          break;
-        }
         return <OutlineView tutorial={tutorial}/>
       case SidePanelView.main:
         return <InfoView tutorial={tutorial}/>

@@ -1,31 +1,45 @@
-import {DialogContent, List, ListItemButton, Typography} from "@mui/material";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import React from "react";
+import {
+	Accordion,
+	AccordionDetails,
+	AccordionSummary,
+	Box,
+	DialogContent,
+	List,
+	ListItemButton,
+	Typography
+} from "@mui/material";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import React, {useState} from "react";
 import {Tutorial} from "../../../../client/generated";
 import {useAppDispatch, useAppSelector} from "../../../store/hooks";
 import {setStepIndex} from "../../../store/clientThunks";
+import {StepActionList} from "../../../../components/StepActionList";
 
 export const OutlineView = (props: {tutorial: Tutorial}) => {
 	const dispatch = useAppDispatch();
 	const {tutorial} = props;
 	const currentStepIndex = useAppSelector(state => state.tutorialManager.stepIndex);
+	const [expandedStep, setExpandedStep] = useState(currentStepIndex);
 
 	const handleStepItemClick = (selectedIndex: number) => {
 		dispatch(setStepIndex(selectedIndex));
 	}
 
 	return (
-		<DialogContent>
-			<Typography variant={"h6"}>{tutorial.title}</Typography>
-			<Typography variant={"body1"}>{tutorial.description}</Typography>
-			<List>
-				{tutorial.steps && tutorial.steps.map(step => (
-					<ListItemButton onClick={() => handleStepItemClick(step.index)}>
-						{(step.index === currentStepIndex) && <KeyboardArrowRightIcon/>}
-						<Typography variant={"body1"}>{step.title}</Typography>
-					</ListItemButton>
-				))}
-			</List>
-		</DialogContent>
+		<Box className={"outline-view"}>
+			{tutorial.steps && tutorial.steps.map(step => (
+				<Accordion expanded={step.index === expandedStep} onChange={() => setExpandedStep(step.index)}>
+					<AccordionSummary
+						expandIcon={<ExpandMoreIcon />}
+					>
+						<Typography>{step.title}</Typography>
+					</AccordionSummary>
+					<AccordionDetails>
+						<Typography>{step.description}</Typography>
+						<StepActionList step={step}/>
+					</AccordionDetails>
+				</Accordion>
+			))}
+		</Box>
 	)
 }

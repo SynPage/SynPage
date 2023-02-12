@@ -2,7 +2,7 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets, filters
 from rest_framework import permissions
 
-from .models.tutorial import Tutorial, Step, Action
+from .models.tutorial import Tutorial, Step, Action, Recommendation
 from synapi.serializers import (
     UserSerializer,
     GroupSerializer,
@@ -10,7 +10,8 @@ from synapi.serializers import (
     TutorialInfoSerializer,
     StepSerializer,
     StepInfoSerializer,
-    ActionSerializer
+    ActionSerializer,
+    RecommendationSerializer
 )
 
 
@@ -71,3 +72,8 @@ class ActionViewSet(viewsets.ModelViewSet):
     queryset = Action.objects.all()
     serializer_class = ActionSerializer
     # permission_classes = [permissions.IsAuthenticated]
+
+
+class RecommendationViewSet(viewsets.ModelViewSet):
+    queryset = Recommendation.objects.all()
+    serializer_class = RecommendationSerializer

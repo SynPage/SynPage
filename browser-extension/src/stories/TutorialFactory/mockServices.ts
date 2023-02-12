@@ -1,6 +1,6 @@
 import {MockPopupClient} from "./mockPopupClient";
 import {MockOnPageClient} from "./mockOnPageClient";
-import {Step, Tutorial} from "../../client/generated";
+import {Recommendation, Step, Tutorial, TutorialRecommendationsInner} from "../../client/generated";
 
 const BASE_PATH = process.env.API_BASE_URL;
 
@@ -35,10 +35,20 @@ export const mockSteps: Step[] = [
   }
 ]
 
+export const mockRecommendation: Recommendation = {
+  tutorialId: 0,
+  title: "Stack Overflow",
+  description: "Description",
+  media: "https://i5.walmartimages.ca/images/Enlarge/094/514/6000200094514.jpg",
+  link: "https://google.ca"
+}
+
 export const mockTutorial: Tutorial = {
   title: "Test Tutorial 1",
   targetSite: "dev.synpage.ca",
-  steps: mockSteps
+  description: "This is a long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long description",
+  steps: mockSteps,
+  recommendations: [mockRecommendation]
 }
 
 export const mockData = [

@@ -4,6 +4,7 @@ import {Step, Tutorial} from "../client/generated";
 
 export class OnPageClient {
   private async query(query: ChromeQuery): Promise<ChromeResponse> {
+    console.log("[Content]: Sending query", query);
     const response = await chrome.runtime.sendMessage(query);
     const {valid, validated} = validateResponse(response);
     if (!valid || validated.status !== Status.ok) {

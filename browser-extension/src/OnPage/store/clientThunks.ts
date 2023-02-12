@@ -23,11 +23,13 @@ export const resumeTutorial = createAsyncThunk<void, void, {
 }>(
 	'tutorialController/resumeTutorial',
 	async (_, {getState, dispatch}) => {
+		console.log("[Content]: Resuming Tutorial");
 		const client = getState().tutorialManager.chromeClient;
 		if (!client) {
 			throw Error();
 		}
 		const tutorial = await client.getOnGoingTutorial();
+		console.log(tutorial);
 		if (tutorial) {
 			dispatch(tutorialLoaded(tutorial));
 		}

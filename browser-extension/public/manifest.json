@@ -38,5 +38,8 @@
     "http://localhost/*",
     "http://dev.ufii4.com:8000/*",
     "http://dev.synpage.ca/*"
-  ]
+  ],
+  "externally_connectable": {
+    "matches": ["http://localhost/*"]
+  }
 }

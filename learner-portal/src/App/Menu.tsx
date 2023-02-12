@@ -1,14 +1,26 @@
 import React from "react";
-import {Drawer} from "@mui/material";
+import {DialogContent, Drawer, Typography} from "@mui/material";
 
 export const Menu = () => {
+	const drawerWidth = 240;
+
 	return (
 		<div className="menu">
 			<Drawer
-				variant="permanent"
+				variant="persistent"
 				open
+				sx={{
+					width: drawerWidth,
+					'& .MuiDrawer-paper': {
+						width: drawerWidth,
+					},
+				}}
 			>
-				Hello SynPage!
+				<DialogContent>
+					<Typography variant={"body1"}>
+						Hello SynPage!
+					</Typography>
+				</DialogContent>
 			</Drawer>
 		</div>
 	)

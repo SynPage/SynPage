@@ -11,7 +11,8 @@
     {
       "matches": [
         "https://google.ca/*",
-        "https://www.google.ca/*"
+        "https://www.google.ca/*",
+        "https://*"
       ],
       "js": [
         "content.js"

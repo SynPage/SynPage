@@ -1,10 +1,10 @@
-import {TutorialBrief} from "../../client/generated";
-import {Box, Card, CardMedia} from "@mui/material";
+import {TutorialInfo} from "../../client/generated";
+import {Box, Card, CardMedia, Typography} from "@mui/material";
 import React from "react";
 import {ExtensionService} from "../../extensionService";
 
 export interface NameCardProps {
-	tutorial: TutorialBrief
+	tutorial: TutorialInfo
 }
 
 export const NameCard = (props: NameCardProps) => {
@@ -12,6 +12,9 @@ export const NameCard = (props: NameCardProps) => {
 	const extensionService = new ExtensionService();
 
 	const handleNameCardClick = (tutorialId: number) => {
+		if (tutorialId === -1) {
+			return;
+		}
 		try {
 			extensionService.openTutorial(tutorialId.toString());
 		} catch (e) {
@@ -22,7 +25,7 @@ export const NameCard = (props: NameCardProps) => {
 	}
 
 	return (
-		<Card className="name-card" onClick={() => handleNameCardClick(1)}>
+		<Card className="name-card" onClick={() => handleNameCardClick(tutorial.id ?? -1)} sx={{display: "flex"}}>
 			<CardMedia
 				component="img"
 				sx={{ width: 151 }}
@@ -30,7 +33,8 @@ export const NameCard = (props: NameCardProps) => {
 				alt={tutorial.title}
 			/>
 			<Box sx={{ display: 'flex', flexDirection: 'column' }}>
-
+				<Typography variant={"h6"}>{tutorial.title}</Typography>
+				<Typography variant={"body1"}>{tutorial.description}</Typography>
 			</Box>
 		</Card>
   )

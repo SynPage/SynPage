@@ -17,15 +17,12 @@ import * as runtime from '../runtime';
 import type {
   ListTutorials200Response,
   Tutorial,
-  TutorialBrief,
 } from '../models';
 import {
     ListTutorials200ResponseFromJSON,
     ListTutorials200ResponseToJSON,
     TutorialFromJSON,
     TutorialToJSON,
-    TutorialBriefFromJSON,
-    TutorialBriefToJSON,
 } from '../models';
 
 export interface CreateTutorialRequest {
@@ -34,23 +31,28 @@ export interface CreateTutorialRequest {
 
 export interface DestroyTutorialRequest {
     id: string;
+    search?: string;
 }
 
 export interface ListTutorialsRequest {
     page?: number;
+    search?: string;
 }
 
 export interface PartialUpdateTutorialRequest {
     id: string;
+    search?: string;
     tutorial?: Tutorial;
 }
 
 export interface RetrieveTutorialRequest {
     id: string;
+    search?: string;
 }
 
 export interface UpdateTutorialRequest {
     id: string;
+    search?: string;
     tutorial?: Tutorial;
 }
 
@@ -98,6 +100,10 @@ export class TutorialsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.search !== undefined) {
+            queryParameters['search'] = requestParameters.search;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
@@ -125,6 +131,10 @@ export class TutorialsApi extends runtime.BaseAPI {
 
         if (requestParameters.page !== undefined) {
             queryParameters['page'] = requestParameters.page;
+        }
+
+        if (requestParameters.search !== undefined) {
+            queryParameters['search'] = requestParameters.search;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -157,6 +167,10 @@ export class TutorialsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.search !== undefined) {
+            queryParameters['search'] = requestParameters.search;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         headerParameters['Content-Type'] = 'application/json';
@@ -183,12 +197,16 @@ export class TutorialsApi extends runtime.BaseAPI {
     /**
      * API endpoint that allows groups to be viewed or edited.
      */
-    async retrieveTutorialRaw(requestParameters: RetrieveTutorialRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TutorialBrief>> {
+    async retrieveTutorialRaw(requestParameters: RetrieveTutorialRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Tutorial>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling retrieveTutorial.');
         }
 
         const queryParameters: any = {};
+
+        if (requestParameters.search !== undefined) {
+            queryParameters['search'] = requestParameters.search;
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -199,13 +217,13 @@ export class TutorialsApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TutorialBriefFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => TutorialFromJSON(jsonValue));
     }
 
     /**
      * API endpoint that allows groups to be viewed or edited.
      */
-    async retrieveTutorial(requestParameters: RetrieveTutorialRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TutorialBrief> {
+    async retrieveTutorial(requestParameters: RetrieveTutorialRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Tutorial> {
         const response = await this.retrieveTutorialRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -219,6 +237,10 @@ export class TutorialsApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
+
+        if (requestParameters.search !== undefined) {
+            queryParameters['search'] = requestParameters.search;
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 

@@ -1,8 +1,7 @@
 import {ChromeQuery, QueryType} from "../chrome/query";
 
 export class ExtensionService {
-	public openTutorial(tutorialId: string) {
-		const extensionId = process.env.REACT_APP_EXTENSION_ID;
+	public openTutorial(tutorialId: string, extensionId: string) {
 		if (!extensionId) {
 			throw new Error("Could not load extension id.");
 		}

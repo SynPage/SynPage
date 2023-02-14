@@ -2,7 +2,7 @@ import {createSlice} from '@reduxjs/toolkit'
 import type {PayloadAction} from '@reduxjs/toolkit'
 import {OnPageClient} from "../../chrome/onPageClient";
 import {Step, Tutorial} from "../../client/generated";
-import {clientLoaded, loadStep, setStepIndex} from "./clientThunks";
+import {clientLoaded, loadStep} from "./clientThunks";
 
 export interface TutorialState {
 	chromeClient?: OnPageClient
@@ -31,10 +31,31 @@ export const tutorialSlice = createSlice({
 			state.tutorial = action.payload;
 		},
 		prevAction: (state) => {
-
+			if (state.actionIndex > 0) {
+				state.actionIndex = state.actionIndex - 1;
+			} else {
+				state.actionIndex = 0;
+				state.stepIndex = state.stepIndex - 1;
+				state.step = undefined;
+			}
 		},
 		nextAction: (state) => {
-
+			const totalActionsInCurrentStep = state.step?.actions?.length ?? 0;
+			const currentAction = state.actionIndex;
+			console.log("Next action...")
+			if (currentAction < totalActionsInCurrentStep - 1) {
+				state.actionIndex = state.actionIndex + 1;
+			} else {
+				state.actionIndex = 0;
+				state.stepIndex = state.stepIndex + 1;
+				state.step = undefined;
+				console.log("StepIndex changed");
+			}
+		},
+		setStepIndex: (state, action: PayloadAction<number>) => {
+			state.stepIndex = action.payload;
+			state.step = undefined;
+			state.actionIndex = 0
 		},
 		exitTutorial: (state) => {
 
@@ -43,15 +64,14 @@ export const tutorialSlice = createSlice({
 	extraReducers: (builder) => {
 		builder.addCase(loadStep.fulfilled, (state, action) => {
 			state.step = action.payload;
+			console.log("Step loaded", action.payload);
 		}).addCase(clientLoaded.fulfilled, (state, action) => {
 			state.chromeClient = action.payload;
-		}).addCase(setStepIndex.fulfilled, (state, action) => {
-			state.stepIndex = action.payload;
 		})
 	},
 })
 
 // Action creators are generated for each case reducer function
-export const {tutorialLoaded} = tutorialSlice.actions
+export const {tutorialLoaded, prevAction, nextAction, setStepIndex} = tutorialSlice.actions
 
 export default tutorialSlice.reducer

@@ -36,33 +36,19 @@ export const resumeTutorial = createAsyncThunk<void, void, {
 	}
 )
 
-export const loadStep = createAsyncThunk<Step, void, {
+export const loadStep = createAsyncThunk<Step, number, {
 	dispatch: AppDispatch
 	state: RootState
 }>(
 	'tutorialController/loadStep',
-	async (stepIndex, {getState}) => {
+	(stepIndex, {getState}) => {
 		const state = getState();
 		const client = state.tutorialManager.chromeClient;
+		console.log("Load step thunk", state);
 		if (!client) {
 			throw new Error();
 		}
-		return client?.requestStep();
-	}
-)
-
-export const setStepIndex = createAsyncThunk<number, number, {
-	dispatch: AppDispatch
-	state: RootState
-}>(
-	'tutorialController/setStep',
-	async (stepIndex, {getState}) => {
-		const state = getState();
-		const client = state.tutorialManager.chromeClient;
-		if (!client) {
-			throw new Error();
-		}
-		return client?.requestStepIndexChange(stepIndex);
+		return client?.requestStep(stepIndex);
 	}
 )
 

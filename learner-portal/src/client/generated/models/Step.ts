@@ -31,7 +31,7 @@ export interface Step {
      * @type {number}
      * @memberof Step
      */
-    readonly id?: number;
+    index: number;
     /**
      * 
      * @type {string}
@@ -46,22 +46,10 @@ export interface Step {
     description?: string;
     /**
      * 
-     * @type {number}
-     * @memberof Step
-     */
-    index: number;
-    /**
-     * 
      * @type {Array<StepActionsInner>}
      * @memberof Step
      */
     readonly actions?: Array<StepActionsInner>;
-    /**
-     * 
-     * @type {number}
-     * @memberof Step
-     */
-    tutorialId: number;
 }
 
 /**
@@ -69,9 +57,8 @@ export interface Step {
  */
 export function instanceOfStep(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "title" in value;
     isInstance = isInstance && "index" in value;
-    isInstance = isInstance && "tutorialId" in value;
+    isInstance = isInstance && "title" in value;
 
     return isInstance;
 }
@@ -86,12 +73,10 @@ export function StepFromJSONTyped(json: any, ignoreDiscriminator: boolean): Step
     }
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
+        'index': json['index'],
         'title': json['title'],
         'description': !exists(json, 'description') ? undefined : json['description'],
-        'index': json['index'],
         'actions': !exists(json, 'actions') ? undefined : ((json['actions'] as Array<any>).map(StepActionsInnerFromJSON)),
-        'tutorialId': json['tutorial_id'],
     };
 }
 
@@ -104,10 +89,9 @@ export function StepToJSON(value?: Step | null): any {
     }
     return {
         
+        'index': value.index,
         'title': value.title,
         'description': value.description,
-        'index': value.index,
-        'tutorial_id': value.tutorialId,
     };
 }
 

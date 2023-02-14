@@ -27,7 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '.localhost', '127.0.0.1', '[::1]',
-    '34.148.79.109', 'dev.ufii4.com'
+    '34.148.79.109', 'dev.ufii4.com',
+    'synpage.ca', 'devlearner.synpage.ca'
 ]
 
 
@@ -137,5 +138,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://localhost:6006',
-    'chrome-extension://*'
+    'chrome-extension://*',
+    'https://devlearner.synpage.ca'
 ]

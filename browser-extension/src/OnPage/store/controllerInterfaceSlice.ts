@@ -14,9 +14,9 @@ export interface ControllerInterfaceState {
 }
 
 const initialState: ControllerInterfaceState = {
-	sidePanelOpen: true,
+	sidePanelOpen: false,
 	sidePanelWidth: 300,
-	sidePanelView: SidePanelView.main
+	sidePanelView: SidePanelView.step
 }
 
 export const controllerInterfaceSlice = createSlice({

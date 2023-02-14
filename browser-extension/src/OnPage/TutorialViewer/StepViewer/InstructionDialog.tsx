@@ -1,24 +1,22 @@
 import {Button, DialogActions, DialogContent, Paper, Popover, Popper, Typography} from "@mui/material";
 import {Action} from "../../../client/generated";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {ElementUtils} from "../../../shared/ElementUtils";
 
 export interface InstructionDialogProps {
 	action: Action;
 	onPrevAction?: () => void;
 	onNextAction?: () => void;
-	numberOfActionsInStep?: number;
 }
 
 export const InstructionDialog = (props: InstructionDialogProps) => {
 	const {action, onPrevAction, onNextAction} = props;
-	const anchorEl = action.actionTarget ? ElementUtils.getTargetElement(action.actionTarget) : null;
+	const [anchorEl, setAnchorEl] = useState<Element | null>(null);
 
 	useEffect(() => {
-		if (anchorEl) {
-			console.log(anchorEl);
-		}
-	}, [anchorEl])
+		setAnchorEl(action.actionTarget ? ElementUtils.getTargetElement(action.actionTarget) : null);
+		console.log("Instructional dialog loaded", action);
+	}, [action])
 
 	return (
 		<div>
@@ -34,10 +32,10 @@ export const InstructionDialog = (props: InstructionDialogProps) => {
 							<Typography sx={{p: 2}}>{action.description}</Typography>
 						</DialogContent>
 						<DialogActions>
-							<Button onClick={onPrevAction} disabled={!!onPrevAction}>
+							<Button onClick={onPrevAction} disabled={!onPrevAction}>
 								Prev
 							</Button>
-							<Button onClick={onNextAction} disabled={!!onNextAction}>
+							<Button onClick={onNextAction} disabled={!onNextAction}>
 								Next
 							</Button>
 						</DialogActions>

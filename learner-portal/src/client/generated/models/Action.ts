@@ -24,7 +24,7 @@ export interface Action {
      * @type {number}
      * @memberof Action
      */
-    readonly id?: number;
+    index: number;
     /**
      * 
      * @type {string}
@@ -36,54 +36,34 @@ export interface Action {
      * @type {string}
      * @memberof Action
      */
-    targetElem?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof Action
-     */
-    stepId: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Action
-     */
-    index: number | null;
+    actionType?: ActionActionTypeEnum;
     /**
      * 
      * @type {string}
      * @memberof Action
      */
-    mouseButton?: ActionMouseButtonEnum;
+    actionTarget?: string;
     /**
      * 
      * @type {string}
      * @memberof Action
      */
-    mouseAction?: ActionMouseActionEnum;
+    actionContent?: string;
 }
 
 
 /**
  * @export
  */
-export const ActionMouseButtonEnum = {
+export const ActionActionTypeEnum = {
     Empty: '',
-    L: 'L',
-    R: 'R',
-    M: 'M'
+    LeftClick: 'Left Click',
+    RightClick: 'Right Click',
+    LeftDoubleClick: 'Left Double Click',
+    RightDoubleClick: 'Right Double Click',
+    Enter: 'Enter'
 } as const;
-export type ActionMouseButtonEnum = typeof ActionMouseButtonEnum[keyof typeof ActionMouseButtonEnum];
-
-/**
- * @export
- */
-export const ActionMouseActionEnum = {
-    Empty: '',
-    Click: 'CLICK',
-    Dbclick: 'DBCLICK'
-} as const;
-export type ActionMouseActionEnum = typeof ActionMouseActionEnum[keyof typeof ActionMouseActionEnum];
+export type ActionActionTypeEnum = typeof ActionActionTypeEnum[keyof typeof ActionActionTypeEnum];
 
 
 /**
@@ -91,9 +71,8 @@ export type ActionMouseActionEnum = typeof ActionMouseActionEnum[keyof typeof Ac
  */
 export function instanceOfAction(value: object): boolean {
     let isInstance = true;
-    isInstance = isInstance && "description" in value;
-    isInstance = isInstance && "stepId" in value;
     isInstance = isInstance && "index" in value;
+    isInstance = isInstance && "description" in value;
 
     return isInstance;
 }
@@ -108,13 +87,11 @@ export function ActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): Ac
     }
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
-        'description': json['description'],
-        'targetElem': !exists(json, 'target_elem') ? undefined : json['target_elem'],
-        'stepId': json['step_id'],
         'index': json['index'],
-        'mouseButton': !exists(json, 'mouse_button') ? undefined : json['mouse_button'],
-        'mouseAction': !exists(json, 'mouse_action') ? undefined : json['mouse_action'],
+        'description': json['description'],
+        'actionType': !exists(json, 'action_type') ? undefined : json['action_type'],
+        'actionTarget': !exists(json, 'action_target') ? undefined : json['action_target'],
+        'actionContent': !exists(json, 'action_content') ? undefined : json['action_content'],
     };
 }
 
@@ -127,12 +104,11 @@ export function ActionToJSON(value?: Action | null): any {
     }
     return {
         
-        'description': value.description,
-        'target_elem': value.targetElem,
-        'step_id': value.stepId,
         'index': value.index,
-        'mouse_button': value.mouseButton,
-        'mouse_action': value.mouseAction,
+        'description': value.description,
+        'action_type': value.actionType,
+        'action_target': value.actionTarget,
+        'action_content': value.actionContent,
     };
 }
 

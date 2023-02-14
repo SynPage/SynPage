@@ -24,7 +24,7 @@ export const App = (props: AppProps) => {
 
 	return (
 		<div className={"synpage-app"}>
-			{tutorial && <TutorialViewer tutorial={tutorial}/>}
+			{tutorial && client && <TutorialViewer tutorial={tutorial}/>}
 		</div>
 	)
 }

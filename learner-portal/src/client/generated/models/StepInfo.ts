@@ -16,33 +16,39 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface TutorialBriefStepsInner
+ * @interface StepInfo
  */
-export interface TutorialBriefStepsInner {
+export interface StepInfo {
     /**
      * 
      * @type {number}
-     * @memberof TutorialBriefStepsInner
+     * @memberof StepInfo
      */
     readonly id?: number;
     /**
      * 
      * @type {string}
-     * @memberof TutorialBriefStepsInner
+     * @memberof StepInfo
      */
     title: string;
     /**
      * 
+     * @type {string}
+     * @memberof StepInfo
+     */
+    description?: string;
+    /**
+     * 
      * @type {number}
-     * @memberof TutorialBriefStepsInner
+     * @memberof StepInfo
      */
     index: number;
 }
 
 /**
- * Check if a given object implements the TutorialBriefStepsInner interface.
+ * Check if a given object implements the StepInfo interface.
  */
-export function instanceOfTutorialBriefStepsInner(value: object): boolean {
+export function instanceOfStepInfo(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "title" in value;
     isInstance = isInstance && "index" in value;
@@ -50,11 +56,11 @@ export function instanceOfTutorialBriefStepsInner(value: object): boolean {
     return isInstance;
 }
 
-export function TutorialBriefStepsInnerFromJSON(json: any): TutorialBriefStepsInner {
-    return TutorialBriefStepsInnerFromJSONTyped(json, false);
+export function StepInfoFromJSON(json: any): StepInfo {
+    return StepInfoFromJSONTyped(json, false);
 }
 
-export function TutorialBriefStepsInnerFromJSONTyped(json: any, ignoreDiscriminator: boolean): TutorialBriefStepsInner {
+export function StepInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean): StepInfo {
     if ((json === undefined) || (json === null)) {
         return json;
     }
@@ -62,11 +68,12 @@ export function TutorialBriefStepsInnerFromJSONTyped(json: any, ignoreDiscrimina
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'title': json['title'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
         'index': json['index'],
     };
 }
 
-export function TutorialBriefStepsInnerToJSON(value?: TutorialBriefStepsInner | null): any {
+export function StepInfoToJSON(value?: StepInfo | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -76,6 +83,7 @@ export function TutorialBriefStepsInnerToJSON(value?: TutorialBriefStepsInner | 
     return {
         
         'title': value.title,
+        'description': value.description,
         'index': value.index,
     };
 }

@@ -13,12 +13,12 @@
  */
 
 import { exists, mapValues } from '../runtime';
-import type { TutorialMetadata } from './TutorialMetadata';
+import type { TutorialInfo } from './TutorialInfo';
 import {
-    TutorialMetadataFromJSON,
-    TutorialMetadataFromJSONTyped,
-    TutorialMetadataToJSON,
-} from './TutorialMetadata';
+    TutorialInfoFromJSON,
+    TutorialInfoFromJSONTyped,
+    TutorialInfoToJSON,
+} from './TutorialInfo';
 
 /**
  * 
@@ -46,10 +46,10 @@ export interface ListTutorials200Response {
     previous?: string | null;
     /**
      * 
-     * @type {Array<TutorialMetadata>}
+     * @type {Array<TutorialInfo>}
      * @memberof ListTutorials200Response
      */
-    results?: Array<TutorialMetadata>;
+    results?: Array<TutorialInfo>;
 }
 
 /**
@@ -74,7 +74,7 @@ export function ListTutorials200ResponseFromJSONTyped(json: any, ignoreDiscrimin
         'count': !exists(json, 'count') ? undefined : json['count'],
         'next': !exists(json, 'next') ? undefined : json['next'],
         'previous': !exists(json, 'previous') ? undefined : json['previous'],
-        'results': !exists(json, 'results') ? undefined : ((json['results'] as Array<any>).map(TutorialMetadataFromJSON)),
+        'results': !exists(json, 'results') ? undefined : ((json['results'] as Array<any>).map(TutorialInfoFromJSON)),
     };
 }
 
@@ -90,7 +90,7 @@ export function ListTutorials200ResponseToJSON(value?: ListTutorials200Response 
         'count': value.count,
         'next': value.next,
         'previous': value.previous,
-        'results': value.results === undefined ? undefined : ((value.results as Array<any>).map(TutorialMetadataToJSON)),
+        'results': value.results === undefined ? undefined : ((value.results as Array<any>).map(TutorialInfoToJSON)),
     };
 }
 

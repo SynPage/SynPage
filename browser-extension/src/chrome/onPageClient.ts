@@ -13,8 +13,8 @@ export class OnPageClient {
     return validated;
   }
 
-  async requestStep(): Promise<Step> {
-    const response = await this.query({type: QueryType.requestStep});
+  async requestStep(stepIndex: number): Promise<Step> {
+    const response = await this.query({type: QueryType.requestStep, message: stepIndex});
     // TODO: Think about when and how it will happen where the requested stepIndex defers from the one returned (actual)
     return response.message;
   }

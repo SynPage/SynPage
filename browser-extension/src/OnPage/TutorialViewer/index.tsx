@@ -3,8 +3,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../store/hooks";
 import {UserController} from "./UserController";
 import {StepViewer} from "./StepViewer";
-import {loadStep, resumeTutorial} from "../store/clientThunks";
-import {tutorialLoaded} from "../store/tutorialSlice";
+import {loadStep} from "../store/clientThunks";
 
 export interface TutorialViewerProps {
 	tutorial: Tutorial
@@ -17,7 +16,7 @@ export const TutorialViewer = (props: TutorialViewerProps) => {
 	const stepIndex = useAppSelector(state => state.tutorialManager.stepIndex);
 
 	useEffect(() => {
-		dispatch(loadStep());
+		dispatch(loadStep(stepIndex));
 	}, [tutorial, stepIndex]);
 
 	return (

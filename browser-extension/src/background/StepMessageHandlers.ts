@@ -9,11 +9,9 @@ export class RequestStepHandler extends IMessageHandler {
 		super([QueryType.requestStep]);
 	}
 
-	override async handleMessage(message: any, senderHost: string): Promise<{ status: Status; message?: any }> {
+	override async handleMessage(stepIndex: number, senderHost: string): Promise<{ status: Status; message?: any }> {
 		const storageService = this.sessionService.getOrCreateSession(senderHost).storageService;
-		console.log(this.sessionService);
-		let {stepIndex, step, tutorial} = await storageService.get(["stepIndex", "step", "tutorial"]);
-		console.log(stepIndex, step, tutorial);
+		let {tutorial, step} = await storageService.get(["tutorial", "step"]);
 		const errorResponse = {
 			status: Status.error,
 			message: "[Background]: lost current step information."
@@ -27,7 +25,7 @@ export class RequestStepHandler extends IMessageHandler {
 			if (step === undefined || step.index !== stepIndex) {
 				step = await this.stepsApi.retrieveStep({id: stepId.toString()});
 				console.log("[Background]: Retrieved step", step);
-				await storageService.set({step: step});
+				await storageService.set({step: step, stepIndex: stepIndex});
 			}
 
 			return {

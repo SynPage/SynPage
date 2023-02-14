@@ -3,7 +3,7 @@ import {Button, DialogActions, DialogContent, Typography} from "@mui/material";
 import React from "react";
 import {Error} from "../../../../shared/Error";
 import {useAppDispatch, useAppSelector} from "../../../store/hooks";
-import {setStepIndex} from "../../../store/clientThunks";
+import {setStepIndex} from "../../../store/tutorialSlice";
 
 export const CurrentStepView = (props: {step: Step}) => {
 	const dispatch = useAppDispatch();

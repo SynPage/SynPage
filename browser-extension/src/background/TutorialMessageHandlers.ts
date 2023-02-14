@@ -16,7 +16,8 @@ export class TutorialInitializationHandler extends IMessageHandler {
 		const tutorial = await this.tutorialsApi.retrieveTutorial({id: id});
 		const targetHost = new URL(tutorial.targetSite).host;
 		const currentTab = await getCurrentTab();
-		const currentPageHost = new URL(currentTab.url ?? "").host;
+		console.log("Constructing URL", currentTab);
+		const currentPageHost = new URL(currentTab.url ?? "https://www.google.ca").host;
 		console.log(targetHost, currentPageHost);
 		if (targetHost !== currentPageHost) {
 			await chrome.tabs.create({url: tutorial.targetSite});

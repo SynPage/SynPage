@@ -40,6 +40,6 @@
     "http://dev.synpage.ca/*"
   ],
   "externally_connectable": {
-    "matches": ["http://localhost/*", "https://devlearner.synpage.ca/*"]
+    "matches": ["http://localhost/*", "https://devlearner.synpage.ca/"]
   }
 }

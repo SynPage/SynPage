@@ -19,7 +19,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 class ActionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Action
-        fields = ['index', 'description', 'action_type', 'action_target', 'action_content']
+        fields = ['step_id', 'index', 'description', 'action_type', 'action_target', 'action_content']
 
 
 class StepSerializer(serializers.ModelSerializer):
@@ -27,7 +27,7 @@ class StepSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Step
-        fields = ['index', 'title', 'description', 'actions']
+        fields = ['tutorial_id', 'index', 'title', 'description', 'actions']
 
 
 class StepInfoSerializer(serializers.ModelSerializer):

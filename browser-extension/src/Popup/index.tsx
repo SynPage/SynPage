@@ -8,6 +8,7 @@ import {ChromeQuery, QueryType} from "../chrome/query";
 import {ChromeResponse, Status, validateResponse} from "../chrome/response";
 import {PopupClient} from "../chrome/popupClient";
 import "./index.css"
+import {getCurrentTab} from "../chrome/utils";
 
 export interface PopupProps {
   chromeClient: PopupClient,
@@ -40,6 +41,7 @@ export const Popup = (props: PopupProps) => {
 
   useEffect(() => {
     // chromeClient.listen(handleChromeMessage, handleChromeError);
+    console.log(chrome);
 
     setLoading("Loading...");
     tutorialsApi.listTutorials().then(value => {

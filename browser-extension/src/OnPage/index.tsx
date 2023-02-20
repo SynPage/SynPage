@@ -4,15 +4,25 @@ import {App} from "./App";
 import {Provider, TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {useAppDispatch} from "./store/hooks";
 import {store} from "./store";
+import {getCurrentTab} from "../chrome/utils";
 
 export interface OnPageProps {
-  chromeClient: OnPageClient
+	chromeClient: OnPageClient
 }
 
 export const OnPage = (props: OnPageProps) => {
-  return (
-    <Provider store={store}>
-      <App {...props}/>
-    </Provider>
-  );
+	useEffect(() => {
+		console.log(chrome);
+		// @ts-ignore
+		const tree = chrome.automation.getTree((tree: any) => {
+			console.log("chrome.automation.GetTree", tree);
+		})
+
+	}, [])
+
+	return (
+		<Provider store={store}>
+			<App {...props}/>
+		</Provider>
+	);
 };

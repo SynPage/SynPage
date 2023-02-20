@@ -7,6 +7,10 @@
     "default_popup": "index.html",
     "default_title": "Open the popup"
   },
+  "automation": {
+    "desktop": false,
+    "interact": true
+  },
   "content_scripts": [
     {
       "matches": [
@@ -30,7 +34,8 @@
   },
   "permissions": [
     "activeTab",
-    "storage"
+    "storage",
+    "debugger"
   ],
   "optional_permissions": [
   ],

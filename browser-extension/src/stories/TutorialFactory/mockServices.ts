@@ -1,6 +1,6 @@
 import {MockPopupClient} from "./mockPopupClient";
 import {MockOnPageClient} from "./mockOnPageClient";
-import {Recommendation, Step, Tutorial, TutorialRecommendationsInner} from "../../client/generated";
+import {Recommendation, Step, Tutorial} from "../../client/generated";
 
 const BASE_PATH = process.env.API_BASE_URL;
 
@@ -9,27 +9,14 @@ export const mockOnPageClient = new MockOnPageClient();
 
 export const mockSteps: Step[] = [
   {
+    tutorialId: 0,
     title: "Test Step 1",
     index: 0,
     actions: [
       {
         index: 0,
-        actionType: "Left Click",
-        actionTarget: "#search",
-        description: "Hello",
-      }
-    ]
-  },
-  {
-    title: "Test Step 2",
-    index: 1,
-    actions: [
-      {
-        index: 0,
-        actionType: "Enter",
-        actionTarget: "#search",
-        actionContent: "Hello World",
-        description: "Hello",
+        type: "Left Click",
+        targetElement: "#search",
       }
     ]
   }
@@ -40,12 +27,13 @@ export const mockRecommendation: Recommendation = {
   title: "Stack Overflow",
   description: "Description",
   media: "https://i5.walmartimages.ca/images/Enlarge/094/514/6000200094514.jpg",
-  link: "https://google.ca"
+  link: "https://google.ca",
+  createdAt: new Date(2023, 3, 17),
+  updatedAt: new Date(2023, 3, 17)
 }
 
 export const mockTutorial: Tutorial = {
   title: "Test Tutorial 1",
-  targetSite: "dev.synpage.ca",
   description: "This is a long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long description",
   steps: mockSteps,
   recommendations: [mockRecommendation]

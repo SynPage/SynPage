@@ -16,7 +16,7 @@ export default {
   },
 } as ComponentMeta<typeof Header>;
 
-const Template: ComponentStory<typeof Header> = (args) => <Header/>;
+const Template: ComponentStory<typeof Header> = (args) => <Header {...args}/>;
 
 export const Default = Template.bind({});
 export const Searching = Template.bind({});

@@ -25,3 +25,5 @@ router.register(r'tutorials', views.TutorialViewSet)
 router.register(r'steps', views.StepViewSet)
 router.register(r'actions', views.ActionViewSet)
 router.register(r'recommendations', views.RecommendationViewSet)
+
+urlpatterns = router.urls

@@ -4,12 +4,17 @@ import {Menu} from "@mui/icons-material";
 import {useState} from "react";
 import {SearchBar} from "./SearchBar";
 
-export const Header = () => {
+export interface HeaderProps {
+  onSearch: (query: string) => void
+}
+
+export const Header = (props: HeaderProps) => {
+  const {onSearch} = props;
   const [searching, setSearching] = useState(false);
 
   const handleSearch = (query: string) => {
     if (query) {
-
+      onSearch(query);
     }
     setSearching(false);
   }

@@ -7,14 +7,10 @@
     "default_popup": "index.html",
     "default_title": "Open the popup"
   },
-  "automation": {
-    "desktop": false,
-    "interact": true
-  },
   "content_scripts": [
     {
       "matches": [
-        "https://google.ca/*",
+        "https://www.amazon.ca/*",
         "https://www.google.ca/*"
       ],
       "js": [

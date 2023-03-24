@@ -3,12 +3,11 @@ import {Header} from "./components/Header";
 import {TutorialList} from "./components/TutorialList";
 import {Loading} from "../shared/Loading";
 import {Error} from "../shared/Error";
-import {ActionsApi, StepsApi, TutorialInfo, TutorialsApi} from "../client/generated";
-import {ChromeQuery, QueryType} from "../chrome/query";
-import {ChromeResponse, Status, validateResponse} from "../chrome/response";
+import {ActionsApi, StepsApi, Tutorial, TutorialInfo, TutorialsApi} from "../client/generated";
+import {QueryType} from "../chrome/query";
+import {Status, validateResponse} from "../chrome/response";
 import {PopupClient} from "../chrome/popupClient";
 import "./index.css"
-import {getCurrentTab} from "../chrome/utils";
 
 export interface PopupProps {
   chromeClient: PopupClient,
@@ -44,7 +43,7 @@ export const Popup = (props: PopupProps) => {
     console.log(chrome);
 
     setLoading("Loading...");
-    tutorialsApi.listTutorials().then(value => {
+    tutorialsApi.tutorialsList().then(value => {
       setLoading(undefined);
       if (!value.results) {
         setError("Failed to get tutorials for site.");
@@ -101,6 +100,34 @@ export const Popup = (props: PopupProps) => {
       setLoading(undefined);
       setError(reason.message ?? "Unknown error.");
     })
+
+    // getCurrentTab().then(tab => {
+    //   chromeClient.queryBackground({type: QueryType.accessibility, message: {tabId: tab.id, locator: ""}}).then(chromeResponse => {
+    //     console.log("AOM", chromeResponse);
+    //     const nodeId: number = chromeResponse.message;
+    //   }, reason => {
+    //     console.log("[Popup]: Error occurred when trying to reach background.");
+    //     setLoading(undefined);
+    //     setError(reason.message ?? "Unknown error.");
+    //   })
+    // })
+  }
+
+  const handleSearch = (question: string) => {
+    chromeClient.queryBackground({type: QueryType.generate, message: question}).then(chromeResponse => {
+      const {valid, validated} = validateResponse(chromeResponse);
+      if (!valid) {
+        console.log("Received unexpected response.", chromeResponse);
+        setError("Received unexpected response.");
+      } else if (chromeResponse.status !== Status.ok) {
+        setError(validated.message ?? "Unknown error.");
+      }
+      console.log("askAI", validated);
+    }, reason => {
+      console.log("[Popup]: Error occurred when trying to reach background.");
+      setLoading(undefined);
+      setError(reason.message ?? "Unknown error.");
+    })
   }
 
   return (
@@ -110,7 +137,7 @@ export const Popup = (props: PopupProps) => {
       stepsApi: stepsApi,
       actionsApi: actionsApi
     }}>
-      <Header/>
+      <Header onSearch={handleSearch}/>
       <Loading loading={loading}/>
       <Error error={error}/>
       <TutorialList tutorials={list} onTutorialSelection={handleTutorialSelection}/>

@@ -1,46 +1,78 @@
-import {Button, DialogActions, DialogContent, Paper, Popover, Popper, Typography} from "@mui/material";
+import {Button, DialogActions, DialogContent, Paper, Popover, Popper, Snackbar, Typography} from "@mui/material";
 import {Action} from "../../../client/generated";
 import React, {useEffect, useState} from "react";
 import {ElementUtils} from "../../../shared/ElementUtils";
+import {ActionController} from "./index";
+import {OnPageAOMService} from "../../onPageAOMService";
 
 export interface InstructionDialogProps {
 	action: Action;
-	onPrevAction?: () => void;
-	onNextAction?: () => void;
+	actionController: ActionController;
+	onTargetElement?: (element: Element) => void;
 }
 
 export const InstructionDialog = (props: InstructionDialogProps) => {
-	const {action, onPrevAction, onNextAction} = props;
+	const {action, actionController, onTargetElement} = props;
 	const [anchorEl, setAnchorEl] = useState<Element | null>(null);
+	const {canNextAction, canPrevAction, nextAction, prevAction} = actionController;
 
 	useEffect(() => {
-		setAnchorEl(action.actionTarget ? ElementUtils.getTargetElement(action.actionTarget) : null);
+		// const targetElement = action.targetElement ? ElementUtils.getTargetElement(action.targetElement) : null
+		// aomService.getNodeSelector(action.targetElement!).then((selector) => {
+		// 	const targetElement = ElementUtils.getTargetElement(selector);
+		// 	setAnchorEl(targetElement);
+		// 	if (targetElement) {
+		// 		onTargetElement?.(targetElement);
+		// 	}
+		// 	console.log("Target element found", selector, targetElement)
+		// })
+		// const targetElement = document.body;
 		console.log("Instructional dialog loaded", action);
 	}, [action])
 
+	const content = () => (
+		<Paper>
+			<DialogContent>
+				<Typography sx={{p: 2}}>{`${action.type}`}</Typography>
+				<Typography sx={{p: 2}}>{action.targetElement}</Typography>
+			</DialogContent>
+			<DialogActions>
+				<Button onClick={prevAction} disabled={!canPrevAction()}>
+					Prev
+				</Button>
+				<Button onClick={nextAction} disabled={!canNextAction()}>
+					Next
+				</Button>
+			</DialogActions>
+		</Paper>
+	)
+
+
 	return (
 		<div>
-			{anchorEl &&
+			{anchorEl ?
 				<Popper
 					open={true}
 					anchorEl={anchorEl}
-					placement={"auto-start"}
+					placement={"bottom-end"}
 				>
-					<Paper>
-						<DialogContent>
-							<Typography sx={{p: 2}}>{`${action.actionType} ${action.actionType} me.`}</Typography>
-							<Typography sx={{p: 2}}>{action.description}</Typography>
-						</DialogContent>
-						<DialogActions>
-							<Button onClick={onPrevAction} disabled={!onPrevAction}>
-								Prev
-							</Button>
-							<Button onClick={onNextAction} disabled={!onNextAction}>
-								Next
-							</Button>
-						</DialogActions>
-					</Paper>
-				</Popper>}
+					{content()}
+				</Popper>
+				:
+				<Popover
+					open={true}
+					anchorEl={document.body}
+					anchorOrigin={{
+						vertical: 'top',
+						horizontal: 'right',
+					}}
+					transformOrigin={{
+						vertical: 'top',
+						horizontal: 'right',
+					}}
+				>
+					{content()}
+				</Popover>}
 		</div>
 	)
 }

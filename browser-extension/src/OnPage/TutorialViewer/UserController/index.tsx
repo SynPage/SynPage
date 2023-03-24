@@ -4,16 +4,14 @@ import {ActionCentre} from "./ActionCentre";
 
 export interface UserControllerProps {
 	tutorial: Tutorial,
-	step?: Step
 }
 
 export const UserController = (props: UserControllerProps) => {
-	const {tutorial, step} = props;
+	const {tutorial} = props;
 
 	return (
 		<div className={"user-controller"}>
-			<ActionCentre/>
-			<SidePanel tutorial={tutorial} step={step}/>
+
 		</div>
 	)
 }

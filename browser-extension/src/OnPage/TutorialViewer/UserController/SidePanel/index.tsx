@@ -1,12 +1,12 @@
 import {Drawer, Tab, Tabs} from "@mui/material"
 import React from "react";
-import {Step, Tutorial} from "../../../../client/generated";
 import {useAppDispatch, useAppSelector} from "../../../store/hooks";
 import {setSidePanelView, SidePanelView, toggleSidePanel} from "../../../store/controllerInterfaceSlice";
 import {OutlineView} from "./OutlineView";
 import {Error} from "../../../../shared/Error";
 import {InfoView} from "./InfoView";
 import {CommentView} from "./CommentView";
+import {Step, Tutorial} from "../../../../client/generated";
 
 export interface SidePanelProps {
   tutorial: Tutorial,

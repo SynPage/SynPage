@@ -1,6 +1,10 @@
 from django.contrib.auth.models import User, Group
+from django.http import JsonResponse
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import viewsets, filters
 from rest_framework import permissions
+from rest_framework.decorators import action
 
 from .models.tutorial import Tutorial, Step, Action, Recommendation
 from synapi.serializers import (
@@ -9,10 +13,10 @@ from synapi.serializers import (
     TutorialSerializer,
     TutorialInfoSerializer,
     StepSerializer,
-    StepInfoSerializer,
     ActionSerializer,
-    RecommendationSerializer
+    RecommendationSerializer, TutorialCreationSerializer
 )
+from .tutorial_generation import generate_tutorial_and_save
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -47,7 +51,34 @@ class TutorialViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action == 'list':
             return TutorialInfoSerializer
+        if self.action == 'create':
+            return TutorialCreationSerializer
         return super().get_serializer_class()
+
+    @extend_schema(
+        responses=TutorialSerializer,
+        request=None,
+        parameters=[
+            OpenApiParameter(
+                name='question',
+                description='The question for which the tutorial will be generated.',
+                required=True,
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.QUERY
+            )
+        ],
+        description='Generate a tutorial based on a given question and return the tutorial ID as a JSON response.',
+    )
+    @action(detail=False, methods=['post'])
+    def generate(self, request, *args, **kwargs):
+        question = request.query_params.get('question')
+
+        if not question:
+            return JsonResponse({"detail": "Question parameter is required."}, status=400)
+
+        tutorial = generate_tutorial_and_save(question)
+
+        return JsonResponse(TutorialSerializer(instance=tutorial).data)
 
 
 class StepViewSet(viewsets.ModelViewSet):
@@ -58,11 +89,6 @@ class StepViewSet(viewsets.ModelViewSet):
     serializer_class = StepSerializer
 
     # permission_classes = [permissions.IsAuthenticated]
-
-    def get_serializer_class(self):
-        if self.action == 'list':
-            return StepInfoSerializer
-        return super().get_serializer_class()
 
 
 class ActionViewSet(viewsets.ModelViewSet):

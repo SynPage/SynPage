@@ -1,8 +1,8 @@
 import {Box, Grid, Typography} from "@mui/material";
-import {Tutorial} from "../../client/generated";
+import {TutorialInfo} from "../../client/generated";
 
 export interface TutorialNameCardProps {
-  tutorial: Tutorial,
+  tutorial: TutorialInfo,
   onClick: (e: any) => void
 }
 

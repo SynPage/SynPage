@@ -1,7 +1,7 @@
 import {ChromeQuery, QueryType} from "../../chrome/query";
 import {ChromeResponse} from "../../chrome/response";
 import {OnPageClient} from "../../chrome/onPageClient";
-import {Step, Tutorial, TutorialInfo} from "../../client/generated";
+import {Step, Tutorial} from "../../client/generated";
 import {mockSteps, mockTutorial} from "./mockServices";
 
 export class MockOnPageClient extends OnPageClient {

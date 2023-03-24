@@ -1,17 +1,17 @@
 import {Box, Grid} from "@mui/material";
-import {TutorialInfo, Tutorial} from "../../client/generated";
+import {Tutorial, TutorialInfo} from "../../client/generated";
 import React from "react";
 import {TutorialNameCard} from "./TutorialNameCard";
 
 export interface TutorialListProps {
-  tutorials: Tutorial[],
-  onTutorialSelection: (tut: Tutorial) => void
+  tutorials: TutorialInfo[],
+  onTutorialSelection: (tut: TutorialInfo) => void
 }
 
 export const TutorialList = (props: TutorialListProps) => {
   const {tutorials, onTutorialSelection} = props;
 
-  const handleListItemClick = (tut: Tutorial) => {
+  const handleListItemClick = (tut: TutorialInfo) => {
     onTutorialSelection(tut)
   }
 

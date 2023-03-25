@@ -1,19 +1,15 @@
 import {
 	Button,
-	Dialog,
 	DialogActions,
 	DialogContent,
 	Paper,
-	Popover,
 	Popper,
-	Snackbar,
 	Typography
 } from "@mui/material";
 import {Action} from "../../../client/generated";
 import React, {useEffect, useState} from "react";
-import {ElementUtils} from "../../../shared/ElementUtils";
 import {ActionController} from "./index";
-import {OnPageAOMService} from "../../onPageAOMService";
+import {ElementUtils} from "../../../shared/ElementUtils";
 
 export interface InstructionDialogProps {
 	action: Action;
@@ -27,16 +23,17 @@ export const InstructionDialog = (props: InstructionDialogProps) => {
 	const {canNextAction, canPrevAction, nextAction, prevAction} = actionController;
 
 	useEffect(() => {
-		// const targetElement = action.targetElement ? ElementUtils.getTargetElement(action.targetElement) : null
-		// aomService.getNodeSelector(action.targetElement!).then((selector) => {
-		// 	const targetElement = ElementUtils.getTargetElement(selector);
-		// 	setAnchorEl(targetElement);
-		// 	if (targetElement) {
-		// 		onTargetElement?.(targetElement);
-		// 	}
-		// 	console.log("Target element found", selector, targetElement)
-		// })
-		// const targetElement = document.body;
+		if (!action.targetElement) {
+			throw new Error("No target element found");
+		}
+		ElementUtils.getNodeSelectorByDescription(action.targetElement).then((selector) => {
+			const targetElement = document.querySelector(selector);
+			setAnchorEl(targetElement);
+			if (targetElement) {
+				onTargetElement?.(targetElement);
+			}
+			console.log("Target element found", selector, targetElement)
+		});
 		console.log("Instructional dialog loaded", action);
 	}, [action])
 

@@ -26,7 +26,7 @@ export class BackgroundApp {
 		// messageService.registerMessageHandler(new RequestStepHandler(stepsApi, sessionService));
 		messageService.registerMessageHandler(new SetStepHandler(sessionService));
 		messageService.registerMessageHandler(new AOMHandler(aomService));
-		messageService.registerMessageHandler(new TutorialFromAIHandler(aiService));
+		messageService.registerMessageHandler(new TutorialFromAIHandler(tutorialsApi, sessionService));
 		messageService.registerExternalMessageHandler(new TutorialInitializationHandler(tutorialsApi, sessionService));
 	}
 }

@@ -114,7 +114,9 @@ export const Popup = (props: PopupProps) => {
   }
 
   const handleSearch = (question: string) => {
+    setLoading("Generating Tutorial...");
     chromeClient.queryBackground({type: QueryType.generate, message: question}).then(chromeResponse => {
+      setLoading(undefined)
       const {valid, validated} = validateResponse(chromeResponse);
       if (!valid) {
         console.log("Received unexpected response.", chromeResponse);

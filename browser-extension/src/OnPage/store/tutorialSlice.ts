@@ -4,11 +4,9 @@ import {OnPageClient} from "../../chrome/onPageClient";
 import {Step, Tutorial} from "../../client/generated";
 import {clientLoaded, loadStep} from "./clientThunks";
 import {IAOMService} from "../../services/IAOMService";
-import {OnPageAOMService} from "../onPageAOMService";
 
 export interface TutorialState {
 	chromeClient?: OnPageClient
-	aomService?: IAOMService
 	tutorial?: Tutorial
 	stepIndex: number
 	actionIndex: number
@@ -69,7 +67,6 @@ export const tutorialSlice = createSlice({
 			throw new Error("[LoadStep]: Not implemented")
 		}).addCase(clientLoaded.fulfilled, (state, action) => {
 			state.chromeClient = action.payload;
-			state.aomService = new OnPageAOMService(action.payload)
 		})
 	},
 })

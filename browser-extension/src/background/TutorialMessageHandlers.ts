@@ -2,9 +2,26 @@ import {IMessageHandler} from "../chrome/IMessageHandler";
 import {ChromeQuery, QueryType} from "../chrome/query";
 import {Status} from "../chrome/response";
 import {getCurrentTab} from "../chrome/utils";
-import {TutorialsApi} from "../client/generated";
+import {Tutorial, TutorialsApi} from "../client/generated";
 import {ISessionService} from "../chrome/SessionService";
 import {IAIService} from "../ai/AIService";
+import {tutorialsApi} from "../client";
+
+const handleTutorialInitialization = async (tutorial: Tutorial, sessionService: ISessionService): Promise<void> => {
+	console.log("[Background]: Saving tutorial", tutorial);
+	await sessionService.getDefaultSession().storageService.set({tutorial: tutorial, stepIndex: 0});
+	await notifyContent({type: QueryType.init, message: tutorial});
+}
+
+const notifyContent = async (query: ChromeQuery) => {
+	const tab = await getCurrentTab();
+	if (!tab || !tab.id) {
+		console.log("[Background]: Failed to reach content script, active tab not found", query);
+	} else {
+		console.log(`[Background]: Sending query`, query, ` to tab`, tab);
+		await chrome.tabs.sendMessage(tab.id, query);
+	}
+}
 
 export class TutorialInitializationHandler extends IMessageHandler {
 	constructor(protected tutorialsApi: TutorialsApi, protected sessionService: ISessionService) {
@@ -20,22 +37,10 @@ export class TutorialInitializationHandler extends IMessageHandler {
 		// if (targetHost !== currentPageHost) {
 		// 	await chrome.tabs.create({url: tutorial.targetSite});
 		// }
-		console.log("[Background]: Saving tutorial", tutorial);
-		await this.sessionService.getDefaultSession().storageService.set({tutorial: tutorial, stepIndex: 0});
-		await this.notifyContent({type: QueryType.init, message: tutorial});
+		await handleTutorialInitialization(tutorial, this.sessionService);
 
 		return {
 			status: Status.ok
-		}
-	}
-
-	protected notifyContent = async (query: ChromeQuery) => {
-		const tab = await getCurrentTab();
-		if (!tab || !tab.id) {
-			console.log("[Background]: Failed to reach content script, active tab not found", query);
-		} else {
-			console.log(`[Background]: Sending query`, query, ` to tab`, tab);
-			await chrome.tabs.sendMessage(tab.id, query);
 		}
 	}
 }
@@ -82,13 +87,17 @@ export class TutorialExitHandler extends IMessageHandler {
 }
 
 export class TutorialFromAIHandler extends IMessageHandler {
-	constructor(protected aiService: IAIService) {
+	constructor(protected tutorialsApi: TutorialsApi, protected sessionService: ISessionService) {
 		super([QueryType.generate]);
 	}
 	override async handleMessage(message: any, sender: chrome.runtime.MessageSender): Promise<{ status: Status; message?: any }> {
 		try {
-			const tutorial = await this.aiService.askAI(message);
-			console.log("Returning AI generated tutorial", tutorial);
+			console.log("Generating tutorial", message);
+			const tutorial = await tutorialsApi.tutorialsGenerateCreate({question: message});
+			console.log("Generated tutorial", tutorial);
+
+			await handleTutorialInitialization(tutorial, this.sessionService);
+
 			return {
 				status: Status.ok,
 				message: tutorial

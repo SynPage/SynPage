@@ -1,31 +1,35 @@
 import {Drawer, Tab, Tabs} from "@mui/material"
-import React from "react";
-import {useAppDispatch, useAppSelector} from "../../../store/hooks";
-import {setSidePanelView, SidePanelView, toggleSidePanel} from "../../../store/controllerInterfaceSlice";
+import React, {useEffect} from "react";
 import {OutlineView} from "./OutlineView";
 import {Error} from "../../../../shared/Error";
 import {InfoView} from "./InfoView";
 import {CommentView} from "./CommentView";
-import {Step, Tutorial} from "../../../../client/generated";
+import {Tutorial} from "../../../../client/generated";
+import {StepController} from "../../index";
+import {SidePanelController} from "../index";
 
 export interface SidePanelProps {
   tutorial: Tutorial,
-  step?: Step,
+  sidePanelController: SidePanelController,
+  stepController: StepController
+}
+
+export enum SidePanelView {
+  main = "main",
+  comment = "comment",
+  step = "step"
 }
 
 export const SidePanel = (props: SidePanelProps) => {
-  const dispatch = useAppDispatch();
-  const {tutorial, step, ...others} = props;
-  const open = useAppSelector(state => state.controllerInterface.sidePanelOpen);
-  const sidePanelWidth = useAppSelector(state => state.controllerInterface.sidePanelWidth);
-  const sidePanelView = useAppSelector(state => state.controllerInterface.sidePanelView);
+  const {tutorial, stepController, sidePanelController} = props;
+  const {open, width, view} = sidePanelController;
 
   const toggleDrawer = () => {
-    dispatch(toggleSidePanel());
+    sidePanelController.toggle();
   }
 
   const handleViewChange = (view: SidePanelView) => {
-    dispatch(setSidePanelView(view));
+    sidePanelController.setView(view);
   }
 
   const createTabs = () => {
@@ -33,15 +37,15 @@ export const SidePanel = (props: SidePanelProps) => {
     for (let view in SidePanelView) {
       tabs.push(<Tab label={view} value={view}/>)
     }
-    return <Tabs variant={"scrollable"} value={sidePanelView} onChange={(e, value) => handleViewChange(value)}>
+    return <Tabs variant={"scrollable"} value={view} onChange={(e, value) => handleViewChange(value)}>
       {tabs}
     </Tabs>
   }
 
   const createView = () => {
-    switch (sidePanelView) {
+    switch (view) {
       case SidePanelView.step:
-        return <OutlineView tutorial={tutorial}/>
+        return <OutlineView tutorial={tutorial} stepController={stepController}/>
       case SidePanelView.main:
         return <InfoView tutorial={tutorial}/>
       case SidePanelView.comment:
@@ -54,10 +58,10 @@ export const SidePanel = (props: SidePanelProps) => {
     <div className={"side-panel"}>
       <Drawer
         sx={{
-          width: sidePanelWidth,
+          width: width,
           flexShrink: 0,
           '& .MuiDrawer-paper': {
-            width: sidePanelWidth,
+            width: width,
             boxSizing: 'border-box',
           },
           border: 'none'

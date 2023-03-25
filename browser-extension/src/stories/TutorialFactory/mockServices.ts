@@ -17,6 +17,11 @@ export const mockSteps: Step[] = [
         index: 0,
         type: "Left Click",
         targetElement: "#search",
+      },
+      {
+        index: 1,
+        type: "Left Click",
+        targetElement: "#profile",
       }
     ]
   }

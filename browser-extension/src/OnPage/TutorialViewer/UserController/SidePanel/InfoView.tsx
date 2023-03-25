@@ -1,13 +1,11 @@
 import {Box, DialogContent, Divider, List, ListItemButton, Stack, Typography} from "@mui/material";
 import React from "react";
 import {Tutorial} from "../../../../client/generated";
-import {useAppDispatch, useAppSelector} from "../../../store/hooks";
 import {CreatorNameCard} from "../../../../components/CreatorNameCard";
 import {TutorialInfoCard} from "../../../../components/TutorialInfoCard";
 import {MediaBox} from "../../../../components/MediaBox";
 
 export const InfoView = (props: { tutorial: Tutorial }) => {
-	const dispatch = useAppDispatch();
 	const {tutorial} = props;
 	const recommendations = tutorial.recommendations;
 

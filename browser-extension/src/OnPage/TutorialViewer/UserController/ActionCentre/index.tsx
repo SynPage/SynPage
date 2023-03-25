@@ -1,22 +1,20 @@
 import React from "react";
 import {Box, SpeedDial, SpeedDialAction, SpeedDialIcon} from "@mui/material";
-import {useAppDispatch, useAppSelector} from "../../../store/hooks";
-import {setSidePanelView, SidePanelView, toggleSidePanel} from "../../../store/controllerInterfaceSlice";
 import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import PrintIcon from '@mui/icons-material/Print';
+import {SidePanelView} from "../SidePanel";
+import {SidePanelController} from "../index";
 
 export interface ActionCentreProps {
-
+	sidePanelController: SidePanelController
 }
 
 export const ActionCentre = (props: ActionCentreProps) => {
-	const dispatch = useAppDispatch();
+	const {sidePanelController} = props;
+	const sidePanelWidth = sidePanelController.open ? sidePanelController.width : 0
 	const fabBottom = 16;
 	const fabRight = 16;
-	const sidePanelWidth = useAppSelector(state => {
-		return state.controllerInterface.sidePanelOpen ? state.controllerInterface.sidePanelWidth : 0;
-	})
 
 	const actions = [
 		{icon: <FileCopyIcon/>, view: SidePanelView.step},
@@ -25,18 +23,18 @@ export const ActionCentre = (props: ActionCentreProps) => {
 	];
 
 	const handleSpeedDialViewClick = (view: SidePanelView) => {
-		dispatch(setSidePanelView(view));
+		sidePanelController.setView(view);
 	}
 
 	return (
-		<Box>
+		<div className={"action-centre"}>
 			<SpeedDial
 				ariaLabel="Action Centre"
-				sx={{position: 'absolute', bottom: 16, right: (16 + sidePanelWidth)}}
+				sx={{position: 'absolute', bottom: fabBottom, right: (fabRight + sidePanelWidth)}}
 				icon={<SpeedDialIcon/>}
 				direction={"left"}
 				onDoubleClick={() => {
-					dispatch(toggleSidePanel())
+					sidePanelController.toggle();
 				}}
 			>
 				{actions.map((action) => (
@@ -45,11 +43,14 @@ export const ActionCentre = (props: ActionCentreProps) => {
 						icon={action.icon}
 						tooltipTitle={action.view}
 						onClick={(e) => {
+							if (!sidePanelController.open) {
+								sidePanelController.toggle();
+							}
 							handleSpeedDialViewClick(action.view);
 						}}
 					/>
 				))}
 			</SpeedDial>
-		</Box>
+		</div>
 	)
 }

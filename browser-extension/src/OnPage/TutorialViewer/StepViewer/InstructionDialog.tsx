@@ -1,4 +1,14 @@
-import {Button, DialogActions, DialogContent, Paper, Popover, Popper, Snackbar, Typography} from "@mui/material";
+import {
+	Button,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	Paper,
+	Popover,
+	Popper,
+	Snackbar,
+	Typography
+} from "@mui/material";
 import {Action} from "../../../client/generated";
 import React, {useEffect, useState} from "react";
 import {ElementUtils} from "../../../shared/ElementUtils";
@@ -59,20 +69,11 @@ export const InstructionDialog = (props: InstructionDialogProps) => {
 					{content()}
 				</Popper>
 				:
-				<Popover
+				<Popper
 					open={true}
-					anchorEl={document.body}
-					anchorOrigin={{
-						vertical: 'top',
-						horizontal: 'right',
-					}}
-					transformOrigin={{
-						vertical: 'top',
-						horizontal: 'right',
-					}}
 				>
 					{content()}
-				</Popover>}
+				</Popper>}
 		</div>
 	)
 }

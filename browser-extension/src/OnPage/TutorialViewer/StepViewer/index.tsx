@@ -92,7 +92,7 @@ export const StepViewer = (props: StepViewerProps) => {
 				<InstructionDialog
 					action={action}
 					actionController={actionController}
-					onTargetElement={el => handleHighlight([el])}
+					onTargetElement={el => handleHighlight(el ? [el] : [])}
 				/>
 			}
 		</div>

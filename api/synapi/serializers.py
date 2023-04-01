@@ -19,7 +19,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 class ActionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Action
-        fields = ['index', 'type', 'target_element', 'extras']
+        fields = ['index', 'type', 'description', 'target_element', 'extras']
 
     def create(self, validated_data):
         step_id = self.context.get('step_id')
@@ -33,7 +33,7 @@ class StepSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Step
-        fields = ['tutorial_id', 'index', 'title', 'description', 'actions']
+        fields = ['tutorial_id', 'index', 'title', 'description', 'actions', 'target_website']
 
 
 class RecommendationSerializer(serializers.ModelSerializer):
@@ -68,7 +68,7 @@ class StepCreationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Step
-        fields = ['index', 'title', 'description', 'actions']
+        fields = ['index', 'title', 'description', 'actions', 'target_website']
 
     def create(self, validated_data):
         step = Step(

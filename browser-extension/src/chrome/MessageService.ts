@@ -61,6 +61,7 @@ export class MessageService implements IMessageService {
 			if (responses.length > 0) {
 				sendResponse(this.constructResponse(validated, Status.ok, responses[0])); // TODO: Should we return all responses?
 			} else if (errors.length > 0) {
+				console.log("Sending error response", errors);
 				sendResponse(this.constructErrorResponse(validated, errors[0]));
 			}
 		} else {

@@ -116,15 +116,17 @@ export const Popup = (props: PopupProps) => {
   const handleSearch = (question: string) => {
     setLoading("Generating Tutorial...");
     chromeClient.queryBackground({type: QueryType.generate, message: question}).then(chromeResponse => {
+      console.log("askAI", chromeResponse);
       setLoading(undefined)
       const {valid, validated} = validateResponse(chromeResponse);
       if (!valid) {
         console.log("Received unexpected response.", chromeResponse);
         setError("Received unexpected response.");
       } else if (chromeResponse.status !== Status.ok) {
-        setError(validated.message ?? "Unknown error.");
+        setError(validated.message.toString() ?? "Unknown error.");
       }
       console.log("askAI", validated);
+      window.close();
     }, reason => {
       console.log("[Popup]: Error occurred when trying to reach background.");
       setLoading(undefined);

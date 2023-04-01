@@ -1,6 +1,6 @@
 import {OnPageClient} from "../chrome/onPageClient";
 import {App} from "./App";
-import {Provider, TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
+import {Provider} from "react-redux";
 import {store} from "./store";
 
 export interface OnPageProps {

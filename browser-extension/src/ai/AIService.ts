@@ -3,7 +3,7 @@ import {Tutorial, TutorialFromJSON} from "../client/generated";
 import {ChatCompletionRequestMessage} from "openai/api";
 
 export interface IAIService {
-	findDescriptionTarget<T extends IdentifiableNode>(description: any, objects: T[]): Promise<T>;
+	findDescriptionTarget<T extends IdentifiableNode>(description: any, objects: T[]): Promise<T|undefined>;
 
 	askAI(question: string): Promise<Tutorial>;
 }
@@ -23,7 +23,7 @@ export class AIService implements IAIService {
 		this.openai = new OpenAIApi(configuration)
 	}
 
-	async findDescriptionTarget<T extends IdentifiableNode>(description: any, objects: T[]): Promise<T> {
+	async findDescriptionTarget<T extends IdentifiableNode>(description: any, objects: T[]): Promise<T|undefined> {
 		console.log("finding target", description, objects)
 		const response = await fetch('http://localhost:7071/api/GetMatchingNode', {
 			method: 'POST',
@@ -37,7 +37,7 @@ export class AIService implements IAIService {
 		});
 		const matchingDescription = await response.text();
 		console.log("found target", response, matchingDescription);
-		return objects.find(o => o.description === matchingDescription)!;
+		return objects.find(o => o.description === matchingDescription);
 	}
 
 	async askAI(question: string): Promise<Tutorial> {

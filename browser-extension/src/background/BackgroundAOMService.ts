@@ -23,14 +23,31 @@ export class BackgroundAOMService implements IAOMService {
 	public async getAccessibilityNode(locator: string) {
 		await this.attach();
 		const result: any = await chrome.debugger.sendCommand({tabId: this.tabId}, "Accessibility.getFullAXTree");
-		let nodes = result.nodes as AXNode[];
+		const nodes = result.nodes as AXNode[];
 		console.log("getFullAXTree", nodes);
-		nodes = nodes.filter(node => node.role?.value == 'textbox');
-		console.log("nodes", nodes);
-		const processed = nodes.map(axnode => {
-			return {id: axnode.backendDOMNodeId ?? -1, description: axnode.name?.value}
+		const processed = nodes.filter(node => {
+			const role = node.role?.value;
+			const name = node.name?.value;
+			if (role !== undefined &&
+				role !== 'none' &&
+				role !== 'StaticText' &&
+				role !== 'generic' &&
+				role !== 'tooltip' &&
+				role !== 'region' &&
+				name !== undefined) {
+				return true;
+			}
+		}).map(node => {
+			return {
+				id: node.backendDOMNodeId ?? -1,
+				description: `${node.role?.value ?? ""} ${node.name?.value ?? ""}`,
+			}
 		});
+		console.log("processed", processed);
 		const node = await this.aiService.findDescriptionTarget(locator, processed);
+		if (!node) {
+			throw new Error("Could not find node");
+		}
 		const nodeId = node.id;
 		console.log("findDescriptionTarget", node);
 		return nodeId;
@@ -38,7 +55,13 @@ export class BackgroundAOMService implements IAOMService {
 
 	public async getNodeSelector(locator: string): Promise<string> {
 		await this.attach();
-		const nodeId = await this.getAccessibilityNode(locator);
+		let nodeId;
+		try {
+			nodeId = await this.getAccessibilityNode(locator);
+		} catch (e) {
+			console.log(e);
+			return "";
+		}
 		const result: any = await chrome.debugger.sendCommand({tabId: this.tabId}, "DOM.resolveNode", {
 			backendNodeId: nodeId
 		});

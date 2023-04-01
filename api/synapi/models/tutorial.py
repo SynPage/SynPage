@@ -12,6 +12,7 @@ class Step(models.Model):
     index = models.IntegerField()
     title = models.CharField(max_length=250)
     description = models.TextField(blank=True)
+    target_website = models.CharField(max_length=250, blank=True)
 
     class Meta:
         ordering = ['tutorial', 'index']
@@ -26,15 +27,17 @@ class Action(models.Model):
         LDC = 'Left Double Click'
         RDC = 'Right Double Click'
         EN = 'Enter'
+        IN = 'Input'
         SU = 'Scroll Up'
         SD = 'Scroll Down'
 
     step = models.ForeignKey(Step, related_name='actions', on_delete=models.CASCADE)
     index = models.IntegerField()
+    description = models.CharField(max_length=250, blank=True)
 
     type = models.CharField(max_length=50, choices=ActionType.choices, default=ActionType.NG)
     target_element = models.CharField(max_length=250, blank=True)
-    extras = models.CharField(max_length=250, null=True)
+    extras = models.CharField(max_length=250, null=True, blank=True)
 
     class Meta:
         ordering = ['step_id', 'index']

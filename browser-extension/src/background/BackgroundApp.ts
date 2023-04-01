@@ -10,7 +10,6 @@ import {SetStepHandler} from "./StepMessageHandlers";
 import {ISessionService} from "../chrome/SessionService";
 import {AOMHandler} from "./AutomationMessageHandlers";
 import {IAIService} from "../ai/AIService";
-import {IAOMService} from "../services/IAOMService";
 import {BackgroundAOMService} from "./BackgroundAOMService";
 
 export class BackgroundApp {

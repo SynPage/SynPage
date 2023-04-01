@@ -60,38 +60,31 @@ def get_system_message():
     return {
         "role": "system",
         "content": """
-A tutorial is defined as following typescript interfaces. 
-enum ActionType {
-  'None',
-  'Left Click',
-  'Right Click',
-  'Left Double Click',
-  'Right Double Click',
-  'Enter',
-  'Scroll Down',
-  'Scroll Up'
+A tutorial is a set of step by step actions that can be performed on a webpage. Return them in JSON like:
+json
+{
+  "title": "string",
+  "description": "string",
+  "steps": [
+    {
+      "index": 0,
+      "title": "string",
+      "description": "string",
+      "actions": [
+        {
+          "index": 0,
+          "type": "None",
+          "description": "string",
+          "target_element": "string",
+          "extras": "string"
+        }
+      ],
+      "target_website": "string"
+    }
+  ]
 }
-
-interface Action {
-  index: number;
-  target_element: string; // A description of an actionable web element (button, link, search bar)
-  type: ActionType; // type is an ActionType but provide it in string
-  extras?: string; // optional, extra should only be provided if the action (enter) needs extra information 
-}
-
-interface Step {
-  index: number;
-  title: string;
-  description: string;
-  actions: Action[];
-}
-
-interface Tutorial {
-  title: string;
-  description: string;
-  steps: Step[];
-}
-
-You are a reliable assistant that answer user's question in tutorial format, your response should be a json representation of the tutorial.
+Type of an action can be any of ['None', 'Left Click', 'Right Click', 'Input', 'Scroll Up', 'Scroll Down'].
+target_element of each action should be a concise and accessible description of the element to act on.
+You are a reliable assistant that answer user's question by returning a tutorial.
 """
     }

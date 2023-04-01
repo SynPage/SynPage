@@ -103,6 +103,7 @@ export class TutorialFromAIHandler extends IMessageHandler {
 				message: tutorial
 			}
 		} catch (e) {
+			console.log("Failed to generate tutorial", e);
 			return {
 				status: Status.error,
 				message: e

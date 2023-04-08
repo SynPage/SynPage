@@ -2,7 +2,7 @@ import {createAsyncThunk, Dispatch, ThunkDispatch} from "@reduxjs/toolkit";
 import {OnPageClient} from "../../chrome/onPageClient";
 import {ChromeQuery, QueryType} from "../../chrome/query";
 import {ChromeResponse, Status} from "../../chrome/response";
-import {tutorialLoaded} from "./tutorialSlice";
+import {setStepIndex, tutorialLoaded} from "./tutorialSlice";
 import {Step, Tutorial} from "../../client/generated";
 import {AppDispatch, RootState} from "./index";
 
@@ -28,10 +28,11 @@ export const resumeTutorial = createAsyncThunk<void, void, {
 		if (!client) {
 			throw Error();
 		}
-		const tutorial = await client.getOnGoingTutorial();
-		console.log(tutorial);
+		const {tutorial, stepIndex} = await client.getOnGoingTutorial();
+		console.log(tutorial, stepIndex);
 		if (tutorial) {
 			dispatch(tutorialLoaded(tutorial));
+			dispatch(setStepIndex(stepIndex));
 		}
 	}
 )

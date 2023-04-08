@@ -38,6 +38,7 @@ export const mockRecommendation: Recommendation = {
 }
 
 export const mockTutorial: Tutorial = {
+  id: 0,
   title: "Test Tutorial 1",
   description: "This is a long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long description",
   steps: mockSteps,

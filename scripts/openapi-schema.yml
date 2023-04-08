@@ -1153,6 +1153,9 @@ components:
           type: integer
         type:
           $ref: '#/components/schemas/TypeEnum'
+        description:
+          type: string
+          maxLength: 250
         target_element:
           type: string
           maxLength: 250
@@ -1302,6 +1305,9 @@ components:
           type: integer
         type:
           $ref: '#/components/schemas/TypeEnum'
+        description:
+          type: string
+          maxLength: 250
         target_element:
           type: string
           maxLength: 250
@@ -1365,9 +1371,15 @@ components:
           items:
             $ref: '#/components/schemas/Action'
           readOnly: true
+        target_website:
+          type: string
+          maxLength: 250
     PatchedTutorial:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         title:
           type: string
           maxLength: 250
@@ -1462,6 +1474,9 @@ components:
           items:
             $ref: '#/components/schemas/Action'
           readOnly: true
+        target_website:
+          type: string
+          maxLength: 250
       required:
       - actions
       - index
@@ -1481,6 +1496,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Action'
+        target_website:
+          type: string
+          maxLength: 250
       required:
       - actions
       - index
@@ -1488,6 +1506,9 @@ components:
     Tutorial:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         title:
           type: string
           maxLength: 250
@@ -1504,6 +1525,7 @@ components:
             $ref: '#/components/schemas/Recommendation'
           readOnly: true
       required:
+      - id
       - recommendations
       - steps
       - title
@@ -1544,6 +1566,7 @@ components:
       - Left Double Click
       - Right Double Click
       - Enter
+      - Input
       - Scroll Up
       - Scroll Down
       type: string
@@ -1554,6 +1577,7 @@ components:
         * `Left Double Click` - Ldc
         * `Right Double Click` - Rdc
         * `Enter` - En
+        * `Input` - In
         * `Scroll Up` - Su
         * `Scroll Down` - Sd
     User:

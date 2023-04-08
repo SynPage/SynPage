@@ -56,6 +56,12 @@ export interface PatchedStep {
      * @memberof PatchedStep
      */
     readonly actions?: Array<Action>;
+    /**
+     * 
+     * @type {string}
+     * @memberof PatchedStep
+     */
+    targetWebsite?: string;
 }
 
 /**
@@ -82,6 +88,7 @@ export function PatchedStepFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'title': !exists(json, 'title') ? undefined : json['title'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'actions': !exists(json, 'actions') ? undefined : ((json['actions'] as Array<any>).map(ActionFromJSON)),
+        'targetWebsite': !exists(json, 'target_website') ? undefined : json['target_website'],
     };
 }
 
@@ -97,6 +104,7 @@ export function PatchedStepToJSON(value?: PatchedStep | null): any {
         'index': value.index,
         'title': value.title,
         'description': value.description,
+        'target_website': value.targetWebsite,
     };
 }
 

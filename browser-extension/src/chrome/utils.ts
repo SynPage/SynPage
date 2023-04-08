@@ -1,8 +1,8 @@
 export async function getCurrentTab() {
   let queryOptions = { active: true, currentWindow: true };
   // `tab` will either be a `tabs.Tab` instance or `undefined`.
-  let [tab] = await chrome.tabs.query(queryOptions);
-  return tab;
+  let tabs = await chrome.tabs.query(queryOptions);
+  return tabs[0];
 }
 
 export async function getAllTabs() {

@@ -30,7 +30,7 @@ Default.args = {
 	sidePanelController: {
 		open: true,
 		width: 300,
-		view: SidePanelView.main,
+		view: SidePanelView.step,
 		toggle: () => {
 
 		},

@@ -13,6 +13,7 @@ export const App = (props: AppProps) => {
 	const {chromeClient} = props;
 	const tutorial = useAppSelector(state => state.tutorialManager.tutorial);
 	const client = useAppSelector(state => state.tutorialManager.chromeClient);
+	const index = useAppSelector(state => state.tutorialManager.stepIndex);
 
 	useEffect(() => {
 		dispatch(clientLoaded(chromeClient));
@@ -24,7 +25,7 @@ export const App = (props: AppProps) => {
 
 	return (
 		<div className={"synpage-app"}>
-			{tutorial && client && <TutorialViewer tutorial={tutorial}/>}
+			{tutorial && client && <TutorialViewer tutorial={tutorial} initialIndex={index}/>}
 		</div>
 	)
 }

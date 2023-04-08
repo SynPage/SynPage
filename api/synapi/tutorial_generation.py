@@ -14,8 +14,8 @@ def generate_tutorial_and_save(question):
     messages = list()
     messages.append(get_system_message())
     messages.append({"role": "user", "content": question})
-    raw_tutorial = create_tutorial(messages)
-    tutorial = process_openai_response(raw_tutorial, record)
+    response = create_tutorial(messages)
+    tutorial = process_openai_response(response, record)
     return tutorial
 
 
@@ -34,12 +34,15 @@ def retry_generation(record: TutorialGenerationRecord):
     return tutorial
 
 
-def process_openai_response(raw_tutorial, record, retry=True):
-    record.openai_response = raw_tutorial
+def process_openai_response(response, record, retry=True):
+    record.openai_response = response
     try:
-        raw_tutorial = raw_tutorial[raw_tutorial.find('{'):raw_tutorial.rfind('}') + 1].strip()
-        json_tutorial = json5.loads(raw_tutorial)
-        serializer = TutorialCreationSerializer(data=json_tutorial)
+        raw_json_response = response[response.find('{'):response.rfind('}') + 1].strip()
+        json_response = json5.loads(raw_json_response)
+        if json_response.get("message"):
+            retry = False
+            raise Exception(json_response.get("message"))
+        serializer = TutorialCreationSerializer(data=json_response)
         serializer.is_valid(raise_exception=True)
         tutorial = serializer.save()
         record.status = TutorialGenerationRecord.Status.Success
@@ -85,6 +88,13 @@ json
 }
 Type of an action can be any of ['None', 'Left Click', 'Right Click', 'Input', 'Scroll Up', 'Scroll Down'].
 target_element of each action should be a concise and accessible description of the element to act on.
+Each step should be in the context of a website, operations on the browser are not valid actions, for example, navigate to a specific url. 
+To indicate the website of the actions should be performed on, use the target_website field of the step.
 You are a reliable assistant that answer user's question by returning a tutorial.
+Whenever a tutorial cannot be generated based on the question, return a message in JSON like:
+json
+{
+    "message": "string"
+}
 """
     }

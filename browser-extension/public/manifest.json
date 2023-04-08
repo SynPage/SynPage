@@ -1,5 +1,5 @@
 {
-  "name": "Hello Extensions",
+  "name": "SynPage",
   "description": "Base Level Extension",
   "version": "1.0",
   "manifest_version": 3,
@@ -14,7 +14,11 @@
         "https://www.google.ca/*",
         "https://portal.azure.com/*",
         "https://console.cloud.google.com/*",
-        "https://www.figma.com/*"
+        "https://www.figma.com/*",
+        "https://github.com/*",
+        "https://www.canva.com/*",
+        "https://waterlooworks.uwaterloo.ca/*",
+        "https://domains.google.com/*"
       ],
       "js": [
         "content.js"
@@ -45,5 +49,11 @@
   ],
   "externally_connectable": {
     "matches": ["http://localhost/*", "https://devlearner.synpage.ca/"]
-  }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*"],
+      "matches": ["https://*/*", "http://*/*"]
+    }
+  ]
 }

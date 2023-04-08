@@ -15,11 +15,12 @@ export const ActionCentre = (props: ActionCentreProps) => {
 	const sidePanelWidth = sidePanelController.open ? sidePanelController.width : 0
 	const fabBottom = 16;
 	const fabRight = 16;
+	const logoUrl = chrome.runtime.getURL("assets/logo.svg");
 
 	const actions = [
 		{icon: <FileCopyIcon/>, view: SidePanelView.step},
-		{icon: <SaveIcon/>, view: SidePanelView.comment},
-		{icon: <PrintIcon/>, view: SidePanelView.main},
+		// {icon: <SaveIcon/>, view: SidePanelView.comment},
+		// {icon: <PrintIcon/>, view: SidePanelView.main},
 	];
 
 	const handleSpeedDialViewClick = (view: SidePanelView) => {
@@ -30,8 +31,8 @@ export const ActionCentre = (props: ActionCentreProps) => {
 		<div className={"action-centre"}>
 			<SpeedDial
 				ariaLabel="Action Centre"
-				sx={{position: 'absolute', bottom: fabBottom, right: (fabRight + sidePanelWidth)}}
-				icon={<SpeedDialIcon/>}
+				sx={{position: 'fixed', bottom: fabBottom, right: (fabRight + sidePanelWidth)}}
+				icon={<img src={logoUrl} height={"80%"} width={"80%"}/>}
 				direction={"left"}
 				onDoubleClick={() => {
 					sidePanelController.toggle();

@@ -7,6 +7,7 @@ import {CommentView} from "./CommentView";
 import {Tutorial} from "../../../../client/generated";
 import {StepController} from "../../index";
 import {SidePanelController} from "../index";
+import {CopilotView} from "./CopilotView";
 
 export interface SidePanelProps {
   tutorial: Tutorial,
@@ -15,9 +16,10 @@ export interface SidePanelProps {
 }
 
 export enum SidePanelView {
-  main = "main",
-  comment = "comment",
-  step = "step"
+  // main = "main",
+  // comment = "comment",
+  step = "step",
+  copilot = "copilot"
 }
 
 export const SidePanel = (props: SidePanelProps) => {
@@ -46,12 +48,15 @@ export const SidePanel = (props: SidePanelProps) => {
     switch (view) {
       case SidePanelView.step:
         return <OutlineView tutorial={tutorial} stepController={stepController}/>
-      case SidePanelView.main:
-        return <InfoView tutorial={tutorial}/>
-      case SidePanelView.comment:
-        return <CommentView tutorial={tutorial}/>
+      // case SidePanelView.main:
+      //   return <InfoView tutorial={tutorial}/>
+      // case SidePanelView.comment:
+      //   return <CommentView tutorial={tutorial}/>
+      case SidePanelView.copilot:
+        return <CopilotView/>
+      default:
+        return <Error error={"View unavailable"}/>
     }
-    return <Error error={"View unavailable"}/>
   }
 
   return (

@@ -20,6 +20,7 @@
 * `Left Double Click` - Ldc
 * `Right Double Click` - Rdc
 * `Enter` - En
+* `Input` - In
 * `Scroll Up` - Su
 * `Scroll Down` - Sd
  * @export
@@ -31,6 +32,7 @@ export const TypeEnum = {
     LeftDoubleClick: 'Left Double Click',
     RightDoubleClick: 'Right Double Click',
     Enter: 'Enter',
+    Input: 'Input',
     ScrollUp: 'Scroll Up',
     ScrollDown: 'Scroll Down'
 } as const;

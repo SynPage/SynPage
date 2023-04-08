@@ -50,6 +50,12 @@ export interface StepCreation {
      * @memberof StepCreation
      */
     actions: Array<Action>;
+    /**
+     * 
+     * @type {string}
+     * @memberof StepCreation
+     */
+    targetWebsite?: string;
 }
 
 /**
@@ -78,6 +84,7 @@ export function StepCreationFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'title': json['title'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'actions': ((json['actions'] as Array<any>).map(ActionFromJSON)),
+        'targetWebsite': !exists(json, 'target_website') ? undefined : json['target_website'],
     };
 }
 
@@ -94,6 +101,7 @@ export function StepCreationToJSON(value?: StepCreation | null): any {
         'title': value.title,
         'description': value.description,
         'actions': ((value.actions as Array<any>).map(ActionToJSON)),
+        'target_website': value.targetWebsite,
     };
 }
 

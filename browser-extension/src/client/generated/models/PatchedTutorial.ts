@@ -34,6 +34,12 @@ import {
 export interface PatchedTutorial {
     /**
      * 
+     * @type {number}
+     * @memberof PatchedTutorial
+     */
+    readonly id?: number;
+    /**
+     * 
      * @type {string}
      * @memberof PatchedTutorial
      */
@@ -77,6 +83,7 @@ export function PatchedTutorialFromJSONTyped(json: any, ignoreDiscriminator: boo
     }
     return {
         
+        'id': !exists(json, 'id') ? undefined : json['id'],
         'title': !exists(json, 'title') ? undefined : json['title'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'steps': !exists(json, 'steps') ? undefined : ((json['steps'] as Array<any>).map(StepFromJSON)),

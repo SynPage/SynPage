@@ -28,7 +28,7 @@ export class OnPageClient {
     await this.query({type: QueryType.exit});
   }
 
-  async getOnGoingTutorial(): Promise<Tutorial> {
+  async getOnGoingTutorial(): Promise<{ tutorial: Tutorial, stepIndex: number }> {
     const response = await this.query({type: QueryType.resumeTutorial});
     return response.message;
   }

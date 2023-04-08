@@ -43,6 +43,12 @@ export interface Action {
      * @type {string}
      * @memberof Action
      */
+    description?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Action
+     */
     targetElement?: string;
     /**
      * 
@@ -74,6 +80,7 @@ export function ActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): Ac
         
         'index': json['index'],
         'type': !exists(json, 'type') ? undefined : TypeEnumFromJSON(json['type']),
+        'description': !exists(json, 'description') ? undefined : json['description'],
         'targetElement': !exists(json, 'target_element') ? undefined : json['target_element'],
         'extras': !exists(json, 'extras') ? undefined : json['extras'],
     };
@@ -90,6 +97,7 @@ export function ActionToJSON(value?: Action | null): any {
         
         'index': value.index,
         'type': TypeEnumToJSON(value.type),
+        'description': value.description,
         'target_element': value.targetElement,
         'extras': value.extras,
     };

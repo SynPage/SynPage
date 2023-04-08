@@ -1,100 +1,131 @@
 import {Action, Step} from "../../../client/generated";
-import {InstructionDialog} from "./InstructionDialog";
 import React, {useEffect, useState} from "react";
-import {Layer, Rect, Stage} from "react-konva";
 import {StepController} from "../index";
-import {prevAction} from "../../store/tutorialSlice";
+import Joyride, {Step as JoyrideStep, CallBackProps, EVENTS, ACTIONS, STATUS} from 'react-joyride';
+import {ElementUtils} from "../../../shared/ElementUtils";
+import {useAppSelector} from "../../store/hooks";
+import {Alert} from "@mui/material";
 
 export interface StepViewerProps {
 	step: Step,
 	stepController: StepController
 }
 
-export interface ActionController {
-	canNextAction: () => boolean
-	canPrevAction: () => boolean
-	nextAction: () => void
-	prevAction: () => void
-}
-
 export const StepViewer = (props: StepViewerProps) => {
 	const {step, stepController} = props;
-	const [actionIndex, setActionIndex] = useState<number>(0);
-	const [action, setAction] = useState<Action>();
-	const [highlighted, setHighlighted] = useState<Element[]>();
-	const {canNextStep, canPrevStep, nextStep, prevStep} = stepController
+	const [joyrideSteps, setJoyrideSteps] = useState<JoyrideStep[]>([]);
+	const [loading, setLoading] = useState<boolean>(true);
+	const chromeClient = useAppSelector(state => state.tutorialManager.chromeClient);
 
 	useEffect(() => {
-		const actions = step.actions;
-		setAction(actions?.[actionIndex]);
-	}, [step, actionIndex])
+		setLoading(true);
+		loadOnPageActions().then(() => setLoading(false));
+	}, [step]);
 
-	const handleHighlight = (elements: Element[]) => {
-		setHighlighted(elements);
+	const loadOnPageActions = async () => {
+		const joyrideSteps: JoyrideStep[] = [];
+		if (step.actions.length < 1) {
+			joyrideSteps.push({
+				content: <div>
+					<h2>{step.description}</h2>
+				</div>,
+				placement: 'center',
+				target: 'body'
+			})
+		}
+		joyrideSteps.push(...(await Promise.all(step.actions.map(async (action): Promise<JoyrideStep> => {
+			if (!action.targetElement || action.targetElement === "") {
+				return {
+					content: <div>
+						<h2>{action.description}</h2>
+					</div>,
+					placement: 'center',
+					target: 'body',
+					floaterProps: {
+						hideArrow: true,
+					}
+				};
+			}
+			let selector = await ElementUtils.getNodeSelectorByDescription(action.targetElement, chromeClient);
+			try {
+				const targetElement = document.querySelector(selector);
+				console.log("Target element found", selector, targetElement)
+				return {
+					content: <h2>{action.description}</h2>,
+					spotlightPadding: 20,
+					spotlightClicks: true,
+					target: selector,
+				};
+			} catch (e) {
+				console.log("Target element not found", selector, e)
+				return {
+					content: <div>
+						<Alert severity="info">
+							Looks like the target element cannot be located for this step. Please follow the instructions below.
+						</Alert>
+						<h2>{action.description}</h2>
+					</div>,
+					placement: 'top-start',
+					target: 'body',
+					disableBeacon: true,
+					spotlightClicks: true,
+					locale: {
+						back: 'Back',
+						close: 'Close',
+						last: 'Done',
+						next: 'Done',
+						skip: 'Skip',
+					},
+					floaterProps: {
+						hideArrow: true,
+					}
+				};
+			}
+		}))));
+
+		console.log("Joyride steps", joyrideSteps);
+		setJoyrideSteps(joyrideSteps);
 	}
 
-	const actionController: ActionController = {
-		canNextAction: () => {
-			return actionIndex < step.actions.length - 1 || canNextStep();
-		},
-		canPrevAction: () => {
-			return actionIndex > 0 || canPrevStep();
-		},
-		nextAction: () => {
-			if (actionIndex < step.actions.length - 1) {
-				setActionIndex(actionIndex + 1);
-			}
-			else {
-				nextStep();
-				setActionIndex(0);
-			}
-		},
-		prevAction: () => {
-			if (actionIndex > 0) {
-				setActionIndex(actionIndex - 1);
-			}
-			else {
-				setActionIndex(prevStep().actions.length - 1);
+	const handleJoyrideCallback = (data: CallBackProps) => {
+		const { action, index, status, type } = data;
+
+		if (type === EVENTS.TOUR_END) {
+			console.log("Joyride tour ended");
+			if (stepController.canNextStep()) {
+				stepController.nextStep();
+			} else {
+				console.log("Tutorial Ended.");
 			}
 		}
-	}
-
-	const highlight = (element: Element) => {
-		const rect = element?.getBoundingClientRect();
-		if (!rect) {
-			return;
-		}
-		return (
-			<Rect x={rect.x} y={rect.y} width={rect.width} height={rect.height} cornerRadius={20} stroke={"red"}/>
-		)
-	}
+	};
 
 	return (
-		<div>
-			<Stage width={window.innerWidth} height={window.innerHeight}
-			       style={{
-				       position: 'fixed',
-				       top: 0,
-				       left: 0,
-				       width: '100%',
-				       height: '100%',
-				       zIndex: 100,
-				       pointerEvents: "none"
-			       }}
-			>
-				<Layer>
-					{highlighted?.map(el => {
-						return highlight(el);
-					})}
-				</Layer>
-			</Stage>
-			{action &&
-				<InstructionDialog
-					action={action}
-					actionController={actionController}
-					onTargetElement={el => handleHighlight(el ? [el] : [])}
-				/>
-			}
+		<div className={"step-viewer"}>
+		  <Joyride
+			  run={!loading}
+			  callback={handleJoyrideCallback}
+			  steps={joyrideSteps}
+		    hideCloseButton={true}
+		    continuous={true}
+			  hideBackButton={true}
+		    styles={{
+			    options: {
+				    zIndex: 10000,
+			    },
+			    overlay: {
+				    backgroundColor: 'rgba(0, 0, 0, 0)', // Set background color to transparent
+				    pointerEvents: 'none', // Disable pointer events to allow interaction with the background
+			    },
+		    }}
+			  locale={{
+				  back: 'Back',
+				  close: 'Close',
+				  last: 'Done',
+				  next: 'Done',
+				  skip: 'Skip',
+			  }}
+		  />
 		</div>
 	)
 }

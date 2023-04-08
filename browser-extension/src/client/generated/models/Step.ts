@@ -56,6 +56,12 @@ export interface Step {
      * @memberof Step
      */
     readonly actions: Array<Action>;
+    /**
+     * 
+     * @type {string}
+     * @memberof Step
+     */
+    targetWebsite?: string;
 }
 
 /**
@@ -86,6 +92,7 @@ export function StepFromJSONTyped(json: any, ignoreDiscriminator: boolean): Step
         'title': json['title'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'actions': ((json['actions'] as Array<any>).map(ActionFromJSON)),
+        'targetWebsite': !exists(json, 'target_website') ? undefined : json['target_website'],
     };
 }
 
@@ -101,6 +108,7 @@ export function StepToJSON(value?: Step | null): any {
         'index': value.index,
         'title': value.title,
         'description': value.description,
+        'target_website': value.targetWebsite,
     };
 }
 

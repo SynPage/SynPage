@@ -11,13 +11,15 @@ module.exports = {
     content: './src/content.tsx'
   },
   output: {
+    publicPath: '',
     path: path.join(__dirname, "build"),
     // filename: '[name].[contenthash].bundle.js',
     filename: '[name].js',
     clean: true
   },
   // mode: process.env.NODE_ENV || "development",
-  mode: "production",
+  mode: "development",
+  devtool: 'cheap-module-source-map',
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
   },
@@ -37,6 +39,25 @@ module.exports = {
       {
         test: /\.(css)$/,
         use: [MiniCssExtractPlugin.loader, "css-loader"],
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/,
+        use: [
+          {
+            loader: 'file-loader',
+          },
+        ],
+      },
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'assets/[name].[ext]',
+            },
+          },
+        ],
       },
     ],
   },

@@ -20,8 +20,8 @@ export interface SidePanelController {
 export const UserController = (props: UserControllerProps) => {
 	const {tutorial, stepController} = props;
 	const [sidePanelWidth, setSidePanelWidth] = useState<number>(300);
-	const [sidePanelOpen, setSidePanelOpen] = useState<boolean>(true);
-	const [sidePanelView, setSidePanelView] = useState<SidePanelView>(SidePanelView.main);
+	const [sidePanelOpen, setSidePanelOpen] = useState<boolean>(false);
+	const [sidePanelView, setSidePanelView] = useState<SidePanelView>(SidePanelView.step);
 	const [sidePanelController, setSidePanelController] = useState<SidePanelController>();
 
 	useEffect(() => {

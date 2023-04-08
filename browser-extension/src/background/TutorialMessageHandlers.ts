@@ -16,7 +16,7 @@ const handleTutorialInitialization = async (tutorial: Tutorial, sessionService: 
 const notifyContent = async (query: ChromeQuery) => {
 	const tab = await getCurrentTab();
 	if (!tab || !tab.id) {
-		console.log("[Background]: Failed to reach content script, active tab not found", query);
+		console.log("[Background]: Failed to reach content script, active tab not found", tab, query);
 	} else {
 		console.log(`[Background]: Sending query`, query, ` to tab`, tab);
 		await chrome.tabs.sendMessage(tab.id, query);
@@ -27,6 +27,7 @@ export class TutorialInitializationHandler extends IMessageHandler {
 	constructor(protected tutorialsApi: TutorialsApi, protected sessionService: ISessionService) {
 		super([QueryType.init]);
 	}
+
 	override async handleMessage(message: any, sender: chrome.runtime.MessageSender) {
 		const id: number = message;
 		const tutorial = await this.tutorialsApi.tutorialsRetrieve({id: id});
@@ -49,6 +50,7 @@ export class TutorialResumptionHandler extends IMessageHandler {
 	constructor(protected sessionService: ISessionService) {
 		super([QueryType.resumeTutorial]);
 	}
+
 	override async handleMessage(message: any, sender: chrome.runtime.MessageSender): Promise<{ status: Status; message?: any }> {
 		if (!sender.url) {
 			return {
@@ -56,14 +58,17 @@ export class TutorialResumptionHandler extends IMessageHandler {
 				message: "Can not identify sender."
 			}
 		}
-		const {tutorial} = await this.sessionService.getOrCreateSession(new URL(sender.url).host).storageService.get(["tutorial"]);
+		const {tutorial, stepIndex} = await this.sessionService.getDefaultSession().storageService.get(["tutorial", "stepIndex"]);
 		let status = Status.ok;
 		if (!tutorial) {
 			status = Status.error;
 		}
 		return {
 			status: status,
-			message: tutorial
+			message: {
+				tutorial: tutorial,
+				stepIndex: stepIndex
+			}
 		}
 	}
 }
@@ -72,6 +77,7 @@ export class TutorialExitHandler extends IMessageHandler {
 	constructor(protected sessionService: ISessionService) {
 		super([QueryType.exit]);
 	}
+
 	override async handleMessage(message: any, sender: chrome.runtime.MessageSender): Promise<{ status: Status; message?: any }> {
 		if (!sender.url) {
 			return {
@@ -90,10 +96,21 @@ export class TutorialFromAIHandler extends IMessageHandler {
 	constructor(protected tutorialsApi: TutorialsApi, protected sessionService: ISessionService) {
 		super([QueryType.generate]);
 	}
+
 	override async handleMessage(message: any, sender: chrome.runtime.MessageSender): Promise<{ status: Status; message?: any }> {
 		try {
+			const {question, context} = message;
+			const prompt = `${context}
+			---
+			Based on the above context, ${question}
+			`;
+			// const currentPage = await getCurrentTab();
+			// if (currentPage && currentPage.url) {
+			// 	prompt += ` Answer in the context of ${currentPage.url}.`
+			// }
+
 			console.log("Generating tutorial", message);
-			const tutorial = await tutorialsApi.tutorialsGenerateCreate({question: message});
+			const tutorial = await tutorialsApi.tutorialsGenerateCreate({question: prompt});
 			console.log("Generated tutorial", tutorial);
 
 			await handleTutorialInitialization(tutorial, this.sessionService);

@@ -19,8 +19,8 @@ export class MockOnPageClient extends OnPageClient {
 
   }
 
-  override async getOnGoingTutorial(): Promise<Tutorial> {
-    return mockTutorial;
+  override async getOnGoingTutorial(): Promise<{tutorial: Tutorial, stepIndex: number}> {
+    return {tutorial: mockTutorial, stepIndex: 0};
   }
 
   override listen(

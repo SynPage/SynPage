@@ -34,6 +34,12 @@ import {
 export interface Tutorial {
     /**
      * 
+     * @type {number}
+     * @memberof Tutorial
+     */
+    readonly id: number;
+    /**
+     * 
      * @type {string}
      * @memberof Tutorial
      */
@@ -63,6 +69,7 @@ export interface Tutorial {
  */
 export function instanceOfTutorial(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "id" in value;
     isInstance = isInstance && "title" in value;
     isInstance = isInstance && "steps" in value;
     isInstance = isInstance && "recommendations" in value;
@@ -80,6 +87,7 @@ export function TutorialFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     }
     return {
         
+        'id': json['id'],
         'title': json['title'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'steps': ((json['steps'] as Array<any>).map(StepFromJSON)),

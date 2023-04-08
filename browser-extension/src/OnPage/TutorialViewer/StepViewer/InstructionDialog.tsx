@@ -9,21 +9,18 @@ import {
 } from "@mui/material";
 import {Action} from "../../../client/generated";
 import React, {useEffect, useState} from "react";
-import {ActionController} from "./index";
 import {ElementUtils} from "../../../shared/ElementUtils";
 import {useAppSelector} from "../../store/hooks";
 
 export interface InstructionDialogProps {
 	action: Action;
-	actionController: ActionController;
 	onTargetElement?: (element: Element | null) => void;
 }
 
 export const InstructionDialog = (props: InstructionDialogProps) => {
-	const {action, actionController, onTargetElement} = props;
+	const {action, onTargetElement} = props;
 	const chromeClient = useAppSelector(state => state.tutorialManager.chromeClient);
 	const [anchorEl, setAnchorEl] = useState<Element | null>(null);
-	const {canNextAction, canPrevAction, nextAction, prevAction} = actionController;
 	const resize = new ResizeObserver((entries, observer) => {
 		onTargetElement?.(anchorEl);
 	});
@@ -69,14 +66,6 @@ export const InstructionDialog = (props: InstructionDialogProps) => {
 				<Typography sx={{p: 2}}>{`${action.type}`}</Typography>
 				<Typography sx={{p: 2}}>{action.targetElement}</Typography>
 			</DialogContent>
-			<DialogActions>
-				<Button onClick={prevAction} disabled={!canPrevAction()}>
-					Prev
-				</Button>
-				<Button onClick={nextAction} disabled={!canNextAction()}>
-					Next
-				</Button>
-			</DialogActions>
 		</Paper>
 	)
 

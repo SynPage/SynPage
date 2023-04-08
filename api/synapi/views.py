@@ -76,7 +76,10 @@ class TutorialViewSet(viewsets.ModelViewSet):
         if not question:
             return JsonResponse({"detail": "Question parameter is required."}, status=400)
 
-        tutorial = generate_tutorial_and_save(question)
+        try:
+            tutorial = generate_tutorial_and_save(question)
+        except Exception as e:
+            return JsonResponse({"detail": str(e)}, status=400)
 
         return JsonResponse(TutorialSerializer(instance=tutorial).data)
 

@@ -2,9 +2,11 @@ import React, {useContext, useEffect, useState} from "react";
 import {StepViewer} from "./StepViewer";
 import {Step, Tutorial} from "../../client/generated";
 import {UserController} from "./UserController";
+import {useAppSelector} from "../store/hooks";
 
 export interface TutorialViewerProps {
-	tutorial: Tutorial
+	tutorial: Tutorial,
+	initialIndex: number
 }
 
 export interface StepController {
@@ -17,14 +19,18 @@ export interface StepController {
 }
 
 export const TutorialViewer = (props: TutorialViewerProps) => {
-	const {tutorial} = props;
-	const [stepIndex, setStepIndex] = useState<number>(0);
+	const {tutorial, initialIndex} = props;
+	const [stepIndex, setStepIndex] = useState<number>(initialIndex);
 	const [step, setStep] = useState<Step|undefined>();
 	const [stepController, setStepController] = useState<StepController>();
+	const chromeClient = useAppSelector(state => state.tutorialManager.chromeClient);
 
 	useEffect(() => {
 		setStep(tutorial.steps[stepIndex]);
-	}, [stepIndex])
+		chromeClient?.requestStepIndexChange(stepIndex).
+		then(() => {console.log("Step index changed")}).
+		catch(e => console.log("Step index change failed", e));
+	}, [stepIndex, tutorial])
 
 	useEffect(() => {
 		setStepController({

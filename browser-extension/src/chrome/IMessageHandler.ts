@@ -5,5 +5,5 @@ export abstract class IMessageHandler {
 	protected constructor(public messageTypes: QueryType[]) {
 	}
 
-	public abstract handleMessage(message: any, senderHostId?: string): Promise<{status: Status, message?: any}>;
+	public abstract handleMessage(message: any, sender: chrome.runtime.MessageSender): Promise<{status: Status, message?: any}>;
 }

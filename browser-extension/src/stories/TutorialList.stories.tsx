@@ -2,6 +2,7 @@ import React from 'react';
 import {ComponentMeta, ComponentStory} from '@storybook/react';
 
 import {TutorialList} from '../Popup/components/TutorialList';
+import {mockTutorial} from "./TutorialFactory/mockServices";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -28,12 +29,8 @@ export const Default = Template.bind({});
 Default.args = {
     tutorials: [
       {
-        title: "Tutorial 1",
-        targetSite: "google.ca"
-      },
-      {
-        title: "Tutorial 2",
-        targetSite: "google.ca"
+        "id": 0,
+        "title": "Test"
       }
     ]
 };

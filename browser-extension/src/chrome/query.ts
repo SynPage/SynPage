@@ -4,7 +4,9 @@ export enum QueryType {
   "requestStep",
   "setStepIndex",
   "resumeTutorial",
-  "exception"
+  "exception",
+  "accessibility",
+  "generate"
 }
 
 export interface ChromeQuery {

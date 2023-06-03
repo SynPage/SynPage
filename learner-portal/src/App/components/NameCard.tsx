@@ -4,19 +4,20 @@ import React from "react";
 import {ExtensionService} from "../../extensionService";
 
 export interface NameCardProps {
-	tutorial: TutorialInfo
+	tutorial: TutorialInfo,
+	extensionId?: string
 }
 
 export const NameCard = (props: NameCardProps) => {
-  const {tutorial} = props;
+  const {tutorial, extensionId} = props;
 	const extensionService = new ExtensionService();
 
 	const handleNameCardClick = (tutorialId: number) => {
-		if (tutorialId === -1) {
+		if (tutorialId === -1 || !extensionId) {
 			return;
 		}
 		try {
-			extensionService.openTutorial(tutorialId.toString());
+			extensionService.openTutorial(tutorialId.toString(), extensionId);
 		} catch (e) {
 			console.log(e);
 			return;

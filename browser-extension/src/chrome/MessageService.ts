@@ -47,7 +47,7 @@ export class MessageService implements IMessageService {
 			await Promise.all(handlers.map(async handler => {
 				if (handler.messageTypes.findIndex(type => validated.type === type) !== -1) {
 					try {
-						const {status, message} = await handler.handleMessage(validated.message, sender.url ? new URL(sender.url).host : undefined);
+						const {status, message} = await handler.handleMessage(validated.message, sender);
 						if (status === Status.ok) {
 							responses.push(message);
 						} else {
@@ -61,6 +61,7 @@ export class MessageService implements IMessageService {
 			if (responses.length > 0) {
 				sendResponse(this.constructResponse(validated, Status.ok, responses[0])); // TODO: Should we return all responses?
 			} else if (errors.length > 0) {
+				console.log("Sending error response", errors);
 				sendResponse(this.constructErrorResponse(validated, errors[0]));
 			}
 		} else {

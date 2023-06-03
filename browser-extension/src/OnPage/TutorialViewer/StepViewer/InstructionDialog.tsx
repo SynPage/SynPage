@@ -1,46 +1,93 @@
-import {Button, DialogActions, DialogContent, Paper, Popover, Popper, Typography} from "@mui/material";
+import {
+	Alert,
+	Button,
+	DialogActions,
+	DialogContent,
+	Paper,
+	Popper, Snackbar,
+	Typography
+} from "@mui/material";
 import {Action} from "../../../client/generated";
 import React, {useEffect, useState} from "react";
 import {ElementUtils} from "../../../shared/ElementUtils";
+import {useAppSelector} from "../../store/hooks";
 
 export interface InstructionDialogProps {
 	action: Action;
-	onPrevAction?: () => void;
-	onNextAction?: () => void;
+	onTargetElement?: (element: Element | null) => void;
 }
 
 export const InstructionDialog = (props: InstructionDialogProps) => {
-	const {action, onPrevAction, onNextAction} = props;
+	const {action, onTargetElement} = props;
+	const chromeClient = useAppSelector(state => state.tutorialManager.chromeClient);
 	const [anchorEl, setAnchorEl] = useState<Element | null>(null);
+	const resize = new ResizeObserver((entries, observer) => {
+		onTargetElement?.(anchorEl);
+	});
+	const mutation = new MutationObserver((mutations, observer) => {
+		onTargetElement?.(anchorEl);
+	});
 
 	useEffect(() => {
-		setAnchorEl(action.actionTarget ? ElementUtils.getTargetElement(action.actionTarget) : null);
+		updateAnchorElement();
 		console.log("Instructional dialog loaded", action);
 	}, [action])
 
+	useEffect(() => {
+		onTargetElement?.(anchorEl);
+	}, [anchorEl])
+
+	const updateAnchorElement = () => {
+		if (action.targetElement === undefined) {
+			setAnchorEl(null);
+			return;
+		}
+		ElementUtils.getNodeSelectorByDescription(action.targetElement, chromeClient).then((selector) => {
+			try {
+				const targetElement = document.querySelector(selector);
+				if (targetElement) {
+					mutation.disconnect();
+					resize.disconnect();
+					mutation.observe(targetElement, {attributes: true});
+					resize.observe(targetElement, {box: "border-box"});
+				}
+				setAnchorEl(targetElement);
+				console.log("Target element found", selector, targetElement)
+			} catch (e) {
+				setAnchorEl(null);
+				console.log("Target element not found", selector, e)
+			}
+		});
+	}
+
+	const content = () => (
+		<Paper>
+			<DialogContent>
+				<Typography sx={{p: 2}}>{`${action.type}`}</Typography>
+				<Typography sx={{p: 2}}>{action.targetElement}</Typography>
+			</DialogContent>
+		</Paper>
+	)
+
+
 	return (
 		<div>
-			{anchorEl &&
+			{anchorEl ?
 				<Popper
 					open={true}
 					anchorEl={anchorEl}
-					placement={"auto-start"}
+					placement={"bottom-end"}
+					style={{zIndex: 999}}
 				>
-					<Paper>
-						<DialogContent>
-							<Typography sx={{p: 2}}>{`${action.actionType} ${action.actionType} me.`}</Typography>
-							<Typography sx={{p: 2}}>{action.description}</Typography>
-						</DialogContent>
-						<DialogActions>
-							<Button onClick={onPrevAction} disabled={!onPrevAction}>
-								Prev
-							</Button>
-							<Button onClick={onNextAction} disabled={!onNextAction}>
-								Next
-							</Button>
-						</DialogActions>
-					</Paper>
-				</Popper>}
+					{content()}
+				</Popper>
+				:
+				<Snackbar open={true} autoHideDuration={6000}>
+					<Alert severity="error" sx={{ width: '100%' }}>
+						{content()}
+					</Alert>
+				</Snackbar>
+			}
 		</div>
 	)
 }

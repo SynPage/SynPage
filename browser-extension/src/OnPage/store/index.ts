@@ -1,11 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
 import {tutorialSlice} from "./tutorialSlice";
-import {controllerInterfaceSlice} from "./controllerInterfaceSlice";
 
 export const store = configureStore({
 	reducer: {
-		tutorialManager: tutorialSlice.reducer,
-		controllerInterface: controllerInterfaceSlice.reducer
+		tutorialManager: tutorialSlice.reducer
 	},
 })
 

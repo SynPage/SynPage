@@ -1,57 +1,35 @@
-import {AppBar, Box, IconButton, Toolbar, Typography} from "@mui/material";
+import {AppBar, Box, IconButton, Paper, Toolbar, Typography} from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import {Menu} from "@mui/icons-material";
 import {useState} from "react";
 import {SearchBar} from "./SearchBar";
+import HelpCenterIcon from '@mui/icons-material/HelpCenter';
+import CloseIcon from "@mui/icons-material/Close";
+import logoFull from '../../assets/logo-full.svg';
 
-export const Header = () => {
-  const [searching, setSearching] = useState(false);
+export interface HeaderProps {
+}
 
-  const handleSearch = (query: string) => {
-    if (query) {
-
-    }
-    setSearching(false);
-  }
-
-  const handleOpenSearch = () => {
-    setSearching(true);
-  }
-
-  return (
-    <Box sx={{flexGrow: 1}}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-          >
-            <Menu/>
-          </IconButton>
-          {searching ?
-            (<>
-              <SearchBar onSearchFor={handleSearch}/>
-            </>) :
-            (<>
-              <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-                SynPage
-              </Typography>
-              <IconButton
-                data-testid="open-search"
-                size="large"
-                color="inherit"
-                aria-label="search"
-                onClick={() => handleOpenSearch()}
-              >
-                <SearchIcon/>
-              </IconButton>
-            </>)
-          }
-
-        </Toolbar>
-      </AppBar>
-    </Box>
-  )
+export const Header = (props: HeaderProps) => {
+	return (
+		<Paper sx={{position: 'fixed', top: 0, left: 0, right: 0, zIndex: 10}} elevation={5}>
+			<Toolbar>
+				<img src={logoFull} alt={"SynPage"} height={30}/>
+				<Box flexGrow={1} />
+				<IconButton
+					size="large"
+					color="inherit"
+				>
+					<HelpCenterIcon/>
+				</IconButton>
+				<IconButton
+					size="large"
+					color="inherit"
+					onClick={() => window.close()}
+				>
+					<CloseIcon/>
+				</IconButton>
+			</Toolbar>
+		</Paper>
+	)
 }

@@ -19,7 +19,13 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 class ActionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Action
-        fields = ['step_id', 'index', 'description', 'action_type', 'action_target', 'action_content']
+        fields = ['index', 'type', 'description', 'target_element', 'extras']
+
+    def create(self, validated_data):
+        step_id = self.context.get('step_id')
+        action = Action.objects.create(**validated_data, step_id=step_id)
+        action.save()
+        return action
 
 
 class StepSerializer(serializers.ModelSerializer):
@@ -27,13 +33,7 @@ class StepSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Step
-        fields = ['tutorial_id', 'index', 'title', 'description', 'actions']
-
-
-class StepInfoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Step
-        fields = ['id', 'title', 'description', 'index']
+        fields = ['tutorial_id', 'index', 'title', 'description', 'actions', 'target_website']
 
 
 class RecommendationSerializer(serializers.ModelSerializer):
@@ -47,12 +47,12 @@ class RecommendationSerializer(serializers.ModelSerializer):
 
 
 class TutorialSerializer(serializers.ModelSerializer):
-    steps = StepInfoSerializer(many=True, read_only=True)
+    steps = StepSerializer(many=True, read_only=True)
     recommendations = RecommendationSerializer(many=True, read_only=True)
 
     class Meta:
         model = Tutorial
-        fields = ['title', 'description', 'target_site', 'steps', 'recommendations']
+        fields = ['id', 'title', 'description', 'steps', 'recommendations']
 
 
 class TutorialInfoSerializer(serializers.ModelSerializer):
@@ -60,4 +60,50 @@ class TutorialInfoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tutorial
-        fields = ['id', 'title', 'description', 'target_site']
+        fields = ['id', 'title', 'description']
+
+
+class StepCreationSerializer(serializers.ModelSerializer):
+    actions = ActionSerializer(many=True, required=True)
+
+    class Meta:
+        model = Step
+        fields = ['index', 'title', 'description', 'actions', 'target_website']
+
+    def create(self, validated_data):
+        step = Step(
+            tutorial_id=self.context.get('tutorial_id'),
+            index=validated_data['index'],
+            title=validated_data['title'],
+            description=validated_data['description']
+        )
+        step.save()
+        actions = validated_data['actions']
+        action_serializers = ActionSerializer(data=actions, many=True, context={'step_id': step.id})
+        if action_serializers.is_valid():
+            action_serializers.save()
+
+        return step
+
+
+class TutorialCreationSerializer(serializers.ModelSerializer):
+    steps = StepCreationSerializer(many=True, required=True)
+
+    class Meta:
+        model = Tutorial
+        fields = ['title', 'description', 'steps']
+
+    def create(self, validated_data):
+        tutorial = Tutorial(
+            title=validated_data['title'],
+            description=validated_data['description']
+        )
+        tutorial.save()
+
+        steps = validated_data['steps']
+
+        step_serializers = StepCreationSerializer(data=steps, many=True, context={'tutorial_id': tutorial.id})
+        if step_serializers.is_valid():
+            step_serializers.save(tutorial_id=tutorial.id)
+
+        return tutorial

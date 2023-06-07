@@ -17,10 +17,9 @@ export const StepActionList = (props: StepActionListProps) => {
 		<Box className={"step-actions"}>
 			{step.actions && <ul>
 				{step.actions.map(action => <li>
-					<Typography variant={"h6"}>Action Description: {action.description}</Typography>
-					<Typography variant={"h6"}>Action Type: {action.actionType}</Typography>
-					<Typography variant={"h6"}>Action Target: {action.actionTarget}</Typography>
-					<Typography variant={"h6"}>Action Content: {action.actionContent}</Typography>
+					<Typography variant={"h6"}>Action Type: {action.type}</Typography>
+					<Typography variant={"h6"}>Action Target: {action.targetElement}</Typography>
+					<Typography variant={"h6"}>Action Content: {action.extras}</Typography>
 				</li>)}
 			</ul>}
 		</Box>

@@ -6,25 +6,23 @@ import {
 	Typography
 } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import React, {useState} from "react";
+import React from "react";
 import {Tutorial} from "../../../../client/generated";
-import {useAppDispatch, useAppSelector} from "../../../store/hooks";
 import {StepActionList} from "../../../../components/StepActionList";
-import {setStepIndex} from "../../../store/tutorialSlice";
+import {StepController} from "../../index";
 
-export const OutlineView = (props: {tutorial: Tutorial}) => {
-	const dispatch = useAppDispatch();
-	const {tutorial} = props;
-	const currentStepIndex = useAppSelector(state => state.tutorialManager.stepIndex);
+export const OutlineView = (props: {tutorial: Tutorial, stepController: StepController}) => {
+	const {tutorial, stepController} = props;
+	const {stepIndex} = stepController;
 
 	const handleStepItemClick = (selectedIndex: number) => {
-		dispatch(setStepIndex(selectedIndex));
+		stepController.setStep(selectedIndex);
 	}
 
 	return (
 		<Box className={"outline-view"}>
-			{tutorial.steps && tutorial.steps.map(step => (
-				<Accordion expanded={step.index === currentStepIndex} onChange={() => handleStepItemClick(step.index)}>
+			{tutorial.steps && tutorial.steps.map((step, index) => (
+				<Accordion expanded={index === stepIndex} onChange={() => handleStepItemClick(index)}>
 					<AccordionSummary
 						expandIcon={<ExpandMoreIcon />}
 					>

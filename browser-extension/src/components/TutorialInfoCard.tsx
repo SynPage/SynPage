@@ -1,4 +1,4 @@
-import {TutorialInfo} from "../client/generated";
+import {Tutorial} from "../client/generated";
 import {Box, Chip, Divider, Icon, Stack, Typography} from "@mui/material";
 import SmartDisplayOutlinedIcon from '@mui/icons-material/SmartDisplayOutlined';
 import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
@@ -10,14 +10,14 @@ import ShareIcon from '@mui/icons-material/Share';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
 
-export interface TutorialInfoCardProps {
-	tutorial: TutorialInfo,
+export interface TutorialCardProps {
+	tutorial: Tutorial,
 	onUpVote: () => void,
 	onDownVote: () => void,
 	onSave: () => void,
 }
 
-export const TutorialInfoCard = (props: TutorialInfoCardProps) => {
+export const TutorialInfoCard = (props: TutorialCardProps) => {
 	const {tutorial, onUpVote, onDownVote, onSave} = props;
 	const title = tutorial.title;
 	const playCount = 1000;

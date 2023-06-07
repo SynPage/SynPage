@@ -3,7 +3,7 @@ import {ChromeQuery, QueryType, validateQuery} from "./query";
 import {Step, Tutorial} from "../client/generated";
 
 export class OnPageClient {
-  private async query(query: ChromeQuery): Promise<ChromeResponse> {
+  public async query(query: ChromeQuery): Promise<ChromeResponse> {
     console.log("[Content]: Sending query", query);
     const response = await chrome.runtime.sendMessage(query);
     const {valid, validated} = validateResponse(response);
@@ -28,7 +28,7 @@ export class OnPageClient {
     await this.query({type: QueryType.exit});
   }
 
-  async getOnGoingTutorial(): Promise<Tutorial> {
+  async getOnGoingTutorial(): Promise<{ tutorial: Tutorial, stepIndex: number }> {
     const response = await this.query({type: QueryType.resumeTutorial});
     return response.message;
   }

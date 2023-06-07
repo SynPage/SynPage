@@ -3,23 +3,25 @@ import type {PayloadAction} from '@reduxjs/toolkit'
 import {OnPageClient} from "../../chrome/onPageClient";
 import {Step, Tutorial} from "../../client/generated";
 import {clientLoaded, loadStep} from "./clientThunks";
+import {IAOMService} from "../../services/IAOMService";
 
 export interface TutorialState {
 	chromeClient?: OnPageClient
 	tutorial?: Tutorial
 	stepIndex: number
-	step?: Step
 	actionIndex: number
 	tutorialLoading?: string
 	tutorialError?: string
 	stepLoading?: string
 	stepError?: string
 	actionError?: string
+	targetElements: Node[]
 }
 
 const initialState: TutorialState = {
 	actionIndex: 0,
-	stepIndex: 0
+	stepIndex: 0,
+	targetElements: []
 }
 
 export const tutorialSlice = createSlice({
@@ -36,26 +38,23 @@ export const tutorialSlice = createSlice({
 			} else {
 				state.actionIndex = 0;
 				state.stepIndex = state.stepIndex - 1;
-				state.step = undefined;
 			}
 		},
 		nextAction: (state) => {
-			const totalActionsInCurrentStep = state.step?.actions?.length ?? 0;
 			const currentAction = state.actionIndex;
+			const totalActionsInCurrentStep = state.tutorial?.steps[state.stepIndex].actions.length ?? 0;
 			console.log("Next action...")
 			if (currentAction < totalActionsInCurrentStep - 1) {
 				state.actionIndex = state.actionIndex + 1;
 			} else {
 				state.actionIndex = 0;
 				state.stepIndex = state.stepIndex + 1;
-				state.step = undefined;
 				console.log("StepIndex changed");
 			}
 		},
 		setStepIndex: (state, action: PayloadAction<number>) => {
 			state.stepIndex = action.payload;
-			state.step = undefined;
-			state.actionIndex = 0
+			state.actionIndex = 0;
 		},
 		exitTutorial: (state) => {
 
@@ -63,8 +62,9 @@ export const tutorialSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder.addCase(loadStep.fulfilled, (state, action) => {
-			state.step = action.payload;
-			console.log("Step loaded", action.payload);
+			// state.step = action.payload;
+			// console.log("Step loaded", action.payload);
+			throw new Error("[LoadStep]: Not implemented")
 		}).addCase(clientLoaded.fulfilled, (state, action) => {
 			state.chromeClient = action.payload;
 		})

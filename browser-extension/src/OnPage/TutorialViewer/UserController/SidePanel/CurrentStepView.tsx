@@ -30,10 +30,9 @@ export const CurrentStepView = (props: {step: Step}) => {
 
 		return <ul>
 			{step.actions.map(action => <li>
-				<Typography variant={"h6"}>Action Description: {action.description}</Typography>
-				<Typography variant={"h6"}>Action Type: {action.actionType}</Typography>
-				<Typography variant={"h6"}>Action Target: {action.actionTarget}</Typography>
-				<Typography variant={"h6"}>Action Content: {action.actionContent}</Typography>
+				<Typography variant={"h6"}>Action Type: {action.type}</Typography>
+				<Typography variant={"h6"}>Action Target: {action.targetElement}</Typography>
+				<Typography variant={"h6"}>Action Content: {action.extras}</Typography>
 			</li>)}
 		</ul>
 	}

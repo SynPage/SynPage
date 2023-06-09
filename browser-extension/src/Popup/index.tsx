@@ -187,11 +187,11 @@ export const Popup = (props: PopupProps) => {
         {/*<Paper sx={{position: 'static', top: 0, left: 0, right: 0}} elevation={5}>*/}
         {/*	*/}
         {/*</Paper>*/}
-        <Box paddingY={8}>
+        <Container sx={{ px: 1, py: 8, display: 'flex', alignItems: 'center' }}>
           <Loading loading={loading} />
           <Error error={error} />
           {!loading && tab === Tab.TUTORIALS && (
-            <Grid sx={{mx: 1}} padding={1} container spacing={1} gap={2} direction={"column"}>
+            <Grid container gap={2} direction={'column'}>
               <Paper
                 component='form'
                 sx={{
@@ -227,11 +227,9 @@ export const Popup = (props: PopupProps) => {
                 tutorials={list}
                 onTutorialSelection={handleTutorialSelection}
               />
-              <Card sx={{borderRadius: 2, boxShadow: 0 }}>
+              <Card sx={{ borderRadius: 2, boxShadow: 0 }}>
                 <CardActionArea onClick={() => setTab(Tab.AI)}>
-                  <Alert severity='info'>
-                    Generate a New Tutorial
-                  </Alert>
+                  <Alert severity='info'>Generate a New Tutorial</Alert>
                 </CardActionArea>
               </Card>
             </Grid>
@@ -241,7 +239,8 @@ export const Popup = (props: PopupProps) => {
               onTutorialSelection={handleTutorialSelection}
             />
           )}
-        </Box>
+        </Container>
+
         <Paper
           sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 10 }}
           elevation={5}
@@ -257,6 +256,7 @@ export const Popup = (props: PopupProps) => {
             <BottomNavigationAction icon={<SmartToyIcon />} />
           </BottomNavigation>
         </Paper>
+
         <Dialog open={ready} onClose={() => setReady(false)}>
           <DialogTitle>Tutorial is ready!</DialogTitle>
           <DialogActions>

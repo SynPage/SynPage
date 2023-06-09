@@ -1,27 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
 body {
-    height: 600px;
-    width: 300px;
-    font-family: 'Inter', sans-serif !important;
+  height: 600px;
+  width: 300px;
+  margin: none !important;
+  font-family: 'Inter', sans-serif !important;
 }
 
 /* Override Material-UI default styles */
-.MuiButton-root, .css-ecpxie-MuiTypography-root, .css-yz9k0d-MuiInputBase-input {
-    font-family: 'Inter', sans-serif !important;
+.MuiButton-root,
+.css-ecpxie-MuiTypography-root,
+.css-yz9k0d-MuiInputBase-input {
+  font-family: 'Inter', sans-serif !important;
 }
 
-.css-1p61t51-MuiPaper-root-MuiCard-root, .css-1q0cj7d-MuiPaper-root, .css-r2d7ro-MuiPaper-root {
+/* .css-1p61t51-MuiPaper-root-MuiCard-root,
+.css-1q0cj7d-MuiPaper-root,
+.css-r2d7ro-MuiPaper-root {
   box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 1px 1px !important;
-}
+} */
 
 .css-rlk7mz-MuiCardMedia-root {
   padding-left: 1rem;
 }
-
+/* 
 .css-r2d7ro-MuiPaper-root {
   margin: auto;
   width: 86%;
   margin-bottom: 10px !important;
   border-radius: 12px !important;
-}
+} */

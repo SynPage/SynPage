@@ -8,7 +8,7 @@ import {
 	InputBase, InputLabel, MenuItem,
 	Paper, Select, SelectChangeEvent,
 	Skeleton, TextField, ToggleButton, ToggleButtonGroup,
-	Typography
+	Typography,
 } from "@mui/material";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import React, {useContext, useState} from "react";
@@ -61,9 +61,9 @@ export const TutorialGenerationComponent = (props: TutorialGenerationProps) => {
 	}
 
 	return (
-		<Box sx={{flexGrow: 1}} padding={1}>
-			<Typography variant="h5">
-				Create an AI onscreen interactive guide
+		<Box sx={{flexGrow: 1, textAlign: 'center'}} padding={1}>
+			<Typography variant="h5" sx={{ marginBottom: '16px', fontWeight: 'bold' }}>
+				Create Your On-Screen Tutorial
 			</Typography>
 			{/*<ToggleButtonGroup*/}
 			{/*	color="primary"*/}
@@ -106,7 +106,7 @@ export const TutorialGenerationComponent = (props: TutorialGenerationProps) => {
 			{/*			</IconButton>*/}
 			{/*	}*/}
 			{/*</Paper>*/}
-
+			
 			<Box
 				component="form"
 				noValidate
@@ -123,13 +123,13 @@ export const TutorialGenerationComponent = (props: TutorialGenerationProps) => {
 				}
 				<Grid container direction={"column"} spacing={2}>
 					<Grid item>
+						
 						<TextField
 							value={context}
 							onChange={(e) => setContext(e.target.value)}
 							fullWidth
 							label="Context"
-							placeholder="Paste a text tutorial here."
-						/>
+							/>
 					</Grid>
 					<Grid item>
 						<TextField
@@ -139,7 +139,6 @@ export const TutorialGenerationComponent = (props: TutorialGenerationProps) => {
 							multiline
 							maxRows={4}
 							label="Question"
-							placeholder="How to setup..."
 						/>
 					</Grid>
 					<Grid item>

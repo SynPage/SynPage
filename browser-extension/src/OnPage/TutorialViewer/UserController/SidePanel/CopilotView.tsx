@@ -48,7 +48,7 @@ export const CopilotView = () => {
 	return (
 		<DialogContent>
 			<Typography variant="h5">
-				Create an AI onscreen interactive guide
+			Generate Your On-Screen Tutorial
 			</Typography>
 			<Paper
 				component="form"
@@ -68,7 +68,7 @@ export const CopilotView = () => {
 			>
 				<InputBase
 					sx={{ml: 1, flex: 1}}
-					placeholder="How to setup..."
+					placeholder="How do I find..."
 					inputProps={{'aria-label': 'ask ai'}}
 					disabled={!!loading}
 				/>

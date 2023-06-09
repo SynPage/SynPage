@@ -17,12 +17,15 @@ import {
 	CardActionArea, Dialog, DialogActions, DialogTitle,
 	Grid, IconButton,
 	InputBase,
-	Paper
+	Paper,
+	createTheme,
+	ThemeProvider
 } from "@mui/material";
 import HomeIcon from '@mui/icons-material/Home';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import {TutorialGenerationComponent} from "./components/TutorialGeneration";
 import SearchIcon from "@mui/icons-material/Search";
+
 
 export interface PopupProps {
 	chromeClient: PopupClient,
@@ -51,6 +54,17 @@ export enum Tab {
 	TUTORIALS,
 	AI,
 }
+
+const theme = createTheme({
+	typography: {
+	  fontFamily: [
+		'Inter',
+		'sans-serif',
+	  ].join(','),
+	},
+  });
+  
+
 
 export const Popup = (props: PopupProps) => {
 	const {chromeClient, tutorialsApi, stepsApi, actionsApi} = props;
@@ -146,69 +160,70 @@ export const Popup = (props: PopupProps) => {
 	}
 
 	return (
-		<ClientContext.Provider value={{
-			chromeClient: chromeClient,
-			tutorialsApi: tutorialsApi,
-			stepsApi: stepsApi,
-			actionsApi: actionsApi
-		}}>
-			<Header/>
-			{/*<Paper sx={{position: 'static', top: 0, left: 0, right: 0}} elevation={5}>*/}
-			{/*	*/}
-			{/*</Paper>*/}
-			<Box paddingY={8}>
-				<Loading loading={loading}/>
-				<Error error={error}/>
-				{!loading && tab === Tab.TUTORIALS &&
-					<>
-						<Paper
-							component="form"
-							sx={{p: '2px 4px', display: 'flex', alignItems: 'center', marginBottom: 3}}
-							elevation={3}
-							onSubmit={(event) => {
-								event.preventDefault();
-								handleSearch(event.currentTarget.querySelector("input")?.value ?? "");
-							}}
-						>
-							<InputBase
-								sx={{ml: 1, flex: 1}}
-								placeholder="What do you want to learn?"
-								inputProps={{'aria-label': 'search tutorials'}}
-							/>
-							<IconButton type="submit" sx={{p: '10px'}} aria-label="search">
-								<SearchIcon/>
-							</IconButton>
-						</Paper>
-						<TutorialList tutorials={list} onTutorialSelection={handleTutorialSelection}/>
-						<Card>
-							<CardActionArea onClick={() => setTab(Tab.AI)}>
-								<Alert severity="info">
-									Cannot find what you are looking for? Try asking the AI {">"}
-								</Alert>
-							</CardActionArea>
-						</Card>
-					</>}
-				{!loading && tab === Tab.AI && <TutorialGenerationComponent onTutorialSelection={handleTutorialSelection}/>}
-			</Box>
-			<Paper sx={{position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 10}} elevation={5}>
-				<BottomNavigation
-					showLabels
-					value={tab}
-					onChange={(event, newValue) => {
-						setTab(newValue);
-					}}
-				>
-					<BottomNavigationAction icon={<HomeIcon/>}/>
-					<BottomNavigationAction icon={<SmartToyIcon/>}/>
-				</BottomNavigation>
-			</Paper>
-			<Dialog open={ready} onClose={() => setReady(false)}>
-				<DialogTitle>Tutorial is ready!</DialogTitle>
-				<DialogActions>
-					<Button sx={{ textTransform: 'none' }} onClick={() => window.close()}>Start your tour now!</Button>
-				</DialogActions>
-			</Dialog>
-		</ClientContext.Provider>
-
+		<ThemeProvider theme={theme}>
+			<ClientContext.Provider value={{
+				chromeClient: chromeClient,
+				tutorialsApi: tutorialsApi,
+				stepsApi: stepsApi,
+				actionsApi: actionsApi
+			}}>
+				<Header/>
+				{/*<Paper sx={{position: 'static', top: 0, left: 0, right: 0}} elevation={5}>*/}
+				{/*	*/}
+				{/*</Paper>*/}
+				<Box paddingY={8}>
+					<Loading loading={loading}/>
+					<Error error={error}/>
+					{!loading && tab === Tab.TUTORIALS &&
+						<>
+							<Paper
+								component="form"
+								sx={{p: '2px 4px', display: 'flex', alignItems: 'center', marginBottom: 3}}
+								elevation={3}
+								onSubmit={(event) => {
+									event.preventDefault();
+									handleSearch(event.currentTarget.querySelector("input")?.value ?? "");
+								}}
+							>
+								<InputBase
+									sx={{ml: 1, flex: 1}}
+									placeholder="What do you want to learn?"
+									inputProps={{'aria-label': 'search tutorials'}}
+								/>
+								<IconButton type="submit" sx={{p: '10px'}} aria-label="search">
+									<SearchIcon/>
+								</IconButton>
+							</Paper>
+							<TutorialList tutorials={list} onTutorialSelection={handleTutorialSelection}/>
+							<Card>
+								<CardActionArea onClick={() => setTab(Tab.AI)}>
+									<Alert severity="info">
+										Cannot find what you are looking for? Try asking the AI {">"}
+									</Alert>
+								</CardActionArea>
+							</Card>
+						</>}
+					{!loading && tab === Tab.AI && <TutorialGenerationComponent onTutorialSelection={handleTutorialSelection}/>}
+				</Box>
+				<Paper sx={{position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 10}} elevation={5}>
+					<BottomNavigation
+						showLabels
+						value={tab}
+						onChange={(event, newValue) => {
+							setTab(newValue);
+						}}
+					>
+						<BottomNavigationAction icon={<HomeIcon/>}/>
+						<BottomNavigationAction icon={<SmartToyIcon/>}/>
+					</BottomNavigation>
+				</Paper>
+				<Dialog open={ready} onClose={() => setReady(false)}>
+					<DialogTitle>Tutorial is ready!</DialogTitle>
+					<DialogActions>
+						<Button sx={{ textTransform: 'none' }} onClick={() => window.close()}>Start your tour now!</Button>
+					</DialogActions>
+				</Dialog>
+			</ClientContext.Provider>
+		</ThemeProvider>
 	);
 };

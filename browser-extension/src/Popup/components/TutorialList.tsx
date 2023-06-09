@@ -42,8 +42,8 @@ export const TutorialList = (props: TutorialListProps) => {
 	};
 
 	return (
-		<Box sx={{flexGrow: 1}} padding={1}>
-			<Grid container spacing={1} direction={"column"}>
+		<Box sx={{flexGrow: 1}}>
+			<Grid container spacing={1} gap={2} direction={"column"}>
 				{createList()}
 			</Grid>
 		</Box>

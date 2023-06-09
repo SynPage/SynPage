@@ -12,7 +12,7 @@ export const TutorialNameCard = (props: TutorialNameCardProps) => {
 	const {tutorial, onClick, loading} = props;
 
 	return (
-		<Box padding={1} alignContent={'center'}>
+		<Box alignContent={'center'}>
 			<Card sx={{flexGrow: 1, borderRadius: 3, display: 'flex', height: 150}} elevation={3}>
 				<CardActionArea sx={{display: 'flex'}} onClick={onClick}>
 					{

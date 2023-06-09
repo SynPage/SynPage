@@ -191,16 +191,18 @@ export const Popup = (props: PopupProps) => {
           <Loading loading={loading} />
           <Error error={error} />
           {!loading && tab === Tab.TUTORIALS && (
-            <>
+            <Grid sx={{mx: 1}} padding={1} container spacing={1} gap={2} direction={"column"}>
               <Paper
                 component='form'
                 sx={{
                   p: '2px 4px',
                   display: 'flex',
                   alignItems: 'center',
-                  marginBottom: 3,
+                  borderRadius: 2,
+                  boxShadow: 0,
+                  border: 1,
+                  borderColor: '#dddddd',
                 }}
-                elevation={3}
                 onSubmit={(event) => {
                   event.preventDefault()
                   handleSearch(
@@ -210,7 +212,7 @@ export const Popup = (props: PopupProps) => {
               >
                 <InputBase
                   sx={{ ml: 1, flex: 1 }}
-                  placeholder='What do you want to learn?'
+                  placeholder='Search'
                   inputProps={{ 'aria-label': 'search tutorials' }}
                 />
                 <IconButton
@@ -225,14 +227,14 @@ export const Popup = (props: PopupProps) => {
                 tutorials={list}
                 onTutorialSelection={handleTutorialSelection}
               />
-              <Card sx={{ mx: 2, borderRadius: 2 }}>
+              <Card sx={{borderRadius: 2, boxShadow: 0 }}>
                 <CardActionArea onClick={() => setTab(Tab.AI)}>
                   <Alert severity='info'>
-                    Can't find what you're looking for? Try asking the AI {'>'}
+                    Generate a New Tutorial
                   </Alert>
                 </CardActionArea>
               </Card>
-            </>
+            </Grid>
           )}
           {!loading && tab === Tab.AI && (
             <TutorialGenerationComponent

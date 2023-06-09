@@ -27,16 +27,18 @@ export const Header = (props: HeaderProps) => {
         zIndex: 10,
         boxShadow: 0,
         borderRadius: 0,
+        borderBottom: 1,
+        borderColor: '#dddddd',
       }}
       elevation={5}
     >
       <Toolbar>
         <img src={logoFull} alt={'SynPage'} height={30} />
         <Box flexGrow={1} />
-        <IconButton size='large' color='inherit'>
+        <IconButton size='large' color='inherit' sx={{padding: 0, color: 'rgba(0, 0, 0, 0.6)'}}>
           <HelpCenterIcon />
         </IconButton>
-        <IconButton size='large' color='inherit' onClick={() => window.close()}>
+        <IconButton size='large' color='inherit' onClick={() => window.close()} sx={{padding: 0, color: 'rgba(0, 0, 0, 0.6)' }}>
           <CloseIcon />
         </IconButton>
       </Toolbar>

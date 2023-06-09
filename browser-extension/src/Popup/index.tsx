@@ -229,7 +229,7 @@ export const Popup = (props: PopupProps) => {
               />
               <Card sx={{ borderRadius: 2, boxShadow: 0 }}>
                 <CardActionArea onClick={() => setTab(Tab.AI)}>
-                  <Alert severity='info'>Generate a New Tutorial</Alert>
+                  <Alert severity='info' sx={{ color: 'rgba(0, 0, 0, 0.6)' }}>Generate a New Tutorial</Alert>
                 </CardActionArea>
               </Card>
             </Grid>
@@ -242,7 +242,8 @@ export const Popup = (props: PopupProps) => {
         </Container>
 
         <Paper
-          sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 10 }}
+          sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 10, boxShadow: 0, borderTop: 1,
+          borderColor: '#dddddd' }}
           elevation={5}
         >
           <BottomNavigation

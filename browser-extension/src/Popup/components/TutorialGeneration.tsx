@@ -62,8 +62,8 @@ export const TutorialGenerationComponent = (props: TutorialGenerationProps) => {
 
 	return (
 		<Box sx={{flexGrow: 1, textAlign: 'center'}} padding={1}>
-			<Typography variant="h5" sx={{ marginBottom: '16px', fontWeight: 'bold' }}>
-				Create Your On-Screen Tutorial
+			<Typography variant="h5" sx={{ marginBottom: '16px', fontSize: '1.4rem', color: 'rgba(0, 0, 0, 0.6)' }}>
+				Tutorial Generator
 			</Typography>
 			{/*<ToggleButtonGroup*/}
 			{/*	color="primary"*/}
@@ -148,10 +148,25 @@ export const TutorialGenerationComponent = (props: TutorialGenerationProps) => {
 						}
 					</Grid>
 					<Grid item display="flex" justifyContent="center">
-						<Button type={"submit"} variant="contained" sx={{textTransform: 'none'}}
-						        disabled={!!loading}
-						        endIcon={loading ? <CircularProgress/> : <ArrowForwardIosIcon/>}
-						>
+						<Button type={"submit"} variant="contained" 
+								sx={{textTransform: 'none', 
+									fontFamily: 'Inter',
+									fontSize: '16px',
+									padding: '0.75rem 2.75rem',
+									fontWeight: 400,
+									fill: '#FFFFFF',
+									color: '#FFFFFF',
+									backgroundColor: 'transparent',
+									backgroundImage: 'linear-gradient(245deg, #9881FD 0%, #B038C2 100%)',
+									borderRadius: '50px 50px 50px 50px',
+									boxShadow: '0px 1px 31px -1px #9881FD',
+									'&:hover': {
+										opacity: '0.8',
+										boxShadow: '0px 1px 31px -1px #9881FD',
+										backgroundImage: 'linear-gradient(245deg, #9881FD 0%, #B038C2 100%)',
+									  }}}
+							    disabled={!!loading}
+						        endIcon={loading ? <CircularProgress/> : <ArrowForwardIosIcon/>}>
 							{loading ? "Generating..." : "Generate"}
 						</Button>
 					</Grid>

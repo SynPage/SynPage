@@ -187,11 +187,21 @@ export const Popup = (props: PopupProps) => {
         {/*<Paper sx={{position: 'static', top: 0, left: 0, right: 0}} elevation={5}>*/}
         {/*	*/}
         {/*</Paper>*/}
-        <Container sx={{ px: 1, py: 8, display: 'flex', alignItems: 'center' }}>
+        <Container
+          sx={{
+            px: 1,
+            py: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2,
+            alignItems: 'center',
+          }}
+        >
           <Loading loading={loading} />
           <Error error={error} />
           {!loading && tab === Tab.TUTORIALS && (
-            <Grid container gap={2} direction={'column'}>
+            // <Grid container gap={2} direction={'column'}>
+            <>
               <Paper
                 component='form'
                 sx={{
@@ -227,12 +237,15 @@ export const Popup = (props: PopupProps) => {
                 tutorials={list}
                 onTutorialSelection={handleTutorialSelection}
               />
-              <Card sx={{ borderRadius: 2, boxShadow: 0 }}>
+              <Card sx={{ borderRadius: 2, boxShadow: 0, width: 1 }}>
                 <CardActionArea onClick={() => setTab(Tab.AI)}>
-                  <Alert severity='info' sx={{ color: 'rgba(0, 0, 0, 0.6)' }}>Generate a New Tutorial</Alert>
+                  <Alert severity='info' sx={{ color: 'rgba(0, 0, 0, 0.6)' }}>
+                    Generate a New Tutorial
+                  </Alert>
                 </CardActionArea>
               </Card>
-            </Grid>
+              {/* </Grid> */}
+            </>
           )}
           {!loading && tab === Tab.AI && (
             <TutorialGenerationComponent
@@ -242,8 +255,16 @@ export const Popup = (props: PopupProps) => {
         </Container>
 
         <Paper
-          sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 10, boxShadow: 0, borderTop: 1,
-          borderColor: '#dddddd' }}
+          sx={{
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            zIndex: 10,
+            boxShadow: 0,
+            borderTop: 1,
+            borderColor: '#dddddd',
+          }}
           elevation={5}
         >
           <BottomNavigation

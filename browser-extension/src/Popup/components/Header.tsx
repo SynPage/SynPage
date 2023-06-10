@@ -10,7 +10,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import { Menu } from '@mui/icons-material'
 import { useState } from 'react'
 import { SearchBar } from './SearchBar'
-import OutlinedFlagIcon from '@mui/icons-material/OutlinedFlag';
+import OutlinedFlagIcon from '@mui/icons-material/OutlinedFlag'
 import CloseIcon from '@mui/icons-material/Close'
 import logoFull from '../../assets/logo-full.svg'
 
@@ -33,12 +33,27 @@ export const Header = (props: HeaderProps) => {
       elevation={5}
     >
       <Toolbar>
-        <img src={logoFull} alt={'SynPage'} height={30} />
+        <img src={logoFull} alt="SynPage" height={30} />
         <Box flexGrow={1} />
-        <IconButton size='large' color='inherit' sx={{padding: 0, color: 'rgba(0, 0, 0, 0.6)'}}>
-          <OutlinedFlagIcon />
-        </IconButton>
-        <IconButton size='large' color='inherit' onClick={() => window.close()} sx={{padding: 0, color: 'rgba(0, 0, 0, 0.6)' }}>
+        <a
+          href="https://airtable.com/shrR7ueO0F96lWYRV"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <IconButton
+            size="large"
+            color="inherit"
+            sx={{ padding: 0, color: 'rgba(0, 0, 0, 0.6)' }}
+          >
+            <OutlinedFlagIcon />
+          </IconButton>
+        </a>
+        <IconButton
+          size="large"
+          color="inherit"
+          onClick={() => window.close()}
+          sx={{ padding: 0, color: 'rgba(0, 0, 0, 0.6)' }}
+        >
           <CloseIcon />
         </IconButton>
       </Toolbar>

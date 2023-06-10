@@ -12,6 +12,10 @@ import {
 import { TutorialInfo } from '../../client/generated'
 import synlogo from '../../assets/logo.svg'
 
+import gcplogo from '../../assets/gcp.svg'
+import awslogo from '../../assets/aws.svg'
+import azurelogo from '../../assets/azure.svg'
+
 export interface TutorialNameCardProps {
   tutorial?: TutorialInfo
   onClick: (e: any) => void
@@ -42,7 +46,7 @@ export const TutorialNameCard = (props: TutorialNameCardProps) => {
             <CardMedia
               component='img'
               sx={{ width: 80 }}
-              image={synlogo}
+              image={azurelogo}
               alt='Tutorial Cover Page'
             />
           )}

@@ -97,9 +97,10 @@ export const TutorialGenerationComponent = (props: TutorialGenerationProps) => {
         sx={{
           fontSize: '1.4rem',
           color: 'rgba(0, 0, 0, 0.6)',
+          textAlign: 'center'
         }}
       >
-        Generate A Tutorial
+        Generate a Tutorial
       </Typography>
 
       {/* <ToggleButtonGroup
@@ -157,13 +158,22 @@ export const TutorialGenerationComponent = (props: TutorialGenerationProps) => {
 
         <Grid container direction={'column'} spacing={2}>
           <Grid item sx={{ borderRadius: 2 }}>
-            <TextField
-              sx={{ borderRadius: 2 }}
-              value={context}
-              onChange={(e) => setContext(e.target.value)}
-              fullWidth
-              label='Context'
-            />
+
+          <FormControl fullWidth>
+  <InputLabel id='context-label'>Context</InputLabel>
+  <Select
+    labelId='context-label'
+    value={context}
+    onChange={(e) => setContext(e.target.value)}
+    sx={{ borderRadius: 2 }}
+  >
+    <MenuItem value='aws' data-id='aws'>AWS</MenuItem>
+    <MenuItem value='azure' data-id='azure'>Azure</MenuItem>
+    <MenuItem value='gcp' data-id='gcp'>GCP</MenuItem>
+  </Select>
+</FormControl>
+
+            
           </Grid>
           <Grid item>
             <TextField

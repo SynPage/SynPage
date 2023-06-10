@@ -10,7 +10,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import { Menu } from '@mui/icons-material'
 import { useState } from 'react'
 import { SearchBar } from './SearchBar'
-import HelpCenterIcon from '@mui/icons-material/HelpCenter'
+import OutlinedFlagIcon from '@mui/icons-material/OutlinedFlag';
 import CloseIcon from '@mui/icons-material/Close'
 import logoFull from '../../assets/logo-full.svg'
 
@@ -36,7 +36,7 @@ export const Header = (props: HeaderProps) => {
         <img src={logoFull} alt={'SynPage'} height={30} />
         <Box flexGrow={1} />
         <IconButton size='large' color='inherit' sx={{padding: 0, color: 'rgba(0, 0, 0, 0.6)'}}>
-          <HelpCenterIcon />
+          <OutlinedFlagIcon />
         </IconButton>
         <IconButton size='large' color='inherit' onClick={() => window.close()} sx={{padding: 0, color: 'rgba(0, 0, 0, 0.6)' }}>
           <CloseIcon />

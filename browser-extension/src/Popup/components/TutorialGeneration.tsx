@@ -25,6 +25,7 @@ import { Tutorial } from '../../client/generated'
 import { TutorialNameCard } from './TutorialNameCard'
 import { QueryType } from '../../chrome/query'
 import { Status, validateResponse } from '../../chrome/response'
+import { Error } from '../../shared/Error'
 
 export interface TutorialGenerationProps {
   onTutorialSelection: (tut: Tutorial) => void
@@ -83,60 +84,67 @@ export const TutorialGenerationComponent = (props: TutorialGenerationProps) => {
   }
 
   return (
-    <Box sx={{ flexGrow: 1, textAlign: 'center' }} padding={1}>
+    <Box
+      sx={{
+        width: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 2,
+      }}
+    >
       <Typography
         variant='h5'
         sx={{
-          marginBottom: '16px',
           fontSize: '1.4rem',
           color: 'rgba(0, 0, 0, 0.6)',
         }}
       >
-        Tutorial Generator
+        Generate A Tutorial
       </Typography>
-      {/*<ToggleButtonGroup*/}
-      {/*	color="primary"*/}
-      {/*	value={mode}*/}
-      {/*	exclusive*/}
-      {/*	onChange={(e, value) => setMode(value as GenerationMode)}*/}
-      {/*>*/}
-      {/*	{Object.entries(GenerationMode).map(([key, value]) => {*/}
-      {/*		return <ToggleButton value={key}>{value}</ToggleButton>;*/}
-      {/*	})}*/}
-      {/*</ToggleButtonGroup>*/}
 
-      {/*<Paper*/}
-      {/*	component="form"*/}
-      {/*	sx={{p: '2px 4px', display: 'flex', alignItems: 'center', marginY: 2}}*/}
-      {/*	elevation={3}*/}
-      {/*	onSubmit={(e) => {*/}
-      {/*		setError(undefined);*/}
-      {/*		setError(undefined);*/}
-      {/*		e.preventDefault();*/}
-      {/*		const question = e.currentTarget.querySelector("input")?.value;*/}
-      {/*		if (!question) {*/}
-      {/*			setError("Please enter a question.");*/}
-      {/*			return;*/}
-      {/*		}*/}
-      {/*		handleGenerate(question);*/}
-      {/*	}}*/}
-      {/*>*/}
-      {/*	<InputBase*/}
-      {/*		sx={{ml: 1, flex: 1}}*/}
-      {/*		placeholder="How to setup..."*/}
-      {/*		inputProps={{'aria-label': 'ask ai'}}*/}
-      {/*		disabled={!!loading}*/}
-      {/*	/>*/}
-      {/*	{*/}
-      {/*		loading ?*/}
-      {/*			<CircularProgress/> :*/}
-      {/*			<IconButton type="submit" sx={{p: '10px'}} aria-label="search">*/}
-      {/*				<ArrowForwardIosIcon/>*/}
-      {/*			</IconButton>*/}
-      {/*	}*/}
-      {/*</Paper>*/}
+      {/* <ToggleButtonGroup
+      	color="primary"
+      	value={mode}
+      	exclusive
+      	onChange={(e, value) => setMode(value as GenerationMode)}
+      >
+      	{Object.entries(GenerationMode).map(([key, value]) => {
+      		return <ToggleButton value={key}>{value}</ToggleButton>;
+      	})}
+      </ToggleButtonGroup>
+      <Paper
+      	component="form"
+      	sx={{p: '2px 4px', display: 'flex', alignItems: 'center', marginY: 2}}
+      	elevation={3}
+      	onSubmit={(e) => {
+      		setError(undefined);
+      		setError(undefined);
+      		e.preventDefault();
+      		const question = e.currentTarget.querySelector("input")?.value;
+      		if (!question) {
+      			setError("Please enter a question.");
+      			return;
+      		}
+      		handleGenerate(question);
+      	}}
+      >
+      	<InputBase
+      		sx={{ml: 1, flex: 1}}
+      		placeholder="How to setup..."
+      		inputProps={{'aria-label': 'ask ai'}}
+      		disabled={!!loading}
+      	/>
+      	{
+      		loading ?
+      			<CircularProgress/> :
+      			<IconButton type="submit" sx={{p: '10px'}} aria-label="search">
+      				<ArrowForwardIosIcon/>
+      			</IconButton>
+      	}
+      </Paper> */}
 
       <Box
+        sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
         component='form'
         noValidate
         autoComplete='off'
@@ -145,10 +153,12 @@ export const TutorialGenerationComponent = (props: TutorialGenerationProps) => {
           handleGenerate()
         }}
       >
-        {error && <Alert severity={'error'}>{error}</Alert>}
+        <Error error={error} />
+
         <Grid container direction={'column'} spacing={2}>
-          <Grid item>
+          <Grid item sx={{ borderRadius: 2 }}>
             <TextField
+              sx={{ borderRadius: 2 }}
               value={context}
               onChange={(e) => setContext(e.target.value)}
               fullWidth
@@ -157,6 +167,7 @@ export const TutorialGenerationComponent = (props: TutorialGenerationProps) => {
           </Grid>
           <Grid item>
             <TextField
+              sx={{ borderRadius: 2 }}
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
               fullWidth

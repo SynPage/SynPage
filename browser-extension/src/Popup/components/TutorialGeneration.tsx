@@ -71,16 +71,20 @@ export const TutorialGenerationComponent = (props: TutorialGenerationProps) => {
         },
         (reason) => {
           console.log(
-            '[Popup]: Error occurred when trying to reach background.'
+            '[Popup]: Error occurred when trying to reach background.',
           )
           setLoading(undefined)
           setError(reason.message ?? 'Unknown error.')
-        }
+        },
       )
   }
 
   const handleClickGenerated = () => {
     generated && onTutorialSelection(generated)
+  }
+
+  const handleChange = (event: any) => {
+    setContext(event.target.value)
   }
 
   return (
@@ -93,62 +97,21 @@ export const TutorialGenerationComponent = (props: TutorialGenerationProps) => {
       }}
     >
       <Typography
-        variant='h5'
+        variant="h5"
         sx={{
           fontSize: '1.4rem',
           color: 'rgba(0, 0, 0, 0.6)',
-          textAlign: 'center'
+          textAlign: 'center',
         }}
       >
         Generate a Tutorial
       </Typography>
 
-      {/* <ToggleButtonGroup
-      	color="primary"
-      	value={mode}
-      	exclusive
-      	onChange={(e, value) => setMode(value as GenerationMode)}
-      >
-      	{Object.entries(GenerationMode).map(([key, value]) => {
-      		return <ToggleButton value={key}>{value}</ToggleButton>;
-      	})}
-      </ToggleButtonGroup>
-      <Paper
-      	component="form"
-      	sx={{p: '2px 4px', display: 'flex', alignItems: 'center', marginY: 2}}
-      	elevation={3}
-      	onSubmit={(e) => {
-      		setError(undefined);
-      		setError(undefined);
-      		e.preventDefault();
-      		const question = e.currentTarget.querySelector("input")?.value;
-      		if (!question) {
-      			setError("Please enter a question.");
-      			return;
-      		}
-      		handleGenerate(question);
-      	}}
-      >
-      	<InputBase
-      		sx={{ml: 1, flex: 1}}
-      		placeholder="How to setup..."
-      		inputProps={{'aria-label': 'ask ai'}}
-      		disabled={!!loading}
-      	/>
-      	{
-      		loading ?
-      			<CircularProgress/> :
-      			<IconButton type="submit" sx={{p: '10px'}} aria-label="search">
-      				<ArrowForwardIosIcon/>
-      			</IconButton>
-      	}
-      </Paper> */}
-
       <Box
         sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
-        component='form'
+        component="form"
         noValidate
-        autoComplete='off'
+        autoComplete="off"
         onSubmit={(e) => {
           e.preventDefault()
           handleGenerate()
@@ -158,32 +121,55 @@ export const TutorialGenerationComponent = (props: TutorialGenerationProps) => {
 
         <Grid container direction={'column'} spacing={2}>
           <Grid item sx={{ borderRadius: 2 }}>
+            {/* <FormControl fullWidth>
+              <InputLabel id="context-label">Context</InputLabel>
+              <Select
+                labelId="context-label"
+                value={context}
+                onChange={(e) => setContext(e.target.value)}
+                sx={{ borderRadius: 2 }}
+              >
+                <MenuItem value="aws" data-id="aws">
+                  AWS
+                </MenuItem>
+                <MenuItem value="azure" data-id="azure">
+                  Azure
+                </MenuItem>
+                <MenuItem value="gcp" data-id="gcp">
+                  GCP
+                </MenuItem>
+              </Select>
+            </FormControl> */}
 
-          <FormControl fullWidth>
-  <InputLabel id='context-label'>Context</InputLabel>
-  <Select
-    labelId='context-label'
-    value={context}
-    onChange={(e) => setContext(e.target.value)}
-    sx={{ borderRadius: 2 }}
-  >
-    <MenuItem value='aws' data-id='aws'>AWS</MenuItem>
-    <MenuItem value='azure' data-id='azure'>Azure</MenuItem>
-    <MenuItem value='gcp' data-id='gcp'>GCP</MenuItem>
-  </Select>
-</FormControl>
-
-            
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Platform</InputLabel>
+              <Select
+                sx={{ borderRadius: 2 }}
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={context}
+                label="Platform"
+                onChange={handleChange}
+              >
+                <MenuItem value={'aws'}>AWS</MenuItem>
+                <MenuItem value={'gcp'}>GCP</MenuItem>
+                <MenuItem value={'azure'}>Azure</MenuItem>
+              </Select>
+            </FormControl>
           </Grid>
           <Grid item>
             <TextField
-              sx={{ borderRadius: 2 }}
+              InputProps={{
+                style: {
+                  borderRadius: 8,
+                },
+              }}
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
               fullWidth
               multiline
               maxRows={4}
-              label='Question'
+              label="Question"
             />
           </Grid>
           <Grid item>
@@ -195,10 +181,10 @@ export const TutorialGenerationComponent = (props: TutorialGenerationProps) => {
               />
             )}
           </Grid>
-          <Grid item display='flex' justifyContent='center'>
+          <Grid item display="flex" justifyContent="center">
             <Button
               type={'submit'}
-              variant='contained'
+              variant="contained"
               sx={{
                 textTransform: 'none',
                 fontFamily: 'Inter',

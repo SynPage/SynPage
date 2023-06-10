@@ -41,24 +41,24 @@ export const TutorialNameCard = (props: TutorialNameCardProps) => {
       >
         <CardActionArea sx={{ display: 'flex' }} onClick={onClick}>
           {loading ? (
-            <Skeleton variant='rectangular' width={80} height={80} />
+            <Skeleton variant="rectangular" width={80} height={80} />
           ) : (
             <CardMedia
-              component='img'
+              component="img"
               sx={{ width: 80 }}
               image={azurelogo}
-              alt='Tutorial Cover Page'
+              alt="Tutorial Cover Page"
             />
           )}
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <CardContent sx={{ flex: '1 0 auto' }}>
               {loading ? (
-                <Skeleton variant='rectangular' width={140} height={70} />
+                <Skeleton variant="rectangular" width={140} height={70} />
               ) : (
                 <Typography
-                  variant='subtitle1'
-                  color='text.secondary'
-                  component='div'
+                  variant="subtitle1"
+                  color="text.secondary"
+                  component="div"
                 >
                   {tutorial?.title}
                 </Typography>

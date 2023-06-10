@@ -80,7 +80,7 @@ export const Popup = (props: PopupProps) => {
 
   useEffect(() => {
     // chromeClient.listen(handleChromeMessage, handleChromeError);
-    console.log(chrome)
+    // console.log(chrome)
 
     setLoading('Loading...')
     tutorialsApi.tutorialsList().then(
@@ -95,32 +95,9 @@ export const Popup = (props: PopupProps) => {
       (reason) => {
         setLoading(undefined)
         setError(reason.message ?? 'Unknown error.')
-      }
+      },
     )
   }, [])
-
-  // const handleChromeMessage = async (query: ChromeQuery): Promise<ChromeResponse> => {
-  //   console.log("[Popup]: Received query", query)
-  //   switch (query.type) {
-  //     default:
-  //       const error = "[Popup]: Unexpected query type."
-  //       setError(error);
-  //       return {
-  //         query: query,
-  //         status: Status.error,
-  //         message: error
-  //       }
-  //   }
-  // }
-
-  // const handleChromeError = async (query: ChromeQuery, message: string): Promise<ChromeResponse> => {
-  //   setError(message);
-  //   return {
-  //     query: query,
-  //     status: Status.error,
-  //     message: message
-  //   }
-  // }
 
   const handleTutorialSelection = (tutorial: TutorialInfo) => {
     if (!tutorial.id) {
@@ -146,11 +123,11 @@ export const Popup = (props: PopupProps) => {
         },
         (reason) => {
           console.log(
-            '[Popup]: Error occurred when trying to reach background.'
+            '[Popup]: Error occurred when trying to reach background.',
           )
           setLoading(undefined)
           setError(reason.message ?? 'Unknown error.')
-        }
+        },
       )
 
     // getCurrentTab().then(tab => {
@@ -202,7 +179,7 @@ export const Popup = (props: PopupProps) => {
           {!loading && tab === Tab.TUTORIALS && (
             <>
               <Paper
-                component='form'
+                component="form"
                 sx={{
                   p: '2px 4px',
                   display: 'flex',
@@ -215,19 +192,19 @@ export const Popup = (props: PopupProps) => {
                 onSubmit={(event) => {
                   event.preventDefault()
                   handleSearch(
-                    event.currentTarget.querySelector('input')?.value ?? ''
+                    event.currentTarget.querySelector('input')?.value ?? '',
                   )
                 }}
               >
                 <InputBase
                   sx={{ ml: 1, flex: 1 }}
-                  placeholder='Search'
+                  placeholder="Search"
                   inputProps={{ 'aria-label': 'search tutorials' }}
                 />
                 <IconButton
-                  type='submit'
+                  type="submit"
                   sx={{ p: '10px' }}
-                  aria-label='search'
+                  aria-label="search"
                 >
                   <SearchIcon />
                 </IconButton>
@@ -238,7 +215,7 @@ export const Popup = (props: PopupProps) => {
               />
               <Card sx={{ borderRadius: 2, boxShadow: 0, width: 1 }}>
                 <CardActionArea onClick={() => setTab(Tab.AI)}>
-                  <Alert severity='info' sx={{ color: 'rgba(0, 0, 0, 0.6)' }}>
+                  <Alert severity="info" sx={{ color: 'rgba(0, 0, 0, 0.6)' }}>
                     Generate a New Tutorial
                   </Alert>
                 </CardActionArea>

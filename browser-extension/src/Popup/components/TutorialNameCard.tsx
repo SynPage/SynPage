@@ -43,13 +43,35 @@ export const TutorialNameCard = (props: TutorialNameCardProps) => {
           {loading ? (
             <Skeleton variant="rectangular" width={80} height={80} />
           ) : (
-            <CardMedia
-              component="img"
-              sx={{ width: 80 }}
-              image={azurelogo}
-              alt="Tutorial Cover Page"
-            />
+            // Conditionally render platform logo (AWS, Azure, GCP)
+            <Typography variant="body1">
+              {tutorial?.description?.toLowerCase().includes('aws') && (
+                <CardMedia
+                  component="img"
+                  sx={{ width: 80 }}
+                  image={awslogo}
+                  alt="AWS Logo"
+                />
+              )}
+              {tutorial?.description?.toLowerCase().includes('azure') && (
+                <CardMedia
+                  component="img"
+                  sx={{ width: 80 }}
+                  image={azurelogo}
+                  alt="Azure Logo"
+                />
+              )}
+              {tutorial?.description?.toLowerCase().includes('gcp') && (
+                <CardMedia
+                  component="img"
+                  sx={{ width: 80 }}
+                  image={gcplogo}
+                  alt="GCP Logo"
+                />
+              )}
+            </Typography>
           )}
+
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <CardContent sx={{ flex: '1 0 auto' }}>
               {loading ? (

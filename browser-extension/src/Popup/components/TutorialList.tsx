@@ -34,7 +34,9 @@ export const TutorialList = (props: TutorialListProps) => {
       tutorials &&
       tutorials.map((tut) => {
         return (
-          <Grid item>
+          <Grid item key={tut.id}>
+            {' '}
+            {/* Add a unique key prop */}
             <TutorialNameCard
               tutorial={tut}
               onClick={() => {

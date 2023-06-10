@@ -102,9 +102,10 @@ export const TutorialGenerationComponent = (props: TutorialGenerationProps) => {
           fontSize: '1.4rem',
           color: 'rgba(0, 0, 0, 0.6)',
           textAlign: 'center',
+          marginTop: '1rem',
         }}
       >
-        Generate a Tutorial
+        New Tutorial
       </Typography>
 
       <Box
@@ -141,7 +142,7 @@ export const TutorialGenerationComponent = (props: TutorialGenerationProps) => {
               </Select>
             </FormControl> */}
 
-            <FormControl fullWidth>
+            {/* <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Platform</InputLabel>
               <Select
                 sx={{ borderRadius: 2 }}
@@ -155,7 +156,7 @@ export const TutorialGenerationComponent = (props: TutorialGenerationProps) => {
                 <MenuItem value={'gcp'}>GCP</MenuItem>
                 <MenuItem value={'azure'}>Azure</MenuItem>
               </Select>
-            </FormControl>
+            </FormControl> */}
           </Grid>
           <Grid item>
             <TextField
@@ -169,7 +170,7 @@ export const TutorialGenerationComponent = (props: TutorialGenerationProps) => {
               fullWidth
               multiline
               maxRows={4}
-              label="Question"
+              label="How do I..."
             />
           </Grid>
           <Grid item>

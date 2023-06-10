@@ -14,6 +14,7 @@ import { QueryType } from '../chrome/query'
 import { Status, validateResponse } from '../chrome/response'
 import { PopupClient } from '../chrome/popupClient'
 import './index.css'
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import {
   Alert,
   BottomNavigation,
@@ -216,7 +217,7 @@ export const Popup = (props: PopupProps) => {
               <Card sx={{ borderRadius: 2, boxShadow: 0, width: 1 }}>
                 <CardActionArea onClick={() => setTab(Tab.AI)}>
                   <Alert severity="info" sx={{ color: 'rgba(0, 0, 0, 0.6)' }}>
-                    Generate a New Tutorial
+                    Generate a New Tutorial →
                   </Alert>
                 </CardActionArea>
               </Card>

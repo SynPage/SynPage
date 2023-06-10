@@ -200,7 +200,6 @@ export const Popup = (props: PopupProps) => {
           <Loading loading={loading} />
           <Error error={error} />
           {!loading && tab === Tab.TUTORIALS && (
-            // <Grid container gap={2} direction={'column'}>
             <>
               <Paper
                 component='form'
@@ -244,7 +243,6 @@ export const Popup = (props: PopupProps) => {
                   </Alert>
                 </CardActionArea>
               </Card>
-              {/* </Grid> */}
             </>
           )}
           {!loading && tab === Tab.AI && (

@@ -84,7 +84,7 @@ export const StepViewer = (props: StepViewerProps) => {
                       fontFamily: 'Inter',
                       textAlign: 'left',
                       fontSize: '13px',
-                      borderRadius: '1rem',
+                      borderRadius: '8px',
                     }}
                   >
                     The target element could not be located. Follow the step
@@ -157,12 +157,12 @@ export const StepViewer = (props: StepViewerProps) => {
             fontFamily: 'Inter',
             marginTop: '-40px',
             padding: '0.7rem 0.9rem',
-            borderRadius: '2rem',
+            borderRadius: '8px',
             marginRight: '0.75rem',
             fontSize: '13px',
           },
           tooltip: {
-            borderRadius: '1rem',
+            borderRadius: '8px',
             fontFamily: 'Inter',
             fontSize: '13px',
           },

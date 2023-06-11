@@ -256,13 +256,21 @@ export const Popup = (props: PopupProps) => {
         </Paper>
 
         <Dialog open={ready} onClose={() => setReady(false)}>
-          <DialogTitle>Tutorial is ready!</DialogTitle>
+          <DialogTitle
+            sx={{
+              textAlign: 'center',
+              fontSize: '13px',
+              marginBottom: '-1.5rem',
+            }}
+          >
+            Your tutorial will be generated!
+          </DialogTitle>
           <DialogActions>
             <Button
-              sx={{ textTransform: 'none' }}
+              sx={{ textTransform: 'none', fontSize: '13px' }}
               onClick={() => window.close()}
             >
-              Start your tour now!
+              OK
             </Button>
           </DialogActions>
         </Dialog>

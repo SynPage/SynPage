@@ -30,3 +30,7 @@ body {
   margin-bottom: 10px !important;
   border-radius: 12px !important;
 } */
+
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+  border-radius: 8px !important;
+}

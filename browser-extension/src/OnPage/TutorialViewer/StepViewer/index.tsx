@@ -11,7 +11,6 @@ import Joyride, {
 import { ElementUtils } from '../../../shared/ElementUtils'
 import { useAppSelector } from '../../store/hooks'
 import { Alert } from '@mui/material'
-import Draggable from 'react-draggable'
 
 export interface StepViewerProps {
   step: Step
@@ -78,35 +77,29 @@ export const StepViewer = (props: StepViewerProps) => {
             console.log('Target element not found', selector, e)
             return {
               content: (
-                <Draggable>
-                  <div>
-                    <Draggable>
-                      <Alert
-                        severity="info"
-                        sx={{
-                          fontFamily: 'Inter',
-                          textAlign: 'left',
-                          fontSize: '13px',
-                          borderRadius: '1rem',
-                        }}
-                      >
-                        The target element could not be located. Follow the step
-                        below.
-                      </Alert>
-                    </Draggable>
-                    <Draggable>
-                      <h2
-                        style={{
-                          fontFamily: 'Inter',
-                          fontSize: '13px',
-                          marginLeft: '0.4rem',
-                        }}
-                      >
-                        {action.description}
-                      </h2>
-                    </Draggable>
-                  </div>
-                </Draggable>
+                <div>
+                  <Alert
+                    severity="info"
+                    sx={{
+                      fontFamily: 'Inter',
+                      textAlign: 'left',
+                      fontSize: '13px',
+                      borderRadius: '1rem',
+                    }}
+                  >
+                    The target element could not be located. Follow the step
+                    below.
+                  </Alert>
+                  <h2
+                    style={{
+                      fontFamily: 'Inter',
+                      fontSize: '13px',
+                      marginLeft: '0.4rem',
+                    }}
+                  >
+                    {action.description}
+                  </h2>
+                </div>
               ),
               placement: 'top-start',
               target: 'body',
@@ -146,58 +139,54 @@ export const StepViewer = (props: StepViewerProps) => {
   }
 
   return (
-    <Draggable>
-      <div className={'step-viewer'}>
-        <Draggable>
-          <Joyride
-            floaterProps={{ placement: 'center' }}
-            run={!loading}
-            callback={handleJoyrideCallback}
-            steps={joyrideSteps}
-            hideCloseButton={true}
-            continuous={true}
-            hideBackButton={true}
-            styles={{
-              options: {
-                zIndex: 10000,
-              },
-              buttonNext: {
-                backgroundColor: 'black',
-                fontFamily: 'Inter',
-                marginTop: '-40px',
-                padding: '0.7rem 0.9rem',
-                borderRadius: '2rem',
-                marginRight: '0.75rem',
-                fontSize: '13px',
-              },
-              tooltip: {
-                borderRadius: '1rem',
-                fontFamily: 'Inter',
-                fontSize: '13px',
-              },
-              tooltipTitle: {
-                fontFamily: 'Inter',
-                fontSize: '13px',
-              },
-              tooltipContent: {
-                fontFamily: 'Inter',
-                fontSize: '13px',
-              },
-              overlay: {
-                backgroundColor: 'rgba(0, 0, 0, 0)', // Set background color to transparent
-                pointerEvents: 'none', // Disable pointer events to allow interaction with the background
-              },
-            }}
-            locale={{
-              back: 'Back',
-              close: 'Close',
-              last: 'Done',
-              next: 'Done',
-              skip: 'Skip',
-            }}
-          />
-        </Draggable>
-      </div>
-    </Draggable>
+    <div className={'step-viewer'}>
+      <Joyride
+        floaterProps={{ placement: 'center' }}
+        run={!loading}
+        callback={handleJoyrideCallback}
+        steps={joyrideSteps}
+        hideCloseButton={true}
+        continuous={true}
+        hideBackButton={true}
+        styles={{
+          options: {
+            zIndex: 10000,
+          },
+          buttonNext: {
+            backgroundColor: 'black',
+            fontFamily: 'Inter',
+            marginTop: '-40px',
+            padding: '0.7rem 0.9rem',
+            borderRadius: '2rem',
+            marginRight: '0.75rem',
+            fontSize: '13px',
+          },
+          tooltip: {
+            borderRadius: '1rem',
+            fontFamily: 'Inter',
+            fontSize: '13px',
+          },
+          tooltipTitle: {
+            fontFamily: 'Inter',
+            fontSize: '13px',
+          },
+          tooltipContent: {
+            fontFamily: 'Inter',
+            fontSize: '13px',
+          },
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0)', // Set background color to transparent
+            pointerEvents: 'none', // Disable pointer events to allow interaction with the background
+          },
+        }}
+        locale={{
+          back: 'Back',
+          close: 'Close',
+          last: 'Done',
+          next: 'Done',
+          skip: 'Skip',
+        }}
+      />
+    </div>
   )
 }

@@ -1,10 +1,7 @@
-import CDP from 'chrome-remote-interface'
-import ProtocolProxyApi from 'devtools-protocol/types/protocol-proxy-api'
-import AccessibilityApi = ProtocolProxyApi.AccessibilityApi
 import { IAIService } from '../ai/AIService'
-import Protocol from 'devtools-protocol'
-import AXNode = Protocol.Accessibility.AXNode
-import Runtime = Protocol.Runtime
+// import Protocol from 'devtools-protocol'
+// import AXNode = Protocol.Accessibility.AXNode
+// import Runtime = Protocol.Runtime
 import { IAOMService } from '../services/IAOMService'
 
 export class BackgroundAOMService implements IAOMService {
@@ -25,7 +22,7 @@ export class BackgroundAOMService implements IAOMService {
       { tabId: this.tabId },
       'Accessibility.getFullAXTree',
     )
-    const nodes = result.nodes as AXNode[]
+    const nodes = result.nodes as any[]
     console.log('getFullAXTree', nodes)
     const processed = nodes
       .filter((node) => {
@@ -75,7 +72,7 @@ export class BackgroundAOMService implements IAOMService {
         backendNodeId: nodeId,
       },
     )
-    const node = result.object as Runtime.RemoteObject
+    const node = result.object
     console.log('resolveNode', node)
     return node.description ?? ''
   }

@@ -33,6 +33,7 @@ import {
   createTheme,
   ThemeProvider,
   Container,
+  CardMedia,
 } from '@mui/material'
 import HomeIcon from '@mui/icons-material/Home'
 import SmartToyIcon from '@mui/icons-material/SmartToy'
@@ -256,6 +257,20 @@ export const Popup = (props: PopupProps) => {
         </Paper>
 
         <Dialog open={ready} onClose={() => setReady(false)}>
+          <CardMedia
+            component="img"
+            sx={{
+              padding: '0',
+              margin: 'auto',
+              width: '70%',
+              marginBottom: '-2rem',
+            }}
+            image={
+              'https://cdn.dribbble.com/users/129972/screenshots/3964116/75_smile.gif'
+            }
+            alt="Success GIF"
+          />
+
           <DialogTitle
             sx={{
               textAlign: 'center',

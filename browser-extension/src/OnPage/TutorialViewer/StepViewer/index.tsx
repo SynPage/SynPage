@@ -78,11 +78,27 @@ export const StepViewer = (props: StepViewerProps) => {
             return {
               content: (
                 <div>
-                  <Alert severity="info" sx={{ fontFamily: 'Inter' }}>
+                  <Alert
+                    severity="info"
+                    sx={{
+                      fontFamily: 'Inter',
+                      textAlign: 'left',
+                      fontSize: '13px',
+                      borderRadius: '1rem',
+                    }}
+                  >
                     The target element could not be located. Follow the step
                     below.
                   </Alert>
-                  <h2 style={{ fontFamily: 'Inter' }}>{action.description}</h2>
+                  <h2
+                    style={{
+                      fontFamily: 'Inter',
+                      fontSize: '13px',
+                      marginLeft: '0.4rem',
+                    }}
+                  >
+                    {action.description}
+                  </h2>
                 </div>
               ),
               placement: 'top-start',
@@ -92,8 +108,8 @@ export const StepViewer = (props: StepViewerProps) => {
               locale: {
                 back: 'Back',
                 close: 'Close',
-                last: 'Done',
-                next: 'Done',
+                last: 'Done ✓',
+                next: 'Done ✓',
                 skip: 'Skip',
               },
               floaterProps: {
@@ -139,6 +155,10 @@ export const StepViewer = (props: StepViewerProps) => {
             backgroundColor: 'black',
             fontFamily: 'Inter',
             marginTop: '-40px',
+            padding: '0.7rem 0.9rem',
+            borderRadius: '2rem',
+            marginRight: '0.75rem',
+            fontSize: '13px',
           },
           overlay: {
             backgroundColor: 'rgba(0, 0, 0, 0)', // Set background color to transparent

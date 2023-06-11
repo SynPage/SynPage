@@ -1,5 +1,5 @@
 {
-  "name": "SynPage",
+  "name": "SynPage – Intelligent On-Screen Guidance",
   "description": "Enter a prompt and receive an on-screen tutorial for how to navigate a complex site like AWS, Azure, or GCP.",
   "version": "1.0",
   "manifest_version": 3,

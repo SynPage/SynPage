@@ -49,7 +49,7 @@ export const StepViewer = (props: StepViewerProps) => {
           if (!action.targetElement || action.targetElement === '') {
             return {
               content: (
-                <div>
+                <div key={action.index}>
                   <h2>{action.description}</h2>
                 </div>
               ),
@@ -68,7 +68,7 @@ export const StepViewer = (props: StepViewerProps) => {
             const targetElement = document.querySelector(selector)
             console.log('Target element found', selector, targetElement)
             return {
-              content: <h2>{action.description}</h2>,
+              content: <h2 key={action.index}>{action.description}</h2>,
               spotlightPadding: 20,
               spotlightClicks: true,
               target: selector,
@@ -77,7 +77,7 @@ export const StepViewer = (props: StepViewerProps) => {
             console.log('Target element not found', selector, e)
             return {
               content: (
-                <div>
+                <div key={action.index}>
                   <Alert
                     severity="info"
                     sx={{
@@ -95,6 +95,8 @@ export const StepViewer = (props: StepViewerProps) => {
                       fontFamily: 'Inter',
                       fontSize: '13px',
                       marginLeft: '0.4rem',
+                      fontWeight: 'normal',
+                      margin: '1rem 0',
                     }}
                   >
                     {action.description}

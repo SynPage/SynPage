@@ -27,16 +27,21 @@ export const OutlineView = (props: {
       {tutorial.steps &&
         tutorial.steps.map((step, index) => (
           <Accordion
-            key={step.index}
+            key={`accordion-${step.index}`}
             expanded={index === stepIndex}
             onChange={() => handleStepItemClick(index)}
           >
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography>{step.title}</Typography>
+            <AccordionSummary
+              key={`summary-${step.index}`}
+              expandIcon={<ExpandMoreIcon />}
+            >
+              <Typography key={`typo-${step.index}`}>{step.title}</Typography>
             </AccordionSummary>
-            <AccordionDetails>
-              <Typography>{step.description}</Typography>
-              <StepActionList step={step} />
+            <AccordionDetails key={`details-${step.index}`}>
+              <Typography key={`typo2-${step.index}`}>
+                {step.description}
+              </Typography>
+              <StepActionList key={`step-${step.index}`} step={step} />
             </AccordionDetails>
           </Accordion>
         ))}

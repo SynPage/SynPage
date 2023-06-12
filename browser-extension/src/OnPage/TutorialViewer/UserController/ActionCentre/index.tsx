@@ -19,16 +19,6 @@ export const ActionCentre = (props: ActionCentreProps) => {
   const fabRight = 16
   const logoUrl = 'https://i.imgur.com/WJeZZ7Q.png'
 
-  const actions = [
-    // { icon: <FileCopyIcon />, view: SidePanelView.step },
-    // {icon: <SaveIcon/>, view: SidePanelView.comment},
-    // {icon: <PrintIcon/>, view: SidePanelView.main},
-  ]
-
-  const handleSpeedDialViewClick = (view: SidePanelView) => {
-    sidePanelController.setView(view)
-  }
-
   return (
     <div className={'action-centre'}>
       <SpeedDial
@@ -43,21 +33,7 @@ export const ActionCentre = (props: ActionCentreProps) => {
         onClick={() => {
           sidePanelController.toggle()
         }}
-      >
-        {/* {actions.map((action) => (
-          <SpeedDialAction
-            key={action.view}
-            icon={action.icon}
-            tooltipTitle={action.view}
-            onClick={(e) => {
-              if (!sidePanelController.open) {
-                sidePanelController.toggle()
-              }
-              handleSpeedDialViewClick(action.view)
-            }}
-          />
-        ))} */}
-      </SpeedDial>
+      ></SpeedDial>
     </div>
   )
 }

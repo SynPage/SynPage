@@ -27,6 +27,7 @@ export const ActionCentre = (props: ActionCentreProps) => {
           position: 'fixed',
           bottom: fabBottom,
           right: fabRight + sidePanelWidth,
+          display: 'none', // hidden for now; may re-activate later
         }}
         icon={<img src={logoUrl} height={'80%'} width={'80%'} />}
         direction={'left'}

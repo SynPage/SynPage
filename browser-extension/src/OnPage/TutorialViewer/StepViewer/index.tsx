@@ -36,7 +36,14 @@ export const StepViewer = (props: StepViewerProps) => {
       joyrideSteps.push({
         content: (
           <div>
-            <h2>{step.description}</h2>
+            <p
+              style={{
+                fontSize: '13px',
+                fontWeight: 'normal',
+              }}
+            >
+              {step.description}
+            </p>
           </div>
         ),
         placement: 'center',
@@ -50,7 +57,14 @@ export const StepViewer = (props: StepViewerProps) => {
             return {
               content: (
                 <div key={action.index}>
-                  <h2>{action.description}</h2>
+                  <p
+                    style={{
+                      fontSize: '13px',
+                      fontWeight: 'normal',
+                    }}
+                  >
+                    {action.description}
+                  </p>
                 </div>
               ),
               placement: 'center',
@@ -68,7 +82,17 @@ export const StepViewer = (props: StepViewerProps) => {
             const targetElement = document.querySelector(selector)
             console.log('Target element found', selector, targetElement)
             return {
-              content: <h2 key={action.index}>{action.description}</h2>,
+              content: (
+                <p
+                  style={{
+                    fontSize: '13px',
+                    fontWeight: 'normal',
+                  }}
+                  key={action.index}
+                >
+                  {action.description}
+                </p>
+              ),
               spotlightPadding: 20,
               spotlightClicks: true,
               target: selector,
@@ -90,7 +114,7 @@ export const StepViewer = (props: StepViewerProps) => {
                     The target element could not be located. Follow the step
                     below.
                   </Alert>
-                  <h2
+                  <p
                     style={{
                       fontFamily: 'Inter',
                       fontSize: '13px',
@@ -100,7 +124,7 @@ export const StepViewer = (props: StepViewerProps) => {
                     }}
                   >
                     {action.description}
-                  </h2>
+                  </p>
                 </div>
               ),
               placement: 'top-start',
